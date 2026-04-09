@@ -10,6 +10,7 @@ export default function ConsultoriaPage() {
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
+    whatsapp: '',
     empresa: '',
     industria: 'Tecnología',
     desafio: ''
@@ -19,6 +20,7 @@ export default function ConsultoriaPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
     setIsSubmitting(true);
     
     try {
@@ -28,26 +30,30 @@ export default function ConsultoriaPage() {
         timestamp: serverTimestamp()
       });
 
-      // 2. Enviar correos electrónicos
+      // 2. Enviar correos electrónicos (con timeout para que no se "pegue" el formulario)
       try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 segundos de espera máximo
+
         await fetch('/api/send-email', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData),
+          signal: controller.signal
         });
+        clearTimeout(timeoutId);
       } catch (emailError) {
-        console.error("Los datos se guardaron pero falló el envío de emails:", emailError);
+        console.error("Los datos se guardaron pero falló el envío de emails o tomó demasiado tiempo:", emailError);
       }
 
       setIsSuccess(true);
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
-      alert("Hubo un error al enviar tu solicitud. Las reglas de la base de datos podrían estar bloqueando el acceso o hay un problema de conexión.");
+      alert("Hubo un problema al procesar tu solicitud. Sin embargo, tus datos podrían haber sido guardados. Si el problema persiste, contáctanos directamente.");
     } finally {
       setIsSubmitting(false);
     }
   };
-
 
   return (
     <main className="min-h-screen bg-[#0A0A1F] text-white">
@@ -109,69 +115,87 @@ export default function ConsultoriaPage() {
             </div>
           ) : (
             <>
-              <h2 className="font-display text-3xl font-bold mb-8 relative z-10">Agenda tu sesión</h2>
+              <h2 className="font-display text-3xl font-bold mb-8 relative z-10 text-glow">Agenda tu sesión</h2>
               
-              <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-                <div>
-                  <label className="block text-sm font-bold text-white/40 uppercase tracking-widest mb-2 ml-1">Nombre Completo</label>
-                  <input 
-                    required
-                    type="text" 
-                    value={formData.nombre}
-                    onChange={(e) => setFormData({...formData, nombre: e.target.value})}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:border-primary/50 focus:bg-white/10 transition-all outline-none" 
-                    placeholder="Juan Pérez" 
-                  />
+              <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-white/40 uppercase tracking-widest mb-1.5 ml-1">Nombre Completo</label>
+                    <input 
+                      required
+                      type="text" 
+                      value={formData.nombre}
+                      onChange={(e) => setFormData({...formData, nombre: e.target.value})}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 focus:border-primary/50 focus:bg-white/10 transition-all outline-none" 
+                      placeholder="Juan Pérez" 
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-white/40 uppercase tracking-widest mb-1.5 ml-1">WhatsApp</label>
+                    <input 
+                      required
+                      type="tel" 
+                      value={formData.whatsapp}
+                      onChange={(e) => setFormData({...formData, whatsapp: e.target.value})}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 focus:border-primary/50 focus:bg-white/10 transition-all outline-none" 
+                      placeholder="+56 9 ..." 
+                    />
+                  </div>
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-bold text-white/40 uppercase tracking-widest mb-2 ml-1">Correo Corporativo</label>
+                  <label className="block text-xs font-bold text-white/40 uppercase tracking-widest mb-1.5 ml-1">Correo Corporativo</label>
                   <input 
                     required
                     type="email" 
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:border-primary/50 focus:bg-white/10 transition-all outline-none" 
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 focus:border-primary/50 focus:bg-white/10 transition-all outline-none" 
                     placeholder="juan@empresa.com" 
                   />
                 </div>
                 
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-bold text-white/40 uppercase tracking-widest mb-2 ml-1">Empresa</label>
+                    <label className="block text-xs font-bold text-white/40 uppercase tracking-widest mb-1.5 ml-1">Empresa</label>
                     <input 
                       required
                       type="text" 
                       value={formData.empresa}
                       onChange={(e) => setFormData({...formData, empresa: e.target.value})}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:border-primary/50 focus:bg-white/10 transition-all outline-none" 
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 focus:border-primary/50 focus:bg-white/10 transition-all outline-none" 
                       placeholder="Empresa S.A." 
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-bold text-white/40 uppercase tracking-widest mb-2 ml-1">Industria</label>
-                    <select 
-                      value={formData.industria}
-                      onChange={(e) => setFormData({...formData, industria: e.target.value})}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:border-primary/50 focus:bg-white/10 transition-all outline-none text-white/60 appearance-none bg-[#111126]"
-                    >
-                      <option>Tecnología</option>
-                      <option>E-commerce</option>
-                      <option>Inmobiliaria</option>
-                      <option>Salud</option>
-                      <option>Otros</option>
-                    </select>
+                    <label className="block text-xs font-bold text-white/40 uppercase tracking-widest mb-1.5 ml-1">Industria</label>
+                    <div className="relative">
+                      <select 
+                        value={formData.industria}
+                        onChange={(e) => setFormData({...formData, industria: e.target.value})}
+                        className="w-full bg-[#1A1A3A] border border-white/10 rounded-xl px-4 py-3.5 focus:border-primary/50 focus:bg-white/10 transition-all outline-none text-white cursor-pointer appearance-none"
+                      >
+                        <option value="Tecnología">Tecnología</option>
+                        <option value="E-commerce">E-commerce</option>
+                        <option value="Inmobiliaria">Inmobiliaria</option>
+                        <option value="Salud">Salud</option>
+                        <option value="Otros">Otros</option>
+                      </select>
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/40">
+                        ▼
+                      </div>
+                    </div>
                   </div>
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-bold text-white/40 uppercase tracking-widest mb-2 ml-1">¿Cuál es tu mayor desafío actual?</label>
+                  <label className="block text-xs font-bold text-white/40 uppercase tracking-widest mb-1.5 ml-1">¿Cuál es tu mayor desafío actual?</label>
                   <textarea 
                     required
                     value={formData.desafio}
                     onChange={(e) => setFormData({...formData, desafio: e.target.value})}
-                    rows={4} 
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:border-primary/50 focus:bg-white/10 transition-all outline-none" 
+                    rows={3} 
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 focus:border-primary/50 focus:bg-white/10 transition-all outline-none resize-none" 
                     placeholder="Cuéntanos brevemente qué proceso te gustaría optimizar..."
                   ></textarea>
                 </div>
@@ -179,16 +203,25 @@ export default function ConsultoriaPage() {
                 <button 
                   disabled={isSubmitting}
                   type="submit" 
-                  className={`w-full bg-primary hover:bg-primary/80 py-5 rounded-2xl font-bold text-xl flex items-center justify-center gap-3 transition-all shadow-xl shadow-primary/20 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  className={`w-full bg-primary hover:bg-primary/80 py-4.5 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 transition-all shadow-xl shadow-primary/20 ${isSubmitting ? 'opacity-50 cursor-not-allowed translate-y-1' : 'active:scale-95'}`}
                 >
-                  {isSubmitting ? 'Enviando...' : 'Enviar Solicitud'}
-                  {!isSubmitting && <Send className="w-5 h-5" />}
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      Enviando...
+                    </>
+                  ) : (
+                    <>
+                      Enviar Solicitud
+                      <Send className="w-5 h-5" />
+                    </>
+                  )}
                 </button>
               </form>
             </>
           )}
           
-          <p className="text-center text-white/30 text-sm mt-8 relative z-10">
+          <p className="text-center text-white/20 text-xs mt-6 relative z-10">
             Responderemos en menos de 24 horas hábiles.
           </p>
         </div>
@@ -196,4 +229,5 @@ export default function ConsultoriaPage() {
     </main>
   );
 }
+
 

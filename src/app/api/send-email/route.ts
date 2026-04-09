@@ -7,16 +7,17 @@ const resend = new Resend(process.env.RESEND_API_KEY || 're_dummy_key');
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { nombre, email, empresa, industria, desafio } = body;
+    const { nombre, email, whatsapp, empresa, industria, desafio } = body;
 
     // 1. Email para el Administrador
     await resend.emails.send({
       from: 'TecnoArtificial <onboarding@resend.dev>',
       to: 'mvaldes86@gmail.com',
-      subject: `Nueva Solicitud de Consultoría: ${empresa}`,
+      subject: `Nueva Solicitud: ${empresa}`,
       html: `
-        <h1>Nueva Solicitud Recibida</h1>
+        <h1>Nueva Solicitud de Consultoría</h1>
         <p><strong>Nombre:</strong> ${nombre}</p>
+        <p><strong>WhatsApp:</strong> ${whatsapp}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Empresa:</strong> ${empresa}</p>
         <p><strong>Industria:</strong> ${industria}</p>
@@ -32,11 +33,13 @@ export async function POST(req: NextRequest) {
       html: `
         <h1>¡Hola ${nombre}!</h1>
         <p>Hemos recibido tu solicitud para una consultoría de IA para <strong>${empresa}</strong>.</p>
+        <p>Guardamos tu contacto: ${whatsapp}.</p>
         <p>Un experto de nuestro equipo revisará tu desafío: <em>"${desafio}"</em> y se pondrá en contacto contigo en menos de 24 horas.</p>
         <br>
         <p>Saludos,<br>El equipo de TecnoArtificial.</p>
       `
     });
+
 
     return NextResponse.json({ success: true });
   } catch (error) {
