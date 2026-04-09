@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Navbar from "@/components/Navbar";
-import { CheckCircle2, Send, PartyPopper } from 'lucide-react';
+import { CheckCircle2, Send, PartyPopper, ChevronDown } from 'lucide-react';
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
