@@ -10,7 +10,8 @@ export async function POST(req: NextRequest) {
   console.log("Iniciando solicitud de envío de email...");
   try {
     const body = await req.json();
-    const { nombre, email, whatsapp, empresa, industria, desafío } = body;
+    const { nombre, email, whatsapp, empresa, industria, desafio } = body;
+
 
     if (!process.env.RESEND_API_KEY) {
       console.warn("ADVERTENCIA: No hay RESEND_API_KEY configurada. El correo no se enviará.");
@@ -32,7 +33,8 @@ export async function POST(req: NextRequest) {
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Empresa:</strong> ${empresa}</p>
         <p><strong>Industria:</strong> ${industria}</p>
-        <p><strong>Desafío:</strong> ${desafío}</p>
+        <p><strong>Desafío:</strong> ${desafio}</p>
+
       `
     });
 
