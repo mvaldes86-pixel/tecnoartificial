@@ -10,10 +10,18 @@ export async function POST(req: NextRequest) {
   console.log("Iniciando solicitud de envío de email...");
   try {
     const body = await req.json();
-    const { nombre, email, whatsapp, empresa, industria, desafio } = body;
+    const { nombre, email, whatsapp, empresa, industria, desafío } = body;
+
+    if (!process.env.RESEND_API_KEY) {
+      console.warn("ADVERTENCIA: No hay RESEND_API_KEY configurada. El correo no se enviará.");
+      return NextResponse.json({ 
+        success: false, 
+        message: "API Key de Resend no configurada en Hostinger." 
+      }, { status: 200 }); // Retornamos 200 para no romper el flujo del cliente
+    }
 
     // 1. Email para el Administrador
-    await resend.emails.send({
+    const adminEmail = await resend.emails.send({
       from: 'TecnoArtificial <onboarding@resend.dev>',
       to: 'mvaldes86@gmail.com',
       subject: `Nueva Solicitud: ${empresa}`,
@@ -24,29 +32,20 @@ export async function POST(req: NextRequest) {
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Empresa:</strong> ${empresa}</p>
         <p><strong>Industria:</strong> ${industria}</p>
-        <p><strong>Desafío:</strong> ${desafio}</p>
+        <p><strong>Desafío:</strong> ${desafío}</p>
       `
     });
 
-    // 2. Email de confirmación para el Cliente
-    await resend.emails.send({
-      from: 'TecnoArtificial <onboarding@resend.dev>',
-      to: email,
-      subject: 'Confirmación de Solicitud - TecnoArtificial',
-      html: `
-        <h1>¡Hola ${nombre}!</h1>
-        <p>Hemos recibido tu solicitud para una consultoría de IA para <strong>${empresa}</strong>.</p>
-        <p>Guardamos tu contacto: ${whatsapp}.</p>
-        <p>Un experto de nuestro equipo revisará tu desafío: <em>"${desafio}"</em> y se pondrá en contacto contigo en menos de 24 horas.</p>
-        <br>
-        <p>Saludos,<br>El equipo de TecnoArtificial.</p>
-      `
-    });
-
+    if (adminEmail.error) {
+      throw new Error(adminEmail.error.message);
+    }
 
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error enviando emails:", error);
-    return NextResponse.json({ error: "Error enviando emails" }, { status: 500 });
+    return NextResponse.json({ 
+      error: "Error interno", 
+      details: error.message 
+    }, { status: 500 });
   }
 }
