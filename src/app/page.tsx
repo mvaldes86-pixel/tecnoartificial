@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import Services from "@/components/Services";
 import About from "@/components/About";
 import Process from "@/components/Process";
+import Portfolio from "@/components/Portfolio";
 
 export default function Home() {
   return (
@@ -10,8 +11,10 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Services />
+      <Portfolio />
       <About />
       <Process />
+
       
       <footer className="py-24 border-t border-white/5 px-6 text-center">
 
