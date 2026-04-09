@@ -4,7 +4,10 @@ import { NextRequest, NextResponse } from 'next/server';
 // Usaremos una API Key de prueba por ahora, el usuario deberá proveer la suya
 const resend = new Resend(process.env.RESEND_API_KEY || 're_dummy_key');
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest) {
+  console.log("Iniciando solicitud de envío de email...");
   try {
     const body = await req.json();
     const { nombre, email, whatsapp, empresa, industria, desafio } = body;

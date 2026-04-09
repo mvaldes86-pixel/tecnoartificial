@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
@@ -5,21 +7,23 @@ export default function Hero() {
   return (
     <section className="relative pt-40 pb-20 px-6 min-h-[90vh] flex items-center justify-center">
       {/* Background Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 blur-[120px] rounded-full animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 blur-[120px] rounded-full animate-pulse delay-1000" />
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 blur-[120px] rounded-full" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 blur-[120px] rounded-full" />
       
       <div className="relative z-10 max-w-5xl text-center">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8 animate-fade-in">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8">
           <Sparkles className="text-secondary w-4 h-4" />
           <span className="text-sm font-bold text-white/80 tracking-wide uppercase">Liderando la Revolución con IA</span>
         </div>
         
-        <h1 className="font-display text-4xl md:text-7xl font-black mb-8 leading-[1.2] px-4 tracking-tight">
+        <h1 className="font-display text-4xl md:text-7xl font-black mb-8 leading-[1.2] px-4">
           Evoluciona tu Negocio con <br />
-          <span className="inline-block bg-gradient-neural bg-clip-text text-transparent italic px-4 py-2">
-            Inteligencia Artificial&nbsp;
+          <span className="text-secondary">
+            Inteligencia Artificial
           </span>
         </h1>
+
+
 
 
 
