@@ -101,12 +101,13 @@ export default function ConsultoriaPage() {
               <p className="text-white/60 text-lg mb-8 max-w-xs mx-auto">
                 Excelente elección. Un consultor experto revisará tu caso y te contactará en las próximas 24 horas.
               </p>
-              <button 
-                onClick={() => setIsSuccess(false)}
-                className="bg-white/10 hover:bg-white/20 px-8 py-3 rounded-full transition-all"
+              <a 
+                href="/"
+                className="inline-block bg-white/10 hover:bg-white/20 px-8 py-3 rounded-full transition-all"
               >
                 Volver al inicio
-              </button>
+              </a>
+
             </div>
           ) : (
             <>
