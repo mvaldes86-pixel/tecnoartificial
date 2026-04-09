@@ -1,6 +1,8 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Services from "@/components/Services";
+import About from "@/components/About";
+import Process from "@/components/Process";
 
 export default function Home() {
   return (
@@ -8,10 +10,11 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Services />
+      <About />
+      <Process />
       
-      {/* Additional sections can be added here */}
-      
-      <footer className="py-12 border-t border-white/10 px-6 text-center text-white/40">
+      <footer className="py-24 border-t border-white/5 px-6 text-center">
+
         <p>&copy; {new Date().getFullYear()} TecnoArtificial. Liderando la optimización con IA.</p>
       </footer>
     </main>

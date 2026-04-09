@@ -13,13 +13,14 @@ export default function Navbar() {
         </div>
         
         <div className="hidden md:flex items-center gap-8">
-          <a href="#servicios" className="text-white/70 hover:text-white transition-colors">Servicios</a>
-          <a href="#nosotros" className="text-white/70 hover:text-white transition-colors">Nosotros</a>
-          <a href="#proceso" className="text-white/70 hover:text-white transition-colors">Proceso</a>
+          <a href="/#servicios" className="text-white/70 hover:text-white transition-colors">Servicios</a>
+          <a href="/#nosotros" className="text-white/70 hover:text-white transition-colors">Nosotros</a>
+          <a href="/#proceso" className="text-white/70 hover:text-white transition-colors">Proceso</a>
           <a href="/consultoria" className="bg-primary hover:bg-primary/80 px-6 py-2 rounded-xl font-bold transition-all shadow-lg shadow-primary/20">
             Consultoría Gratis
           </a>
         </div>
+
       </div>
     </nav>
   );

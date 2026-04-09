@@ -16,7 +16,7 @@ export default function Hero() {
         
         <h1 className="font-display text-6xl md:text-8xl font-black mb-8 leading-[1.1] tracking-tighter">
           Evoluciona tu Negocio con <br />
-          <span className="bg-gradient-neural bg-clip-text text-transparent italic">Inteligencia Artificial</span>
+          <span className="bg-gradient-neural bg-clip-text text-transparent italic pr-2">Inteligencia Artificial</span>
         </h1>
         
         <p className="font-sans text-xl md:text-2xl text-white/60 mb-12 max-w-3xl mx-auto leading-relaxed">
@@ -28,10 +28,11 @@ export default function Hero() {
             Solicitar Consultoría Gratuita
             <ArrowRight className="group-hover:translate-x-1 transition-transform" />
           </a>
-          <a href="#servicios" className="glass hover:bg-white/10 text-white px-10 py-5 rounded-2xl font-bold text-lg transition-all">
+          <a href="/#servicios" className="glass hover:bg-white/10 text-white px-10 py-5 rounded-2xl font-bold text-lg transition-all">
             Ver Servicios
           </a>
         </div>
+
       </div>
     </section>
   );
