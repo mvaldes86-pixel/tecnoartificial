@@ -3,7 +3,7 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 
 export default function Hero() {
   return (
-    <section className="relative pt-40 pb-20 px-6 overflow-hidden min-h-[90vh] flex items-center justify-center">
+    <section className="relative pt-40 pb-20 px-6 min-h-[90vh] flex items-center justify-center">
       {/* Background Orbs */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 blur-[120px] rounded-full animate-pulse" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 blur-[120px] rounded-full animate-pulse delay-1000" />
@@ -14,10 +14,13 @@ export default function Hero() {
           <span className="text-sm font-bold text-white/80 tracking-wide uppercase">Liderando la Revolución con IA</span>
         </div>
         
-        <h1 className="font-display text-6xl md:text-8xl font-black mb-8 leading-[1.1] tracking-tighter">
+        <h1 className="font-display text-5xl md:text-8xl font-black mb-8 leading-[1.1] tracking-tighter px-4">
           Evoluciona tu Negocio con <br />
-          <span className="bg-gradient-neural bg-clip-text text-transparent italic pr-2">Inteligencia Artificial</span>
+          <span className="inline-block bg-gradient-neural bg-clip-text text-transparent italic px-4 py-2">
+            Inteligencia Artificial
+          </span>
         </h1>
+
         
         <p className="font-sans text-xl md:text-2xl text-white/60 mb-12 max-w-3xl mx-auto leading-relaxed">
           Diseñamos agentes autónomos y automatizamos tus campañas de venta para que escales mientras nosotros optimizamos tu operación.
