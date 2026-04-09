@@ -18,7 +18,8 @@ export default function Home() {
       
       <footer className="py-24 border-t border-white/5 px-6 text-center">
 
-        <p>&copy; {new Date().getFullYear()} TecnoArtificial. Liderando la optimización con IA.</p>
+        <p>&copy; {new Date().getFullYear()} TecnoArtificial.  Liderando la optimización con IA.</p>
+
       </footer>
     </main>
   );
