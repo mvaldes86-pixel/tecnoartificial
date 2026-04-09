@@ -14,12 +14,13 @@ export default function Hero() {
           <span className="text-sm font-bold text-white/80 tracking-wide uppercase">Liderando la Revolución con IA</span>
         </div>
         
-        <h1 className="font-display text-4xl md:text-7xl font-black mb-8 leading-[1.1] tracking-tighter px-4">
+        <h1 className="font-display text-4xl md:text-7xl font-black mb-8 leading-[1.2] px-4 tracking-tight">
           Evoluciona tu Negocio con <br />
-          <span className="inline-block bg-gradient-neural bg-clip-text text-transparent italic px-4 py-2">
-            Inteligencia Artificial
+          <span className="inline-block bg-gradient-neural bg-clip-text text-transparent italic px-4 py-2" style={{ WebkitBoxDecorationBreak: 'clone' }}>
+            Inteligencia Artificial&nbsp;
           </span>
         </h1>
+
 
 
         
