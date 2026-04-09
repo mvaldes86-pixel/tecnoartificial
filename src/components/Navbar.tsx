@@ -8,10 +8,11 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center p-6">
       <div className="glass flex items-center justify-between w-full max-w-7xl px-8 py-4 rounded-2xl">
-        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer">
-          <Cpu className="text-primary w-8 h-8" />
-          <span className="font-display font-bold text-2xl tracking-tight">TecnoArtificial</span>
+        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer group">
+          <Cpu className="text-primary w-8 h-8 group-hover:scale-110 transition-transform" />
+          <span className="font-display font-bold text-2xl whitespace-nowrap">TecnoArtificial</span>
         </Link>
+
 
 
         

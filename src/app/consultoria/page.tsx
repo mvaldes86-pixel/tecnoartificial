@@ -177,7 +177,7 @@ export default function ConsultoriaPage() {
                     </button>
                     
                     {isDropdownOpen && (
-                      <div className="absolute top-full left-0 right-0 mt-2 bg-[#1A1A3A] border border-white/10 rounded-2xl overflow-hidden z-50 shadow-2xl">
+                      <div className="absolute top-full left-0 right-0 mt-2 bg-[#1A1A3F] border border-white/20 rounded-2xl overflow-hidden z-[100] shadow-2xl animate-in fade-in zoom-in-95 duration-200">
                         {industrias.map((ind) => (
                           <button
                             key={ind}
@@ -186,13 +186,14 @@ export default function ConsultoriaPage() {
                               setFormData({...formData, industria: ind});
                               setIsDropdownOpen(false);
                             }}
-                            className="w-full px-5 py-3 text-left hover:bg-primary transition-colors text-sm"
+                            className="w-full px-5 py-4 text-left hover:bg-primary transition-colors text-sm font-medium"
                           >
                             {ind}
                           </button>
                         ))}
                       </div>
                     )}
+
                   </div>
                 </div>
                 
