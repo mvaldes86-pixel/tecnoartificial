@@ -16,10 +16,11 @@ export default function Hero() {
         
         <h1 className="font-display text-4xl md:text-7xl font-black mb-8 leading-[1.2] px-4 tracking-tight">
           Evoluciona tu Negocio con <br />
-          <span className="inline-block bg-gradient-neural bg-clip-text text-transparent italic px-4 py-2" style={{ WebkitBoxDecorationBreak: 'clone' }}>
+          <span className="inline-block bg-gradient-neural bg-clip-text text-transparent italic px-4 py-2">
             Inteligencia Artificial&nbsp;
           </span>
         </h1>
+
 
 
 
