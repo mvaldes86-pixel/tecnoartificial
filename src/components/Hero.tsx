@@ -14,12 +14,13 @@ export default function Hero() {
           <span className="text-sm font-bold text-white/80 tracking-wide uppercase">Liderando la Revolución con IA</span>
         </div>
         
-        <h1 className="font-display text-5xl md:text-8xl font-black mb-8 leading-[1.1] tracking-tighter px-4">
+        <h1 className="font-display text-4xl md:text-7xl font-black mb-8 leading-[1.1] tracking-tighter px-4">
           Evoluciona tu Negocio con <br />
           <span className="inline-block bg-gradient-neural bg-clip-text text-transparent italic px-4 py-2">
             Inteligencia Artificial
           </span>
         </h1>
+
 
         
         <p className="font-sans text-xl md:text-2xl text-white/60 mb-12 max-w-3xl mx-auto leading-relaxed">
