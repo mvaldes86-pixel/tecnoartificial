@@ -22,18 +22,32 @@ export default function ConsultoriaPage() {
     setIsSubmitting(true);
     
     try {
+      // 1. Guardar en Firestore
       await addDoc(collection(db, "leads"), {
         ...formData,
         timestamp: serverTimestamp()
       });
+
+      // 2. Enviar correos electrónicos
+      try {
+        await fetch('/api/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        });
+      } catch (emailError) {
+        console.error("Los datos se guardaron pero falló el envío de emails:", emailError);
+      }
+
       setIsSuccess(true);
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
-      alert("Hubo un error al enviar tu solicitud. Por favor intenta de nuevo.");
+      alert("Hubo un error al enviar tu solicitud. Las reglas de la base de datos podrían estar bloqueando el acceso o hay un problema de conexión.");
     } finally {
       setIsSubmitting(false);
     }
   };
+
 
   return (
     <main className="min-h-screen bg-[#0A0A1F] text-white">
