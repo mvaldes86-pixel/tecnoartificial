@@ -2,26 +2,18 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET() {
-  const apiKey = process.env.RESEND_API_KEY;
-  return NextResponse.json({ 
-    status: "alive", 
-    hasKey: !!apiKey
-  });
-}
-
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { nombre, email, empresa, desafio } = body;
+    const { nombre, email, whatsapp, empresa, industria, desafio } = body;
     const apiKey = process.env.RESEND_API_KEY;
 
     if (!apiKey) {
-      return NextResponse.json({ success: false, error: "NO_API_KEY" }, { status: 500 });
+      return NextResponse.json({ success: false, error: "MISSING_KEY" }, { status: 500 });
     }
 
-    // ENVÍO AL ADMIN
-    const response = await fetch('https://api.resend.com/emails', {
+    // Email para Admin
+    const adminResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -30,18 +22,26 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({
         from: 'TecnoArtificial <contacto@tecnoartificial.com>',
         to: ['mvaldes@tecnoartificial.com', 'contacto@tecnoartificial.com'],
-        subject: `🚀 Solicitud: ${empresa}`,
-        html: `<p><strong>Nombre:</strong> ${nombre}</p><p><strong>Empresa:</strong> ${empresa}</p><p><strong>Email:</strong> ${email}</p><p><strong>Desafío:</strong> ${desafio}</p>`
+        subject: `🚀 Leads: ${empresa} (${nombre})`,
+        html: `
+          <div style="font-family: sans-serif; max-width: 600px; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+            <h2 style="color: #6366F1;">Nueva Solicitud Detectada</h2>
+            <p><strong>Nombre:</strong> ${nombre}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>WhatsApp:</strong> ${whatsapp}</p>
+            <p><strong>Empresa:</strong> ${empresa}</p>
+            <p><strong>Industria:</strong> ${industria}</p>
+            <p><strong>Desafío:</strong> ${desafio}</p>
+            <hr />
+            <p style="font-size: 10px; color: #999;">Enviado desde el portal TecnoArtificial</p>
+          </div>
+        `
       })
     });
 
-    const result = await response.json();
+    const adminResult = await adminResponse.json();
 
-    if (!response.ok) {
-      return NextResponse.json({ success: false, error: "RESEND_REJECTED", details: result }, { status: response.status });
-    }
-
-    // MANDAR COPIA AL CLIENTE
+    // Email para Cliente
     const clientResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -51,20 +51,25 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({
         from: 'TecnoArtificial <contacto@tecnoartificial.com>',
         to: email,
-        subject: 'Confirmación - TecnoArtificial',
-        html: `<p>Hola ${nombre}, recibimos tu solicitud.</p>`
+        subject: 'Recibimos tu solicitud - TecnoArtificial',
+        html: `
+          <div style="font-family: sans-serif; max-width: 600px; padding: 20px;">
+            <h2>¡Hola ${nombre}!</h2>
+            <p>Hemos recibido correctamente tu solicitud para <strong>${empresa}</strong>.</p>
+            <p>Un consultor experto se pondrá en contacto contigo en breve.</p>
+            <br />
+            <p>Saludos,<br />Equipo TecnoArtificial</p>
+          </div>
+        `
       })
     });
 
-    const clientResult = await clientResponse.json();
-
     return NextResponse.json({ 
       success: true, 
-      resendId: result.id, // ESTO ES LO QUE NECESITAMOS VER
-      clientResendId: clientResult.id
+      resendId: adminResult.id 
     });
 
   } catch (error: any) {
-    return NextResponse.json({ success: false, error: "SYSTEM_FATAL", message: error.message }, { status: 500 });
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }

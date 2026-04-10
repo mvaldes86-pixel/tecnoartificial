@@ -99,14 +99,13 @@ export default function ConsultoriaPage() {
               </div>
               <h2 className="font-display text-4xl font-bold mb-4">¡Solicitud Enviada!</h2>
               <p className="text-white/60 mb-8 max-w-sm mx-auto">
-                Un consultor experto revisará tu caso y te contactará en las próximas 24 horas.
+                Excelente. Hemos recibido tus datos y un consultor te contactará en menos de 24 horas.
               </p>
-              {Object.keys(formData).map((key) => (
-                <input key={key} type="hidden" name={key} value={""} />
-              ))}
-              <div className="text-[10px] text-white/20 mt-10">
-                Email Ref: {isSuccess === true ? "Enviando..." : (typeof isSuccess === 'string' ? isSuccess : "")}
+              
+              <div className="text-[10px] text-white/20 mt-10 uppercase tracking-widest">
+                Envío validado: {typeof isSuccess === 'string' ? isSuccess : "OK"}
               </div>
+
               <a 
                 href="/"
                 className="inline-block bg-white/10 hover:bg-white/20 px-8 py-3 rounded-full transition-all"
