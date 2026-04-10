@@ -49,10 +49,12 @@ export default function About() {
                   alt="Manuel Valdés Alegría - TecnoArtificial"
                   fill
                   className="object-cover"
+                  unoptimized
                 />
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>
