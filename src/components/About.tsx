@@ -4,15 +4,16 @@ import Image from 'next/image';
 export default function About() {
   const points = [
     {
-      text: <><strong>CEO de TecnoArtificial</strong>, experto en marketing digital y estrategia comercial para negocios que buscan crecer de forma rentable.</>
+      text: <><strong>CEO de TecnoArtificial</strong>, especialista en <strong>arquitectura de Inteligencia Artificial</strong> y automatización de procesos operativos de alta complejidad.</>
     },
     {
-      text: <>Cuenta con <strong>más de 15 años de experiencia</strong> trabajando con dueños de empresas y equipos comerciales, ayudándolos a entender qué está fallando en su marketing, tomar mejores decisiones y construir estrategias más claras antes de invertir más dinero en publicidad.</>
+      text: <>Experto en el <strong>desarrollo de APIs personalizadas</strong> e integraciones técnicas que permiten conectar cualquier sistema con modelos de IA avanzados (LLMs) y agentes autónomos.</>
     },
     {
-      text: <>Junto a su empresa, ha acompañado a múltiples negocios a <strong>ganar claridad, enfoque y dirección en su marketing</strong>, evitando errores comunes y decisiones improvisadas.</>
+      text: <>Más de 15 años de trayectoria liderando la <strong>transformación digital</strong>, ayudando a empresas a escalar sin fricción mediante la creación de herramientas de software propietarias y automatización inteligente.</>
     }
   ];
+
 
   return (
     <section id="nosotros" className="py-24 px-6 bg-[#0A0A1F]">
