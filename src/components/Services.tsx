@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Zap, TrendingUp, Bot, BrainCircuit } from 'lucide-react';
+import { Zap, TrendingUp, Bot, Code2 } from 'lucide-react';
 
 const services = [
   {
@@ -23,12 +23,13 @@ const services = [
     color: "text-green-400"
   },
   {
-    title: "Estrategia Generativa",
-    description: "Consultoría personalizada para implementar LLMs en tu núcleo de negocio y diferenciarte de la competencia.",
-    icon: BrainCircuit,
+    title: "Desarrollo de Apps IA",
+    description: "Construimos aplicaciones a medida y ecosistemas de automatización complejos, integrando IA generativa en tu software.",
+    icon: Code2,
     color: "text-orange-400"
   }
 ];
+
 
 export default function Services() {
   return (
