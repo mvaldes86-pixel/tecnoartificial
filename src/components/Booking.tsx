@@ -28,7 +28,7 @@ export default function Booking() {
                   <div className="p-2 bg-white/5 rounded-lg">
                     <Mail className="w-5 h-5 text-primary" />
                   </div>
-                  <span>tecnoartificialoficial@gmail.com</span>
+                  <span>contacto@tecnoartificial.com</span>
                 </div>
                 <div className="flex items-center gap-3 text-white/80">
                   <div className="p-2 bg-white/5 rounded-lg">
@@ -41,7 +41,7 @@ export default function Booking() {
             
             <div className="flex flex-col gap-4">
               <a 
-                href="https://calendar.google.com/calendar/u/2?cid=dGVjbm9hcnRpZmljaWFsb2ZpY2lhbEBnbWFpbC5jb20" 
+                href="https://calendar.app.google/Ag4TCcUv2KxATUAe9" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative inline-flex items-center justify-center gap-3 bg-primary hover:bg-primary/90 text-white px-8 py-6 rounded-2xl font-black text-xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-primary/20"
@@ -49,6 +49,7 @@ export default function Booking() {
                 Agendar en mi Calendario
                 <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
               </a>
+
               
               <p className="text-center text-white/40 text-sm">
                 * Se creará automáticamente un evento con enlace a Google Meet.

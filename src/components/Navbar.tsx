@@ -45,13 +45,14 @@ export default function Navbar() {
               <Link onClick={() => setIsMenuOpen(false)} href="/#proceso" className="text-xl font-medium text-white/90 py-2 border-b border-white/5">Proceso</Link>
               <a 
                 onClick={() => setIsMenuOpen(false)} 
-                href="https://calendar.google.com/calendar/u/2?cid=dGVjbm9hcnRpZmljaWFsb2ZpY2lhbEBnbWFpbC5jb20" 
+                href="https://calendar.app.google/Ag4TCcUv2KxATUAe9" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="bg-primary hover:bg-primary/90 text-white py-5 rounded-2xl font-black text-lg shadow-lg shadow-primary/20 transition-all active:scale-95"
               >
                 Reservar Consultoría
               </a>
+
             </div>
           </div>
         )}
