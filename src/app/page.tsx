@@ -4,6 +4,7 @@ import Services from "@/components/Services";
 import About from "@/components/About";
 import Process from "@/components/Process";
 import Portfolio from "@/components/Portfolio";
+import Booking from "@/components/Booking";
 
 export default function Home() {
   return (
@@ -14,13 +15,12 @@ export default function Home() {
       <Portfolio />
       <About />
       <Process />
-
+      <Booking />
       
       <footer className="py-24 border-t border-white/5 px-6 text-center">
-
-        <p>&copy; {new Date().getFullYear()} TecnoArtificial.  Liderando la optimización con IA.</p>
-
+        <p>&copy; {new Date().getFullYear()} TecnoArtificial. Liderando la optimización con IA.</p>
       </footer>
     </main>
   );
 }
+
