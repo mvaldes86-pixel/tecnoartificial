@@ -1,45 +1,54 @@
-'use client';
-
-import React from 'react';
-import { Target, Users, ShieldCheck } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
+import Image from 'next/image';
 
 export default function About() {
+  const points = [
+    {
+      text: <><strong>CEO de TecnoArtificial</strong>, experto en marketing digital y estrategia comercial para negocios que buscan crecer de forma rentable.</>
+    },
+    {
+      text: <>Cuenta con <strong>más de 15 años de experiencia</strong> trabajando con dueños de empresas y equipos comerciales, ayudándolos a entender qué está fallando en su marketing, tomar mejores decisiones y construir estrategias más claras antes de invertir más dinero en publicidad.</>
+    },
+    {
+      text: <>Junto a su empresa, ha acompañado a múltiples negocios a <strong>ganar claridad, enfoque y dirección en su marketing</strong>, evitando errores comunes y decisiones improvisadas.</>
+    }
+  ];
+
   return (
-    <section id="nosotros" className="py-24 px-6 bg-white/[0.02]">
+    <section id="nosotros" className="py-24 px-6 bg-[#0A0A1F]">
       <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <h2 className="font-display text-4xl md:text-5xl font-bold mb-8">Nuestra Misión</h2>
-            <p className="text-xl text-white/60 mb-8 leading-relaxed">
-              En TecnoArtificial, no solo implementamos tecnología; transformamos la visión de negocio de nuestros clientes. Nuestra misión es democratizar el acceso a herramientas de IA de élite para empresas en crecimiento.
-            </p>
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="order-2 lg:order-1">
+            <span className="block text-sm font-black text-white/40 uppercase tracking-[0.3em] mb-4">
+              Quién te invita a la sesión
+            </span>
+            <h2 className="font-display text-4xl md:text-6xl font-bold mb-10 leading-tight">
+              Manuel Valdés Alegría
+            </h2>
             
-            <div className="space-y-6">
-              {[
-                { icon: Target, title: "Enfoque en Resultados", desc: "No nos interesan los adornos, buscamos impacto directo en tu facturación." },
-                { icon: Users, title: "Equipo Senior", desc: "Consultores con experiencia real en despliegue de modelos LLM." },
-                { icon: ShieldCheck, title: "Seguridad de Datos", desc: "Implementaciones privadas y seguras que protegen tu propiedad intelectual." }
-              ].map((item, i) => (
-                <div key={i} className="flex gap-4">
-                  <div className="mt-1 bg-primary/10 p-2 rounded-lg">
-                    <item.icon className="text-primary w-5 h-5" />
+            <div className="space-y-8">
+              {points.map((point, i) => (
+                <div key={i} className="flex gap-4 items-start group">
+                  <div className="mt-1 flex-shrink-0">
+                    <CheckCircle2 className="text-primary w-6 h-6" />
                   </div>
-                  <div>
-                    <h4 className="font-bold text-lg">{item.title}</h4>
-                    <p className="text-white/40">{item.desc}</p>
-                  </div>
+                  <p className="text-white/70 text-lg leading-relaxed group-hover:text-white transition-colors">
+                    {point.text}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
           
-          <div className="relative">
-            <div className="aspect-square rounded-[3rem] overflow-hidden glass border-white/10 p-1">
-              <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 rounded-[2.8rem] flex items-center justify-center">
-                <div className="text-center p-12">
-                  <span className="block text-8xl font-black text-white/10 mb-4 tracking-tighter">10X</span>
-                  <p className="text-2xl font-display font-medium text-white/80 uppercase tracking-widest">Aumento en<br/>Productividad</p>
-                </div>
+          <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
+            <div className="relative p-2 rounded-[2.5rem] bg-primary shadow-[0_0_50px_rgba(99,102,241,0.2)]">
+              <div className="relative w-full aspect-[4/5] md:w-[450px] rounded-[2rem] overflow-hidden bg-white/5">
+                <Image 
+                  src="/images/nosotros.png"
+                  alt="Manuel Valdés Alegría - TecnoArtificial"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
           </div>
@@ -48,3 +57,4 @@ export default function About() {
     </section>
   );
 }
+
