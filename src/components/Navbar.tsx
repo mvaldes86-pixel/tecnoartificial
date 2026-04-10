@@ -23,9 +23,15 @@ export default function Navbar() {
           <Link href="/#servicios" className="text-white/70 hover:text-white transition-colors">Servicios</Link>
           <Link href="/#nosotros" className="text-white/70 hover:text-white transition-colors">Nosotros</Link>
           <Link href="/#proceso" className="text-white/70 hover:text-white transition-colors">Proceso</Link>
-          <Link href="/consultoria" className="bg-primary hover:bg-primary/80 px-6 py-2 rounded-xl font-bold transition-all shadow-lg shadow-primary/20">
+          <a 
+            href="https://calendar.app.google/Ag4TCcUv2KxATUAe9" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="bg-primary hover:bg-primary/80 px-6 py-2 rounded-xl font-bold transition-all shadow-lg shadow-primary/20"
+          >
             Consultoría Gratis
-          </Link>
+          </a>
+
         </div>
 
         {/* Mobile Menu Button */}

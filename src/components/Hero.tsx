@@ -34,10 +34,16 @@ export default function Hero() {
         </p>
         
         <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-          <a href="/consultoria" className="group bg-primary hover:bg-primary/80 text-white px-10 py-5 rounded-2xl font-bold text-lg flex items-center gap-3 transition-all shadow-2xl shadow-primary/40">
+          <a 
+            href="https://calendar.app.google/Ag4TCcUv2KxATUAe9" 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group bg-primary hover:bg-primary/80 text-white px-10 py-5 rounded-2xl font-bold text-lg flex items-center gap-3 transition-all shadow-2xl shadow-primary/40"
+          >
             Solicitar Consultoría Gratuita
             <ArrowRight className="group-hover:translate-x-1 transition-transform" />
           </a>
+
           <a href="/#servicios" className="glass hover:bg-white/10 text-white px-10 py-5 rounded-2xl font-bold text-lg transition-all">
             Ver Servicios
           </a>
