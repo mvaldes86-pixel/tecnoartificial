@@ -45,15 +45,15 @@ export default function About() {
             <div className="relative p-2 rounded-[2.5rem] bg-primary shadow-[0_0_50px_rgba(99,102,241,0.2)]">
               <div className="relative w-full aspect-[4/5] md:w-[450px] rounded-[2rem] overflow-hidden bg-white/5">
                 <Image 
-                  src="/images/nosotros.png"
+                  src="/images/nosotros.jpg"
                   alt="Manuel Valdés Alegría - TecnoArtificial"
                   fill
                   className="object-cover"
-                  unoptimized
                 />
               </div>
             </div>
           </div>
+
 
         </div>
       </div>
