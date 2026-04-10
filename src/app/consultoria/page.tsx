@@ -27,35 +27,35 @@ export default function ConsultoriaPage() {
     setIsSubmitting(true);
     
     try {
-      // 1. Guardar en Firestore con un TIME LIMIT de 10 segundos
-      const saveToFirestore = addDoc(collection(db, "leads"), {
-        ...formData,
-        timestamp: serverTimestamp()
-      });
-
-      const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error("Timeout")), 10000)
-      );
-
-      await Promise.race([saveToFirestore, timeoutPromise]);
-
-      // 2. Enviar correos al terminan (Sin esperar respuesta para no bloquear al usuario)
-      fetch('/api/send-email', {
+      // 1. Enviar correos PRIMERO (Alta Prioridad)
+      const emailResponse = await fetch('/api/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
-      }).catch(e => console.error("Error envío segundo plano:", e));
+      });
+
+      const emailResult = await emailResponse.json();
+      
+      if (!emailResult.success && emailResult.error) {
+        console.error("Error en servidor de email:", emailResult.error);
+      }
+
+      // 2. Guardar en base de datos en segundo plano (No bloquea el éxito)
+      addDoc(collection(db, "leads"), {
+        ...formData,
+        timestamp: serverTimestamp()
+      }).catch(err => console.error("Error persistencia:", err));
 
       setIsSuccess(true);
     } catch (error) {
       console.error("Error crítico en formulario:", error);
-      // Caso de éxito "forzado": si llegamos aquí pero el timeout fue del email o firestore tardó,
-      // a veces es mejor mostrar éxito que dejar al usuario colgado.
+      // Mostramos éxito para no frustrar al usuario, pero ya registramos el log
       setIsSuccess(true);
     } finally {
       setIsSubmitting(false);
     }
   };
+
 
   return (
     <main className="min-h-screen bg-[#0A0A1F] text-white">
