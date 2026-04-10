@@ -16,7 +16,7 @@ export default function ConsultoriaPage() {
     desafio: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess, setIsSuccess] = useState<boolean | string>(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const industrias = ["Tecnología", "E-commerce", "Inmobiliaria", "Salud", "Otros"];
@@ -36,15 +36,13 @@ export default function ConsultoriaPage() {
       const emailResult = await emailResponse.json();
       
       if (emailResult.success) {
-        // Solo si el email fue exitoso, guardamos en DB y mostramos éxito
         addDoc(collection(db, "leads"), {
           ...formData,
           timestamp: serverTimestamp()
         }).catch(err => console.error("Error persistencia:", err));
         
-        setIsSuccess(true);
+        setIsSuccess(emailResult.resendId || true);
       } else {
-        // Si el servidor devolvió un error (ej: falta API KEY), lo mostramos en consola
         console.error("Fallo el envío de email:", emailResult.error, emailResult.message);
         alert(`Error: ${emailResult.message || "No se pudo enviar el correo"}`);
       }
@@ -55,6 +53,7 @@ export default function ConsultoriaPage() {
       setIsSubmitting(false);
     }
   };
+
 
 
 
@@ -99,9 +98,15 @@ export default function ConsultoriaPage() {
                 <PartyPopper className="text-accent w-12 h-12" />
               </div>
               <h2 className="font-display text-4xl font-bold mb-4">¡Solicitud Enviada!</h2>
-              <p className="text-white/60 text-lg mb-8 max-w-xs mx-auto">
-                Excelente elección. Un consultor experto revisará tu caso y te contactará en las próximas 24 horas.
+              <p className="text-white/60 mb-8 max-w-sm mx-auto">
+                Un consultor experto revisará tu caso y te contactará en las próximas 24 horas.
               </p>
+              {Object.keys(formData).map((key) => (
+                <input key={key} type="hidden" name={key} value={""} />
+              ))}
+              <div className="text-[10px] text-white/20 mt-10">
+                Email Ref: {isSuccess === true ? "Enviando..." : (typeof isSuccess === 'string' ? isSuccess : "")}
+              </div>
               <a 
                 href="/"
                 className="inline-block bg-white/10 hover:bg-white/20 px-8 py-3 rounded-full transition-all"
