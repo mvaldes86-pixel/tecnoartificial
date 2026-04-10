@@ -27,7 +27,6 @@ export default function ConsultoriaPage() {
     setIsSubmitting(true);
     
     try {
-      // 1. Enviar correos PRIMERO (Alta Prioridad)
       const emailResponse = await fetch('/api/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -36,25 +35,27 @@ export default function ConsultoriaPage() {
 
       const emailResult = await emailResponse.json();
       
-      if (!emailResult.success && emailResult.error) {
-        console.error("Error en servidor de email:", emailResult.error);
+      if (emailResult.success) {
+        // Solo si el email fue exitoso, guardamos en DB y mostramos éxito
+        addDoc(collection(db, "leads"), {
+          ...formData,
+          timestamp: serverTimestamp()
+        }).catch(err => console.error("Error persistencia:", err));
+        
+        setIsSuccess(true);
+      } else {
+        // Si el servidor devolvió un error (ej: falta API KEY), lo mostramos en consola
+        console.error("Fallo el envío de email:", emailResult.error, emailResult.message);
+        alert(`Error: ${emailResult.message || "No se pudo enviar el correo"}`);
       }
-
-      // 2. Guardar en base de datos en segundo plano (No bloquea el éxito)
-      addDoc(collection(db, "leads"), {
-        ...formData,
-        timestamp: serverTimestamp()
-      }).catch(err => console.error("Error persistencia:", err));
-
-      setIsSuccess(true);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error crítico en formulario:", error);
-      // Mostramos éxito para no frustrar al usuario, pero ya registramos el log
-      setIsSuccess(true);
+      alert("Hubo un error al procesar tu solicitud. Por favor intenta de nuevo.");
     } finally {
       setIsSubmitting(false);
     }
   };
+
 
 
   return (
