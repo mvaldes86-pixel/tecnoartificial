@@ -37,8 +37,17 @@ export default function RootLayout({
       lang="es"
       className={`${outfit.variable} ${inter.variable} h-full antialiased`}
     >
+      <head>
+        <style dangerouslySetInnerHTML={{ __html: `
+          body { background-color: #0A0A1F !important; color: white !important; margin: 0; padding: 0; }
+          svg { max-width: 100% !important; height: auto !important; }
+          .fixed-bottom { position: fixed; bottom: 2rem; right: 2rem; z-index: 100; }
+          img { max-width: 100%; height: auto; }
+        `}} />
+      </head>
       <body className="min-h-full flex flex-col bg-[#0A0A1F] text-white selection:bg-primary/30">
         {children}
+
         
         {/* Botón WhatsApp Flotante */}
         <a 
