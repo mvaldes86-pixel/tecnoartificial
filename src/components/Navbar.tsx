@@ -27,9 +27,10 @@ export default function Navbar() {
             href="https://calendar.app.google/Ag4TCcUv2KxATUAe9" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="bg-primary hover:bg-primary/80 px-6 py-2 rounded-xl font-bold transition-all shadow-lg shadow-primary/20"
+            className="bg-primary hover:bg-primary/80 text-white px-6 py-2 rounded-xl font-bold transition-all shadow-lg shadow-primary/20"
           >
             Consultoría Gratis
+
           </a>
 
         </div>
