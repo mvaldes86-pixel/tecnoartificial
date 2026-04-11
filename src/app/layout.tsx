@@ -17,7 +17,9 @@ export const metadata: Metadata = {
   description: "Lideramos la transformación digital con agentes de inteligencia artificial. Optimizamos procesos y creamos campañas de venta automatizadas para escalar tu negocio.",
   keywords: ["IA", "Inteligencia Artificial", "Optimización de Procesos", "Ventas IA", "Automatización", "Agentes Autónomos"],
   authors: [{ name: "TecnoArtificial" }],
+  generator: "TecnoArtificial Build 2026.04.11.01",
   openGraph: {
+
     title: "TecnoArtificial | Evoluciona tu Negocio con IA",
     description: "Optimizamos tus procesos y escalamos tus ventas con tecnología de IA de última generación.",
     type: "website",
