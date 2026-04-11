@@ -18,7 +18,8 @@ export const metadata: Metadata = {
   title: "TecnoArtificial | Optimización de Procesos con IA y Automatización",
   description: "Lideramos la transformación digital con agentes de inteligencia artificial. Optimizamos procesos y creamos campañas de venta automatizadas para escalar tu negocio.",
   keywords: ["IA", "Inteligencia Artificial", "Optimización de Procesos", "Ventas IA", "Automatización", "Agentes Autónomos"],
-  generator: "TecnoArtificial Build 2026.04.11.02",
+  generator: "TecnoArtificial Build 2026.04.11.03",
+
   openGraph: {
     title: "TecnoArtificial | Evoluciona tu Negocio con IA",
     description: "Optimizamos tus procesos y escalamos tus ventas con tecnología de IA de última generación.",
@@ -76,10 +77,12 @@ export default function RootLayout({
 
         {/* Botón WhatsApp Flotante */}
         <a 
+          id="whatsapp-trigger"
           href="https://wa.me/56929510388" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="fixed bottom-8 right-8 z-[100] bg-[#25D366] p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all group"
+          className="fixed bottom-8 right-8 z-[999] bg-[#25D366] p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all group opacity-100 visible"
+          style={{ zIndex: 9999, display: 'flex' }}
           aria-label="Contactar por WhatsApp"
         >
           <svg className="w-8 h-8 text-white fill-current" viewBox="0 0 24 24">
@@ -89,6 +92,7 @@ export default function RootLayout({
             ¡Hablemos por WhatsApp!
           </span>
         </a>
+
       </body>
 
     </html>
