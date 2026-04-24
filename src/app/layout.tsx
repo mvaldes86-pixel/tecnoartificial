@@ -15,9 +15,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "TecnoArtificial | Optimización de Procesos con IA y Automatización",
-  description: "Lideramos la transformación digital con agentes de inteligencia artificial. Optimizamos procesos y creamos campañas de venta automatizadas para escalar tu negocio.",
-  keywords: ["IA", "Inteligencia Artificial", "Optimización de Procesos", "Ventas IA", "Automatización", "Agentes Autónomos"],
+  title: "TecnoArtificial | Marketing, Eficiencia y Seguridad con IA",
+  description: "Potenciamos tu negocio con marketing de alta conversión, eficiencia operacional mediante agentes autónomos y seguridad inteligente con visión artificial.",
+  keywords: ["IA", "Inteligencia Artificial", "Marketing IA", "Eficiencia Operacional", "Seguridad Inteligente", "Visión Artificial", "Automatización", "Agentes Autónomos"],
   generator: "TecnoArtificial Build 2026.04.11.03",
 
   openGraph: {
