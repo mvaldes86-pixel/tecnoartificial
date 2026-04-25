@@ -4,7 +4,7 @@ import React from 'react';
 
 const logos = [
   { src: '/logos/arigrav.png', alt: 'Arigrav', invert: true, scale: 'scale-[1.5]' },
-  { src: '/logos/ecolados.png', alt: 'Ecolados', invert: false, scale: 'scale-[7.5]' },
+  { src: '/logos/ecolados.png', alt: 'Ecolados', invert: false, scale: 'scale-100' },
   { src: '/logos/ecoqueen.webp', alt: 'EcoQueen', invert: false, scale: 'scale-[1.3]' },
   { src: '/logos/ibi.jpeg', alt: 'IBI', invert: false, scale: 'scale-[1.1]' },
 ];
@@ -26,11 +26,11 @@ export default function Clients() {
         <div className="flex animate-scroll whitespace-nowrap min-w-full">
           {displayLogos.map((logo, index) => (
             <div key={index} className="flex-shrink-0 flex items-center justify-center px-20 h-40">
-              <div className={`relative h-16 flex items-center justify-center ${logo.scale} ${logo.invert ? 'invert' : ''}`}>
+              <div className={`relative h-16 flex items-center justify-center ${logo.scale} ${logo.invert ? 'invert' : ''} ${logo.alt === 'Ecolados' ? 'overflow-hidden w-24' : ''}`}>
                 <img
                   src={logo.src}
                   alt={logo.alt}
-                  className="h-full w-auto max-w-[220px] object-contain grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all duration-300"
+                  className={`h-full w-auto max-w-[220px] object-contain grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all duration-300 ${logo.alt === 'Ecolados' ? 'scale-[8.5]' : ''}`}
                 />
               </div>
             </div>
