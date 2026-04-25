@@ -4,9 +4,9 @@ import React from 'react';
 
 const logos = [
   { src: '/logos/arigrav.png', alt: 'Arigrav', invert: true, scale: 'scale-150' },
-  { src: '/logos/ecolados.avif', alt: 'Ecolados', invert: false, scale: 'scale-[3.5]' },
+  { src: '/logos/ecolados.png', alt: 'Ecolados', invert: false, scale: 'scale-[2.2]' },
   { src: '/logos/ecoqueen.webp', alt: 'EcoQueen', invert: false, scale: 'scale-150' },
-  { src: '/logos/ibi.jpeg', alt: 'IBI', invert: false, scale: 'scale-110' },
+  { src: '/logos/ibi.jpeg', alt: 'IBI', invert: false, scale: 'scale-[2.5]' },
 ];
 
 export default function Clients() {
@@ -25,7 +25,7 @@ export default function Clients() {
         {/* Usamos dos contenedores para un scroll infinito perfecto */}
         <div className="flex animate-scroll whitespace-nowrap min-w-full">
           {displayLogos.map((logo, index) => (
-            <div key={index} className="flex-shrink-0 flex items-center justify-center px-20 h-32">
+            <div key={index} className="flex-shrink-0 flex items-center justify-center px-24 h-40">
               <div className={`relative h-20 flex items-center justify-center ${logo.scale} ${logo.invert ? 'invert' : ''}`}>
                 <img
                   src={logo.src}
