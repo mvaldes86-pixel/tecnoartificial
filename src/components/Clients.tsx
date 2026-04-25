@@ -7,6 +7,7 @@ const logos = [
   { src: '/logos/arigrav.png', alt: 'Arigrav', invert: true },
   { src: '/logos/ecolados.avif', alt: 'Ecolados', invert: false },
   { src: '/logos/ecoqueen.webp', alt: 'EcoQueen', invert: false },
+  { src: '/logos/ibi.jpeg', alt: 'IBI', invert: false },
 ];
 
 export default function Clients() {
