@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import Navbar from "@/components/Navbar";
 import { CheckCircle2, Send, PartyPopper, ChevronDown } from 'lucide-react';
 import { db } from "@/lib/firebase";
@@ -46,7 +47,7 @@ export default function ConsultoriaPage() {
         console.error("Fallo el envío de email:", emailResult.error, emailResult.message);
         alert(`Error: ${emailResult.message || "No se pudo enviar el correo"}`);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error crítico en formulario:", error);
       alert("Hubo un error al procesar tu solicitud. Por favor intenta de nuevo.");
     } finally {
@@ -106,12 +107,12 @@ export default function ConsultoriaPage() {
                 Envío validado: {typeof isSuccess === 'string' ? isSuccess : "OK"}
               </div>
 
-              <a 
+              <Link 
                 href="/"
                 className="inline-block bg-white/10 hover:bg-white/20 px-8 py-3 rounded-full transition-all"
               >
                 Volver al inicio
-              </a>
+              </Link>
 
             </div>
           ) : (

@@ -1,13 +1,12 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 
 const logos = [
-  { src: '/logos/arigrav.png', alt: 'Arigrav', invert: true },
-  { src: '/logos/ecolados.avif', alt: 'Ecolados', invert: false },
-  { src: '/logos/ecoqueen.webp', alt: 'EcoQueen', invert: false },
-  { src: '/logos/ibi.jpeg', alt: 'IBI', invert: false },
+  { src: '/logos/arigrav.png', alt: 'Arigrav', invert: true, scale: 'scale-150' },
+  { src: '/logos/ecolados.png', alt: 'Ecolados', invert: false, scale: 'scale-125' },
+  { src: '/logos/ecoqueen.webp', alt: 'EcoQueen', invert: false, scale: 'scale-150' },
+  { src: '/logos/ibi.jpeg', alt: 'IBI', invert: false, scale: 'scale-110' },
 ];
 
 export default function Clients() {
@@ -15,43 +14,29 @@ export default function Clients() {
   const displayLogos = [...logos, ...logos, ...logos, ...logos];
 
   return (
-    <section className="py-20 bg-background overflow-hidden border-y border-white/5">
-      <div className="max-w-7xl mx-auto px-6 mb-12 text-center">
+    <section className="py-32 bg-background overflow-hidden border-y border-white/5">
+      <div className="max-w-7xl mx-auto px-6 mb-20 text-center">
         <h2 className="text-white/40 text-sm font-black uppercase tracking-[0.3em]">
           Empresas que confían en nosotros
         </h2>
       </div>
       
-      <div className="relative flex overflow-hidden group">
-        <div className="flex animate-scroll whitespace-nowrap">
+      <div className="relative flex overflow-hidden">
+        {/* Usamos dos contenedores para un scroll infinito perfecto */}
+        <div className="flex animate-scroll whitespace-nowrap min-w-full">
           {displayLogos.map((logo, index) => (
-            <div key={index} className="flex items-center justify-center px-12 h-20 grayscale hover:grayscale-0 transition-all duration-500 opacity-50 hover:opacity-100">
-              <div className={`relative h-full aspect-[3/1] ${logo.invert ? 'invert' : ''}`}>
-                <Image
+            <div key={index} className="flex-shrink-0 flex items-center justify-center px-20 h-32">
+              <div className={`relative h-20 flex items-center justify-center ${logo.scale} ${logo.invert ? 'invert' : ''}`}>
+                <img
                   src={logo.src}
                   alt={logo.alt}
-                  fill
-                  className="object-contain"
+                  className="h-full w-auto object-contain grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all duration-300"
                 />
               </div>
             </div>
           ))}
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes scroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-scroll {
-          display: flex;
-          animation: scroll 30s linear infinite;
-        }
-        .animate-scroll:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
     </section>
   );
 }

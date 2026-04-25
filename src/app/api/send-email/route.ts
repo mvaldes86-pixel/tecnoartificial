@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { nombre, email, whatsapp, empresa, industria, desafio } = body;
+    const { nombre, email, whatsapp, empresa, desafio } = body;
     const apiKey = process.env.RESEND_API_KEY;
 
     if (!apiKey) {
@@ -109,7 +109,8 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, resendId: clientResult.id });
 
-  } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    return NextResponse.json({ success: false, error: message }, { status: 500 });
   }
 }

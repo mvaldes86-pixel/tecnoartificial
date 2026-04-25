@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Hero() {
   return (
@@ -44,9 +45,9 @@ export default function Hero() {
             <ArrowRight className="group-hover:translate-x-1 transition-transform" />
           </a>
 
-          <a href="/#servicios" className="glass hover:bg-white/10 text-white px-10 py-5 rounded-2xl font-bold text-lg transition-all">
+          <Link href="/#servicios" className="glass hover:bg-white/10 text-white px-10 py-5 rounded-2xl font-bold text-lg transition-all">
             Ver Servicios
-          </a>
+          </Link>
         </div>
 
       </div>

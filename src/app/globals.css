@@ -15,8 +15,21 @@
 }
 
 @layer base {
-  body {
-    @apply bg-background text-foreground antialiased;
+  html, body {
+    background-color: #0A0A1F;
+    color: #F8F9FF;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    @apply antialiased;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  a {
+    color: #6366F1;
   }
 }
 

@@ -37,11 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="es"
-      className={`${outfit.variable} ${inter.variable}`}
-      style={{ backgroundColor: '#0A0A1F', color: '#FFFFFF', margin: 0, padding: 0 }}
-    >
+    <html lang="es" className={`${outfit.variable} ${inter.variable}`}>
       <head>
         <Script id="facebook-pixel" strategy="lazyOnload">
           {`
@@ -57,20 +53,15 @@ export default function RootLayout({
             fbq('track', 'PageView');
           `}
         </Script>
-        <style dangerouslySetInnerHTML={{ __html: `
-          html, body { background-color: #0A0A1F !important; color: white !important; min-height: 100%; margin: 0; }
-          * { box-sizing: border-box; }
-          a { color: #6366F1; }
-          svg { max-width: 50px !important; height: auto !important; }
-        `}} />
       </head>
-      <body style={{ backgroundColor: '#0A0A1F', color: '#FFFFFF' }} className="antialiased">
+      <body className="antialiased">
         <noscript>
           <img 
             height="1" 
             width="1" 
             style={{ display: 'none' }}
             src="https://www.facebook.com/tr?id=1428411498841708&ev=PageView&noscript=1"
+            alt=""
           />
         </noscript>
         {children}
