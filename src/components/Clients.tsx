@@ -4,7 +4,7 @@ import React from 'react';
 
 const logos = [
   { src: '/logos/arigrav.png', alt: 'Arigrav', invert: true, scale: 'scale-150' },
-  { src: '/logos/ecolados.png', alt: 'Ecolados', invert: false, scale: 'scale-200' },
+  { src: '/logos/ecolados.avif', alt: 'Ecolados', invert: false, scale: 'scale-[3.5]' },
   { src: '/logos/ecoqueen.webp', alt: 'EcoQueen', invert: false, scale: 'scale-150' },
   { src: '/logos/ibi.jpeg', alt: 'IBI', invert: false, scale: 'scale-110' },
 ];
