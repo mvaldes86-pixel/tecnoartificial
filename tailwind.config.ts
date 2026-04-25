@@ -28,6 +28,10 @@ const config: Config = {
       animation: {
         scroll: 'scroll 40s linear infinite',
       },
+      scale: {
+        '175': '1.75',
+        '200': '2',
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
