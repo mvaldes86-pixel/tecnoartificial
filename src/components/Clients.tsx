@@ -26,7 +26,7 @@ export default function Clients() {
         <div className="flex animate-scroll whitespace-nowrap min-w-full">
           {displayLogos.map((logo, index) => (
             <div key={index} className="flex-shrink-0 flex items-center justify-center px-20 h-40">
-              <div className={`relative h-16 flex items-center justify-center ${logo.scale} ${logo.invert ? 'invert' : ''} ${logo.alt === 'Ecolados' ? 'overflow-hidden w-24' : ''}`}>
+              <div className={`relative h-16 flex items-center justify-center ${logo.scale} ${logo.invert ? 'invert' : ''} ${logo.alt === 'Ecolados' ? 'overflow-hidden w-56' : ''}`}>
                 <img
                   src={logo.src}
                   alt={logo.alt}
