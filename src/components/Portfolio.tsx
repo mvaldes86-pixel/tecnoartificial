@@ -1,26 +1,26 @@
 'use client';
 
 import React from 'react';
-import { ShoppingCart, LineChart, MessageSquare, ArrowUpRight } from 'lucide-react';
+import { ShoppingCart, Cpu, Camera, ArrowUpRight } from 'lucide-react';
 
 const agents = [
   {
-    title: "Agente de Ventas 24/7",
-    description: "Captura leads cualificados y cierra ventas mientras duermes. Integración directa con WhatsApp y CRM.",
+    title: "Cierre de Ventas Autónomo",
+    description: "Tu fuerza comercial incansable. Captura leads de alto valor, califica prospectos y concreta ventas las 24 horas del día.",
     icon: <ShoppingCart className="w-8 h-8 text-primary" />,
-    features: ["Cierres automáticos", "Cualificación de leads", "Multilingüe"]
+    features: ["Cierres en tiempo real", "Cualificación avanzada", "Multicanal (WhatsApp/Web)"]
   },
   {
-    title: "Analista Predictivo",
-    description: "Entiende el futuro de tu negocio con IA que analiza tus datos históricos para predecir tendencias.",
-    icon: <LineChart className="w-8 h-8 text-accent" />,
-    features: ["Previsión de inventario", "Análisis de churn", "Optimización de precios"]
+    title: "Orquestador de Procesos IA",
+    description: "El cerebro operativo de tu empresa. Automatiza tareas complejas y elimina la carga administrativa manual mediante APIs personalizadas.",
+    icon: <Cpu className="w-8 h-8 text-accent" />,
+    features: ["Integración de sistemas", "Flujos autónomos", "Cero fricción operativa"]
   },
   {
-    title: "Gestor de Soporte",
-    description: "Atención al cliente con empatía artificial. Resuelve el 80% de las dudas sin intervención humana.",
-    icon: <MessageSquare className="w-8 h-8 text-secondary" />,
-    features: ["Resolución instantánea", "Escalado inteligente", "Historial contextual"]
+    title: "Analista de Visión Predictiva",
+    description: "Vigilancia activa con IA. Transforma tus cámaras en un sistema de detección avanzada capaz de prevenir incidentes en tiempo real.",
+    icon: <Camera className="w-8 h-8 text-secondary" />,
+    features: ["Detección de anomalías", "Análisis KVM/NVR", "Alertas preventivas"]
   }
 ];
 
