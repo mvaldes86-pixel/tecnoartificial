@@ -23,7 +23,7 @@ const services = [
         Protección que anticipa el futuro. Integramos tecnología de análisis inteligente en tu infraestructura KVM/NVR.
         <div className="mt-4 flex items-center gap-3">
           <img src="/logos/dmac.png" alt="Dmac Security Logo" className="h-10 object-contain" />
-          <span className="text-xs font-bold text-white/40 uppercase tracking-widest">Representantes DmacUSA en Chile</span>
+          <span className="text-xs font-bold text-white/40 uppercase tracking-widest">Representantes Dmac USA en Chile</span>
         </div>
       </>
     ),
