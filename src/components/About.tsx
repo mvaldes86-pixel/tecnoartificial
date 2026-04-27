@@ -48,7 +48,7 @@ export default function About() {
                   src="/images/nosotros.jpg"
                   alt="Manuel Valdés Alegría - TecnoArtificial"
                   fill
-                  className="object-cover"
+                  className="object-cover object-top"
                 />
               </div>
             </div>
