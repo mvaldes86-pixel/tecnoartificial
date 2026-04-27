@@ -10,7 +10,7 @@ const steps = [
   },
   {
     num: "02",
-    title: "Diseño de Arquitectura",
+    title: "Creación de Agentes Autónomos",
     desc: "Personalizamos los agentes y flujos de trabajo específicos para tu industria y objetivos."
   },
   {

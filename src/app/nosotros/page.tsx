@@ -1,20 +1,14 @@
 import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import Services from "@/components/Services";
-import Process from "@/components/Process";
-import Clients from "@/components/Clients";
-import Portfolio from "@/components/Portfolio";
+import About from "@/components/About";
 import Booking from "@/components/Booking";
 
-export default function Home() {
+export default function NosotrosPage() {
   return (
     <main className="relative flex flex-col w-full">
       <Navbar />
-      <Hero />
-      <Services />
-      <Portfolio />
-      <Process />
-      <Clients />
+      <div className="pt-24">
+        <About />
+      </div>
       <Booking />
       
       <footer className="py-24 border-t border-white/5 px-6 text-center">

@@ -17,10 +17,11 @@ export default function Hero() {
           <span className="text-sm font-bold text-white/80 tracking-wide uppercase">Liderando la Revolución con IA</span>
         </div>
         
-        <h1 className="font-display text-4xl md:text-7xl font-black mb-8 leading-[1.2] px-4">
-          Evoluciona tu Negocio con <br />
+        <h1 className="font-display text-4xl md:text-6xl font-black mb-8 leading-[1.2] px-4">
+          A través de agentes autónomos, automatizamos tus <br />
           <span className="text-secondary">
-            Inteligencia Artificial
+            Campañas de Marketing, Procesos Operacionales <br />
+            y Gestión de Cámaras Inteligentes
           </span>
         </h1>
 

@@ -17,8 +17,16 @@ const services = [
     color: "text-blue-400"
   },
   {
-    title: "Seguridad Inteligente",
-    description: "Protección que anticipa el futuro. Integramos tecnología de análisis inteligente directamente en tu infraestructura KVM/NVR, dotando a tus cámaras de detección avanzada y alertas preventivas.",
+    title: "Cámaras Inteligentes, Predicción IA",
+    description: (
+      <>
+        Protección que anticipa el futuro. Integramos tecnología de análisis inteligente en tu infraestructura KVM/NVR.
+        <div className="mt-4 flex items-center gap-3">
+          <img src="/logos/dmac.png" alt="Dmac Security Logo" className="h-10 object-contain" />
+          <span className="text-xs font-bold text-white/40 uppercase tracking-widest">Representantes DmacUSA en Chile</span>
+        </div>
+      </>
+    ),
     icon: Camera,
     color: "text-emerald-400"
   }
@@ -42,7 +50,7 @@ export default function Services() {
               <service.icon className="w-8 h-8" />
             </div>
             <h3 className="font-display text-2xl font-bold mt-4">{service.title}</h3>
-            <p className="text-white/50 leading-relaxed">{service.description}</p>
+            <div className="text-white/50 leading-relaxed">{service.description}</div>
           </div>
         ))}
       </div>

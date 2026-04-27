@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ShoppingCart, Cpu, Camera, ArrowUpRight } from 'lucide-react';
+import { ShoppingCart, Workflow, Video, ArrowUpRight } from 'lucide-react';
 
 const agents = [
   {
@@ -13,13 +13,13 @@ const agents = [
   {
     title: "Orquestador de Procesos IA",
     description: "El cerebro operativo de tu empresa. Automatiza tareas complejas y elimina la carga administrativa manual mediante APIs personalizadas.",
-    icon: <Cpu className="w-8 h-8 text-accent" />,
+    icon: <Workflow className="w-8 h-8 text-accent" />,
     features: ["Integración de sistemas", "Flujos autónomos", "Cero fricción operativa"]
   },
   {
     title: "Analista de Visión Predictiva",
     description: "Vigilancia activa con IA. Transforma tus cámaras en un sistema de detección avanzada capaz de prevenir incidentes en tiempo real.",
-    icon: <Camera className="w-8 h-8 text-secondary" />,
+    icon: <Video className="w-8 h-8 text-secondary" />,
     features: ["Detección de anomalías", "Análisis KVM/NVR", "Alertas preventivas"]
   }
 ];

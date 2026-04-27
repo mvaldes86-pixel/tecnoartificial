@@ -23,7 +23,7 @@ export default function About() {
             <span className="block text-sm font-black text-white/40 uppercase tracking-[0.3em] mb-4">
               Quién te invita a la sesión
             </span>
-            <h2 className="font-display text-4xl md:text-6xl font-bold mb-10 leading-tight">
+            <h2 className="font-display text-3xl md:text-5xl font-bold mb-8 leading-tight">
               Manuel Valdés Alegría
             </h2>
             
@@ -33,7 +33,7 @@ export default function About() {
                   <div className="mt-1 flex-shrink-0">
                     <CheckCircle2 className="text-primary w-6 h-6" />
                   </div>
-                  <p className="text-white/70 text-lg leading-relaxed group-hover:text-white transition-colors">
+                  <p className="text-white/70 text-base leading-relaxed group-hover:text-white transition-colors">
                     {point.text}
                   </p>
                 </div>
@@ -43,7 +43,7 @@ export default function About() {
           
           <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
             <div className="relative p-2 rounded-[2.5rem] bg-primary shadow-[0_0_50px_rgba(99,102,241,0.2)]">
-              <div className="relative w-full aspect-[4/5] md:w-[450px] rounded-[2rem] overflow-hidden bg-white/5">
+              <div className="relative w-full aspect-[4/5] md:w-[320px] rounded-[2rem] overflow-hidden bg-white/5">
                 <Image 
                   src="/images/nosotros.jpg"
                   alt="Manuel Valdés Alegría - TecnoArtificial"
