@@ -7,6 +7,7 @@ const logos = [
   { src: '/logos/ecolados.png', alt: 'Ecolados', invert: false, scale: 'scale-100' },
   { src: '/logos/ecoqueen.webp', alt: 'EcoQueen', invert: false, scale: 'scale-[1.3]' },
   { src: '/logos/ibi.jpeg', alt: 'IBI', invert: false, scale: 'scale-[1.1]' },
+  { src: '/logos/dmac.png', alt: 'DMAC Security', invert: false, scale: 'scale-100' },
 ];
 
 export default function Clients() {

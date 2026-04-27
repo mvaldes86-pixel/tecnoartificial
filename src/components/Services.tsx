@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Megaphone, Cpu, Camera } from 'lucide-react';
+import { Megaphone, Workflow, Video } from 'lucide-react';
 
 const services = [
   {
@@ -13,7 +13,7 @@ const services = [
   {
     title: "Eficiencia Operacional 360°",
     description: "Transformamos la productividad de tu empresa. Implementamos agentes autónomos y APIs personalizadas que orquestan tus procesos internos, eliminando fricciones y escalando tu capacidad operativa.",
-    icon: Cpu,
+    icon: Workflow,
     color: "text-blue-400"
   },
   {
@@ -27,7 +27,7 @@ const services = [
         </div>
       </>
     ),
-    icon: Camera,
+    icon: Video,
     color: "text-emerald-400"
   }
 ];
