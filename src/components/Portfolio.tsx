@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ShoppingCart, Workflow, Video, ArrowUpRight } from 'lucide-react';
+import { ShoppingCart, Workflow, ArrowUpRight } from 'lucide-react';
 
 const agents = [
   {
@@ -15,12 +15,6 @@ const agents = [
     description: "El cerebro operativo de tu empresa. Automatiza tareas complejas y elimina la carga administrativa manual mediante APIs personalizadas.",
     icon: <Workflow className="w-8 h-8 text-accent" />,
     features: ["Integración de sistemas", "Flujos autónomos", "Cero fricción operativa"]
-  },
-  {
-    title: "Analista de Visión Predictiva",
-    description: "Vigilancia activa con IA. Transforma tus cámaras en un sistema de detección avanzada capaz de prevenir incidentes en tiempo real.",
-    icon: <Video className="w-8 h-8 text-secondary" />,
-    features: ["Detección de anomalías", "Análisis KVM/NVR", "Alertas preventivas"]
   }
 ];
 
@@ -35,7 +29,7 @@ export default function Portfolio() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {agents.map((agent, i) => (
             <div key={i} className="glass p-10 rounded-[2.5rem] group hover:bg-white/5 transition-all duration-500 relative overflow-hidden border border-white/5 hover:border-primary/30">
               <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/5 blur-[50px] group-hover:bg-primary/10 transition-colors" />

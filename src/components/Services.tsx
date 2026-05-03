@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Megaphone, Workflow, Video } from 'lucide-react';
+import { Megaphone, Workflow } from 'lucide-react';
 
 const services = [
   {
@@ -15,20 +15,6 @@ const services = [
     description: "Transformamos la productividad de tu empresa. Implementamos agentes autónomos y APIs personalizadas que orquestan tus procesos internos, eliminando fricciones y escalando tu capacidad operativa.",
     icon: Workflow,
     color: "text-blue-400"
-  },
-  {
-    title: "Cámaras Inteligentes, Predicción IA",
-    description: (
-      <>
-        Protección que anticipa el futuro. Integramos tecnología de análisis inteligente en tu infraestructura KVM/NVR.
-        <div className="mt-4 flex items-center gap-3">
-          <img src="/logos/dmac.png" alt="Dmac Security Logo" className="h-10 object-contain" />
-          <span className="text-xs font-bold text-white/40 uppercase tracking-widest">Representantes Dmac USA en Chile</span>
-        </div>
-      </>
-    ),
-    icon: Video,
-    color: "text-emerald-400"
   }
 ];
 
@@ -43,7 +29,7 @@ export default function Services() {
         </p>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
         {services.map((service, index) => (
           <div key={index} className="glass-card group flex flex-col items-start gap-4">
             <div className={`p-4 rounded-xl bg-white/5 ${service.color} group-hover:scale-110 transition-transform`}>
