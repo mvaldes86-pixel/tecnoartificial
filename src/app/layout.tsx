@@ -69,7 +69,7 @@ export default function RootLayout({
         {/* Botón WhatsApp Flotante */}
         <a 
           id="whatsapp-trigger"
-          href="https://wa.me/56929510388" 
+          href="https://wa.me/56933472864" 
           target="_blank" 
           rel="noopener noreferrer"
           className="fixed bottom-8 right-8 z-[999] bg-[#25D366] p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all group opacity-100 visible"

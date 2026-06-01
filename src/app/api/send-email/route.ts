@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: "MISSING_KEY" }, { status: 500 });
     }
 
-    const tecnoWhatsapp = "+56929510388";
+    const tecnoWhatsapp = "+56933472864";
 
     // 1. EMAIL PARA ADMIN
     const adminHtml = `
