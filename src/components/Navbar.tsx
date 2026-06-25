@@ -23,6 +23,7 @@ export default function Navbar() {
           <Link href="/#servicios" className="text-white/70 hover:text-white transition-colors">Servicios</Link>
           <Link href="/nosotros" className="text-white/70 hover:text-white transition-colors">Nosotros</Link>
           <Link href="/#proceso" className="text-white/70 hover:text-white transition-colors">Proceso</Link>
+          <Link href="/#casos-exito" className="text-white/70 hover:text-white transition-colors">Casos de Éxito</Link>
           <a 
             href="https://calendar.app.google/Ag4TCcUv2KxATUAe9" 
             target="_blank" 
@@ -50,6 +51,7 @@ export default function Navbar() {
               <Link onClick={() => setIsMenuOpen(false)} href="/#servicios" className="text-xl font-medium text-white/90 py-2 border-b border-white/5">Servicios</Link>
               <Link onClick={() => setIsMenuOpen(false)} href="/nosotros" className="text-xl font-medium text-white/90 py-2 border-b border-white/5">Nosotros</Link>
               <Link onClick={() => setIsMenuOpen(false)} href="/#proceso" className="text-xl font-medium text-white/90 py-2 border-b border-white/5">Proceso</Link>
+              <Link onClick={() => setIsMenuOpen(false)} href="/#casos-exito" className="text-xl font-medium text-white/90 py-2 border-b border-white/5">Casos de Éxito</Link>
               <a 
                 onClick={() => setIsMenuOpen(false)} 
                 href="https://calendar.app.google/Ag4TCcUv2KxATUAe9" 

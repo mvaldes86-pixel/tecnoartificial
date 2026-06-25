@@ -5,6 +5,7 @@ import Services from "@/components/Services";
 import Process from "@/components/Process";
 import Clients from "@/components/Clients";
 import Portfolio from "@/components/Portfolio";
+import CaseStudy from "@/components/CaseStudy";
 import Booking from "@/components/Booking";
 
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
       <Portfolio />
       <Process />
       <Clients />
+      <CaseStudy />
       <Booking />
       
       <footer className="py-24 border-t border-white/5 px-6 text-center flex flex-col items-center gap-6">
