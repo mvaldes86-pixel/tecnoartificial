@@ -12,9 +12,10 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.104.2",
     "firebase": "^12.11.0",
     "lucide-react": "^0.468.0",
-    "next": "15.1.4",
+    "next": "^15.1.11",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "resend": "^6.10.0"
