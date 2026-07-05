@@ -6,6 +6,7 @@ import Process from "@/components/Process";
 import Clients from "@/components/Clients";
 import Portfolio from "@/components/Portfolio";
 import CaseStudy from "@/components/CaseStudy";
+import Vigenta from "@/components/Vigenta";
 import Booking from "@/components/Booking";
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
       <Process />
       <Clients />
       <CaseStudy />
+      <Vigenta />
       <Booking />
       
       <footer className="py-24 border-t border-white/5 px-6 text-center flex flex-col items-center gap-6">
