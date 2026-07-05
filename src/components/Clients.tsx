@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 
 const logos = [
@@ -8,32 +6,26 @@ const logos = [
 ];
 
 export default function Clients() {
-  // Duplicate logos for seamless scroll
-  const displayLogos = [...logos, ...logos, ...logos, ...logos];
-
   return (
     <section className="py-32 bg-background overflow-hidden border-y border-white/5">
-      <div className="max-w-7xl mx-auto px-6 mb-20 text-center">
+      <div className="max-w-7xl mx-auto px-6 mb-16 text-center">
         <h2 className="text-white/40 text-sm font-black uppercase tracking-[0.3em]">
           Empresas que confían en nosotros
         </h2>
       </div>
-      
-      <div className="relative flex overflow-hidden">
-        {/* Usamos dos contenedores para un scroll infinito perfecto */}
-        <div className="flex animate-scroll whitespace-nowrap min-w-full">
-          {displayLogos.map((logo, index) => (
-            <div key={index} className="flex-shrink-0 flex items-center justify-center px-20 h-40">
-              <div className={`relative h-16 flex items-center justify-center ${logo.scale} ${logo.invert ? 'invert' : ''} ${logo.alt === 'Ecolados' ? 'overflow-hidden w-56' : ''}`}>
-                <img
-                  src={logo.src}
-                  alt={logo.alt}
-                  className={`h-full w-auto max-w-[220px] object-contain grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all duration-300 ${logo.alt === 'Ecolados' ? 'scale-[8.5]' : ''}`}
-                />
-              </div>
+
+      <div className="flex flex-wrap items-center justify-center gap-16 md:gap-28 px-6">
+        {logos.map((logo, index) => (
+          <div key={index} className="flex items-center justify-center h-24">
+            <div className={`relative h-16 flex items-center justify-center ${logo.scale} ${logo.invert ? 'invert' : ''}`}>
+              <img
+                src={logo.src}
+                alt={logo.alt}
+                className="h-full w-auto max-w-[220px] object-contain grayscale opacity-70"
+              />
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </section>
   );

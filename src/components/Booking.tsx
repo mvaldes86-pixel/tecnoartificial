@@ -4,9 +4,6 @@ import { Calendar, Mail, ArrowRight, Video } from 'lucide-react';
 export default function Booking() {
   return (
     <section id="consultoria" className="py-24 px-6 relative overflow-hidden">
-      {/* Background Glow */}
-      <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/20 blur-[120px] rounded-full pointer-events-none" />
-      
       <div className="max-w-5xl mx-auto">
         <div className="glass-card !p-12 border-primary/20 relative">
           <div className="grid md:grid-cols-2 gap-12 items-center">

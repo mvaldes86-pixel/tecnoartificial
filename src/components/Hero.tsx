@@ -1,16 +1,10 @@
-'use client';
-
 import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Hero() {
   return (
-    <section className="relative pt-40 pb-20 px-6 min-h-[90vh] flex items-center justify-center">
-      {/* Background Orbs */}
-      <div className="hidden md:block absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 blur-[120px] rounded-full" />
-      <div className="hidden md:block absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 blur-[120px] rounded-full" />
-      
+    <section className="relative pt-40 pb-24 px-6 flex items-center justify-center">
       <div className="relative z-10 max-w-5xl text-center">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8">
           <Sparkles className="text-secondary w-4 h-4" />

@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { ShoppingCart, Workflow, ArrowUpRight } from 'lucide-react';
 
@@ -31,9 +29,7 @@ export default function Portfolio() {
 
         <div className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {agents.map((agent, i) => (
-            <div key={i} className="glass p-10 rounded-[2.5rem] group hover:bg-white/5 transition-all duration-500 relative overflow-hidden border border-white/5 hover:border-primary/30">
-              <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/5 blur-[50px] group-hover:bg-primary/10 transition-colors" />
-              
+            <div key={i} className="glass p-10 rounded-[2.5rem] group hover:border-primary/30 transition-colors duration-300 relative overflow-hidden">
               <div className="mb-8 p-4 bg-white/5 rounded-2xl w-fit">
                 {agent.icon}
               </div>
