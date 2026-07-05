@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Outfit, Inter } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 
 
@@ -38,9 +37,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${outfit.variable} ${inter.variable}`}>
-      <head>
-        <Script id="facebook-pixel" strategy="lazyOnload">
-          {`
+      <body className="antialiased">
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
             !function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
             n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -51,10 +51,9 @@ export default function RootLayout({
             'https://connect.facebook.net/en_US/fbevents.js');
             fbq('init', '1428411498841708');
             fbq('track', 'PageView');
-          `}
-        </Script>
-      </head>
-      <body className="antialiased">
+          `,
+          }}
+        />
         <noscript>
           <img 
             height="1" 
