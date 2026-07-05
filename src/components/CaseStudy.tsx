@@ -52,7 +52,7 @@ export default function CaseStudy() {
 
         <div className="glass-card !p-10 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex items-center gap-6">
-            <img src="/logos/ibi.jpeg" alt="IBI" className="h-14 w-auto object-contain rounded-lg flex-shrink-0" />
+            <img src="/logos/ibi.jpeg" alt="IBI" className="h-20 w-auto object-contain rounded-lg flex-shrink-0" />
             <p className="text-white/70 max-w-md text-sm md:text-base">
               Datos reales medidos entre el 24 de abril y el 25 de junio de 2026, sobre WhatsApp Business + IA, sin intervención humana hasta que el lead está listo para visitar.
             </p>

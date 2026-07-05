@@ -2,7 +2,7 @@ import React from 'react';
 
 const logos = [
   { src: '/logos/arigrav.png', alt: 'Arigrav', invert: true, scale: 'scale-[1.5]' },
-  { src: '/logos/ibi.jpeg', alt: 'IBI', invert: false, scale: 'scale-[1.1]' },
+  { src: '/logos/ibi.jpeg', alt: 'IBI', invert: false, scale: 'scale-[1.45]' },
 ];
 
 export default function Clients() {
