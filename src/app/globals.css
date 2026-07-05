@@ -18,6 +18,7 @@
 
 @layer base {
   html, body {
+    overflow-x: hidden;
     background-color: #0A0A1F;
     /* Ambientación de color con degradados radiales: costo de pintado mínimo,
        sin capas de composición (a diferencia de filter:blur en divs grandes). */

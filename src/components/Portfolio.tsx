@@ -18,7 +18,7 @@ const agents = [
 
 export default function Portfolio() {
   return (
-    <section id="agentes" className="py-32 px-6 relative overflow-hidden">
+    <section id="agentes" className="py-16 md:py-32 px-6 relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-20">
           <h2 className="text-4xl md:text-6xl font-display font-black mb-6">Fuerza de Trabajo <span className="text-primary italic">Digital</span></h2>

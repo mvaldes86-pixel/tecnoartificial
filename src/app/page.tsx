@@ -22,7 +22,7 @@ export default function Home() {
       <Vigenta />
       <Booking />
       
-      <footer className="py-24 border-t border-white/5 px-6 text-center flex flex-col items-center gap-6">
+      <footer className="py-14 md:py-24 border-t border-white/5 px-6 text-center flex flex-col items-center gap-6">
         <div className="flex gap-6 items-center">
           <a href="https://www.instagram.com/tecnoartificial.spa" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-primary transition-colors">
             <Instagram className="w-6 h-6" />

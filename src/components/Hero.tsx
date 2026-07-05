@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function Hero() {
   return (
-    <section className="relative pt-40 pb-24 px-6 flex items-center justify-center">
+    <section className="relative pt-28 pb-14 px-6 md:pt-40 md:pb-24 flex items-center justify-center">
       <div className="relative z-10 max-w-5xl text-center">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8">
           <Sparkles className="text-secondary w-4 h-4" />

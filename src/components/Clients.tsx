@@ -7,7 +7,7 @@ const logos = [
 
 export default function Clients() {
   return (
-    <section className="py-32 bg-background overflow-hidden border-y border-white/5">
+    <section className="py-16 md:py-32 bg-background overflow-hidden border-y border-white/5">
       <div className="max-w-7xl mx-auto px-6 mb-16 text-center">
         <h2 className="text-white/40 text-sm font-black uppercase tracking-[0.3em]">
           Empresas que confían en nosotros

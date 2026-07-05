@@ -41,14 +41,12 @@ export default function About() {
           </div>
           
           <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
-            <div className="relative p-2 rounded-[2.5rem] bg-primary shadow-[0_0_50px_rgba(99,102,241,0.2)]">
-              <div className="relative w-full aspect-[4/5] md:w-[320px] rounded-[2rem] overflow-hidden bg-white/5">
-                <img
-                  src="/images/nosotros.jpg"
-                  alt="Manuel Valdés Alegría - TecnoArtificial"
-                  className="absolute inset-0 w-full h-full object-cover object-top"
-                />
-              </div>
+            <div className="relative p-2 rounded-[2.5rem] bg-primary shadow-[0_0_50px_rgba(99,102,241,0.2)] w-[280px] md:w-[340px]">
+              <img
+                src="/images/nosotros.jpg"
+                alt="Manuel Valdés Alegría - TecnoArtificial"
+                className="block w-full h-auto rounded-[2rem] object-cover"
+              />
             </div>
           </div>
 

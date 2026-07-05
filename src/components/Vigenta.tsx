@@ -26,7 +26,7 @@ const highlights = [
 
 export default function Vigenta() {
   return (
-    <section id="vigenta" className="py-32 px-6 relative overflow-hidden">
+    <section id="vigenta" className="py-16 md:py-32 px-6 relative overflow-hidden">
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-bold mb-6 uppercase tracking-wide">
