@@ -90,9 +90,8 @@ export default function ConsultoriaPage() {
         </div>
 
         {/* Lead Form Section */}
-        <div className="glass shadow-2xl rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden min-h-[600px] flex flex-col justify-center animate-in fade-in slide-in-from-right duration-700">
-          <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 blur-[100px] rounded-full" />
-          
+        <div className="glass shadow-2xl rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden flex flex-col justify-center animate-in fade-in slide-in-from-right duration-700">
+
           {isSuccess ? (
             <div className="relative z-10 text-center py-10">
               <div className="w-24 h-24 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-8 animate-bounce">
