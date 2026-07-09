@@ -13,11 +13,32 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+// Token de verificación de Google Search Console. Se rellena con el valor que
+// entrega Search Console (método "etiqueta HTML"). Si está vacío, no se emite.
+const GOOGLE_SITE_VERIFICATION = "";
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://tecnoartificial.com"),
   title: "TecnoArtificial | Marketing, Eficiencia y Seguridad con IA",
   description: "Potenciamos tu negocio con marketing de alta conversión, eficiencia operacional mediante agentes autónomos y seguridad inteligente con visión artificial.",
   keywords: ["IA", "Inteligencia Artificial", "Marketing IA", "Eficiencia Operacional", "Seguridad Inteligente", "Visión Artificial", "Automatización", "Agentes Autónomos"],
   generator: "TecnoArtificial Build 2026.04.11.03",
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  ...(GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: GOOGLE_SITE_VERIFICATION } }
+    : {}),
 
   openGraph: {
     title: "TecnoArtificial | Evoluciona tu Negocio con IA",
@@ -29,6 +50,25 @@ export const metadata: Metadata = {
   },
 };
 
+// Datos estructurados (schema.org) — ayuda a Google a entender la empresa y
+// alimenta el panel de conocimiento / ficha de negocio.
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "TecnoArtificial",
+  url: "https://tecnoartificial.com",
+  description:
+    "Marketing de alta conversión, eficiencia operacional con agentes autónomos y seguridad inteligente con visión artificial.",
+  areaServed: "CL",
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+56920293667",
+    contactType: "customer service",
+    availableLanguage: ["Spanish"],
+  },
+  sameAs: ["https://wa.me/56920293667"],
+};
+
 
 export default function RootLayout({
   children,
@@ -38,6 +78,10 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${outfit.variable} ${inter.variable}`}>
       <body className="antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
