@@ -1,11 +1,23 @@
 import type { MetadataRoute } from "next";
+import { getAllPosts } from "@/lib/blog";
 
 const BASE_URL = "https://tecnoartificial.com";
 
-// Lista de páginas indexables del sitio. Mantener sincronizada con las rutas
-// reales (mismas que htmlPages en next.config.ts).
-export default function sitemap(): MetadataRoute.Sitemap {
+// Se regenera junto con el blog para incluir los artículos nuevos.
+export const revalidate = 600;
+
+// Lista de páginas indexables del sitio. Las estáticas se mantienen sincronizadas
+// con htmlPages en next.config.ts; los artículos del blog se agregan dinámicamente.
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date();
+
+  const posts = await getAllPosts();
+  const blogEntries: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `${BASE_URL}/blog/${post.slug}`,
+    lastModified: new Date(post.publishedAt),
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
 
   return [
     {
@@ -19,6 +31,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: "monthly",
       priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/blog`,
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 0.7,
     },
     {
       url: `${BASE_URL}/nosotros`,
@@ -38,5 +56,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.3,
     },
+    ...blogEntries,
   ];
 }
