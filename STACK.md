@@ -31,10 +31,16 @@ en **Supabase** (`arigrav-osorno`, sistema de guías de despacho). Eso NO es tec
 | Analítica | **Meta Pixel** | ID `1428411498841708` en `layout.tsx`. **NO hay Google Analytics / GA4.** | `layout.tsx` |
 | SEO | **Google Search Console** | Propiedad de **Dominio** verificada (cuenta tecnoartificialspa@) · sitemap enviado · TXT `google-site-verification=wNcOqTZ4...` | Search Console + TXT |
 
-### NO se usa (para evitar suposiciones)
-- ❌ **Supabase** — el único proyecto Supabase del usuario es `arigrav-osorno` (otro negocio).
+### NO se usa en producción (para evitar suposiciones)
+- ❌ **Supabase** — el sitio en producción NO se conecta a Supabase: **cero variables `SUPABASE_*` en Vercel** y **cero código** de Supabase en el repo (verificado). ⚠️ **Límite de visibilidad:** la integración Supabase de Claude está conectada a la org **"mvaldes86-pixel's Org"** (cuenta personal), que solo tiene el proyecto `arigrav-osorno` (otro negocio: guías de despacho). Si existe un proyecto Supabase bajo **tecnoartificialspa@gmail.com**, Claude NO lo ve desde esa conexión — pero da igual: aunque exista, el sitio no lo usa (usa Firebase).
 - ❌ Vercel Postgres / Vercel Blob / Neon / cualquier otra BD.
 - ❌ Google Analytics.
+
+### Mapa de cuentas (hay mezcla personal/negocio)
+- GitHub repo `mvaldes86-pixel/tecnoartificial` → cuenta **personal**.
+- Supabase que Claude ve (`mvaldes86-pixel's Org`) → cuenta **personal** (solo arigrav-osorno).
+- Vercel (hosting/deploy), Search Console, Google Business → cuenta **negocio** `tecnoartificialspa@gmail.com`.
+- Firebase `tecnoartificial-leads-1234` → dueño no confirmado (config pública en el código).
 
 ---
 
