@@ -31,6 +31,7 @@ export default function Home() {
             <Facebook className="w-6 h-6" />
           </a>
         </div>
+        <p className="text-white/40 text-sm">Antonio Bellet 193, Of. 1210, Providencia, Santiago, Chile</p>
         <p className="text-white/60">&copy; 2026 TecnoArtificial. Liderando la optimización con IA.</p>
       </footer>
     </main>

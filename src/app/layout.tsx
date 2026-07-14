@@ -60,6 +60,13 @@ const organizationJsonLd = {
   description:
     "Marketing de alta conversión, eficiencia operacional con agentes autónomos y seguridad inteligente con visión artificial.",
   areaServed: "CL",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Antonio Bellet 193, Of. 1210",
+    addressLocality: "Providencia",
+    addressRegion: "Región Metropolitana",
+    addressCountry: "CL",
+  },
   contactPoint: {
     "@type": "ContactPoint",
     telephone: "+56920293667",

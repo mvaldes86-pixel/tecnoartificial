@@ -32,7 +32,7 @@ export default function PrivacidadPage() {
             <h2 className="font-display text-xl font-bold text-white mb-4">1. Identificación del Responsable</h2>
             <p>
               <strong className="text-white">TecnoArtificial SpA</strong> (en adelante &ldquo;TecnoArtificial&rdquo;, &ldquo;nosotros&rdquo; o &ldquo;la empresa&rdquo;),
-              con domicilio en Chile, es responsable del tratamiento de los datos personales que usted nos proporcione a través
+              con domicilio en Antonio Bellet 193, Of. 1210, Providencia, Santiago, Chile, es responsable del tratamiento de los datos personales que usted nos proporcione a través
               de nuestro sitio web <strong className="text-white">tecnoartificial.com</strong> y de nuestras plataformas digitales,
               incluyendo nuestras páginas de Facebook e Instagram.
             </p>
@@ -150,7 +150,7 @@ export default function PrivacidadPage() {
         </div>
 
         <div className="mt-16 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-white/30 text-sm">
-          <p>© 2026 TecnoArtificial SpA. Todos los derechos reservados.</p>
+          <p>© 2026 TecnoArtificial SpA. Todos los derechos reservados. · Antonio Bellet 193, Of. 1210, Providencia, Santiago, Chile</p>
           <div className="flex gap-6">
             <Link href="/terminos" className="hover:text-white/60 transition-colors">Términos de Servicio</Link>
             <Link href="/" className="hover:text-white/60 transition-colors">Volver al inicio</Link>

@@ -105,7 +105,7 @@ export default async function BlogPage() {
 
       <footer className="border-t border-white/5 px-6 py-8">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-white/30 text-sm">
-          <p>© 2026 TecnoArtificial SpA.</p>
+          <p>© 2026 TecnoArtificial SpA. · Antonio Bellet 193, Of. 1210, Providencia, Santiago, Chile</p>
           <Link href="/" className="hover:text-white/60 transition-colors">
             Volver al inicio
           </Link>

@@ -158,7 +158,7 @@ export default function TerminosPage() {
         </div>
 
         <div className="mt-16 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-white/30 text-sm">
-          <p>© 2026 TecnoArtificial SpA. Todos los derechos reservados.</p>
+          <p>© 2026 TecnoArtificial SpA. Todos los derechos reservados. · Antonio Bellet 193, Of. 1210, Providencia, Santiago, Chile</p>
           <div className="flex gap-6">
             <Link href="/privacidad" className="hover:text-white/60 transition-colors">Política de Privacidad</Link>
             <Link href="/" className="hover:text-white/60 transition-colors">Volver al inicio</Link>
