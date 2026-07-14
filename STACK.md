@@ -16,6 +16,21 @@ en **Supabase** (`arigrav-osorno`, sistema de guías de despacho). Eso NO es tec
 
 ---
 
+## Datos oficiales de la empresa
+
+- **Razón social:** TecnoArtificial SpA
+- **Dirección:** **Antonio Bellet 193, Of. 1210, Providencia, Santiago, Chile**
+- **Correo:** contacto@tecnoartificial.com · **WhatsApp:** +56 9 2029 3667
+
+> La dirección debe estar en **todo el sitio**. Actualmente vive en: footers (home,
+> nosotros, blog, privacidad, términos), el domicilio legal de la Política de
+> Privacidad, y el JSON-LD `Organization` → `PostalAddress` en `src/app/layout.tsx`
+> (`streetAddress: "Antonio Bellet 193, Of. 1210"`, `addressLocality: "Providencia"`,
+> `addressRegion: "Región Metropolitana"`, `addressCountry: "CL"`). Si cambia la
+> dirección, actualizar esos 6 archivos + este documento.
+
+---
+
 ## Arquitectura de producción (verificada)
 
 | Capa | Servicio | Detalle | Cómo se verificó |
