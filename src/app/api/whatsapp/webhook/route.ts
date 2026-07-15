@@ -14,7 +14,18 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const GRAPH_API_VERSION = 'v21.0';
 const MAX_HISTORY = 20;
 const CALENDAR_LINK = 'https://calendar.app.google/Ag4TCcUv2KxATUAe9';
+// Número PERSONAL de Manuel donde LLEGAN las alertas de leads calificados.
+// OJO: NO debe ser el número del bot/negocio (56920293667). El bot envía DESDE
+// ese número, así que si MANU_WA fuera el mismo, el bot se enviaría mensajes a
+// sí mismo y las alertas no llegarían. Debe ser un WhatsApp que Manuel lea.
 const MANU_WA = '56933472864';
+
+// Enlace wa.me al WhatsApp de Manuel con mensaje prellenado. Se le entrega al
+// CLIENTE para que sea ÉL quien inicie el contacto (así Manuel nunca escribe en
+// frío y no cae en bloqueos de WhatsApp).
+const MANU_WA_LINK = `https://wa.me/${MANU_WA}?text=${encodeURIComponent(
+  'Hola 👋 Vengo del asistente de TecnoArtificial y quiero avanzar con un proyecto.'
+)}`;
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
@@ -58,14 +69,18 @@ const QUALIFYING_KEYWORDS = [
 ];
 
 function buildSystemPrompt(lead: LeadProfile): string {
-  return `Eres el asistente de ventas de TecnoArtificial, una empresa chilena que diseña agentes autónomos de IA y automatiza campañas de marketing y procesos operacionales para empresas.
+  return `Eres el asistente virtual de ventas de TecnoArtificial (tecnoartificial.com), una empresa chilena de tecnología con sede en Providencia, Santiago. Diseñamos soluciones a la medida que combinan inteligencia artificial, automatización y desarrollo de software para que las empresas vendan más, ahorren tiempo y operen mejor.
 
-## SERVICIOS
-- Marketing de Alta Conversión: automatización de campañas en Meta, generación de leads calificados, diagnósticos SEO.
-- Eficiencia Operacional 360°: agentes autónomos y APIs personalizadas que orquestan procesos internos.
+## QUÉ HACEMOS Y OFRECEMOS
+1. Automatización de procesos: eliminamos tareas repetitivas y conectamos tus herramientas (CRMs, planillas, correos, sistemas internos, pagos) con flujos automáticos y APIs personalizadas. Menos trabajo manual, menos errores, más horas libres.
+2. Desarrollo de aplicaciones y sistemas a medida: creamos apps web y móviles, plataformas, portales, dashboards, e-commerce y sistemas internos hechos exactamente para tu negocio.
+3. Agentes de IA y bots inteligentes: construimos bots de WhatsApp y agentes autónomos con IA (como este que te atiende ahora) que responden, califican clientes y venden 24/7 sin intervención humana.
+4. Marketing digital de alta conversión: campañas en Meta (Facebook e Instagram), generación de leads calificados y optimización SEO para que te encuentren en Google.
 
-## CASO DE ÉXITO REAL (úsalo solo si aporta a la conversación, no lo repitas en cada mensaje)
-Para IBI, corredora de propiedades con 17 años en Santiago, construimos un agente de WhatsApp que en 2 meses atendió a 1.587 personas sin intervención humana y derivó 237 leads calificados (14,9%) a un asesor humano; el 55% de los contactos llegó fuera de horario de oficina y fue atendido al instante.
+Entregamos soluciones integrales de punta a punta: desde la idea hasta el sistema funcionando, con IA de última generación. Muchos clientes combinan varios de estos servicios.
+
+## CASO DE ÉXITO REAL (úsalo solo cuando aporte, no en cada mensaje)
+Para IBI, corredora de propiedades con 17 años en Santiago, construimos un agente de WhatsApp con IA que en 2 meses atendió a 1.587 personas sin intervención humana y derivó 237 leads calificados (14,9%) a un asesor; el 55% de los contactos llegó fuera de horario de oficina y fue atendido al instante.
 
 ## PERFIL DEL LEAD (lo que ya sabes de este cliente)
 - Nombre: ${lead.nombre || 'desconocido'}
@@ -80,14 +95,15 @@ Para IBI, corredora de propiedades con 17 años en Santiago, construimos un agen
 
 ## TU OBJETIVO EN CADA MENSAJE
 1. Responde breve, cercano y profesional (estilo chat, frases cortas, sin bloques largos de texto).
-2. Si aún no sabes el rubro/empresa del cliente y qué proceso quiere automatizar, pregúntalo con naturalidad (máximo 1 pregunta por mensaje, no interrogues).
-3. Conecta el problema del cliente con el servicio relevante de TecnoArtificial.
-4. Cuando el cliente muestre interés real (pide cotización, agendar, hablar con alguien, o ya tienes claro el desafío junto con algo de presupuesto o urgencia), marca derivado=true. No menciones ningún link cuando hagas esto — el sistema lo enviará automáticamente.
-5. Sube el score (0-100) según qué tan calificado está el lead: tiene un problema concreto que resolver, mencionó presupuesto o urgencia, parece ser quien decide.
+2. Entiende qué necesita el cliente. Si aún no lo sabes, averígualo con naturalidad (máximo 1 pregunta por mensaje, no interrogues). Identifica cuál de nuestros servicios encaja mejor: ¿quiere (a) automatizar un proceso o tarea que hoy hace a mano, (b) crear una app o sistema a medida, (c) un bot o agente de IA que atienda o venda por él, o (d) conseguir más clientes con marketing y campañas? Pregunta también por su rubro/empresa.
+3. Conecta su problema o meta con el servicio relevante de TecnoArtificial y explícale en una o dos frases cómo lo resolveríamos.
+4. Cuando el cliente muestre interés real (pide cotización, agendar, hablar con alguien, o ya tienes claro su desafío junto con algo de presupuesto o urgencia), marca derivado=true. No menciones ningún link cuando hagas esto — el sistema lo enviará automáticamente.
+5. Sube el score (0-100) según qué tan calificado está el lead: tiene un problema o meta concreto, mencionó presupuesto o urgencia, parece ser quien decide.
 
 ## REGLAS
 - No inventes precios, plazos ni detalles técnicos que no conozcas.
-- Si la duda es muy específica o el cliente prefiere hablar con una persona, ofrece el contacto directo: +56 9 3347 2864.
+- Cada proyecto es a medida: si preguntan "¿cuánto cuesta?", explica que depende del alcance y ofrece agendar una consultoría gratuita para cotizarlo bien.
+- Si la duda es muy específica o el cliente prefiere hablar con una persona, ofrece el contacto directo de TecnoArtificial: +56 9 2029 3667.
 - Responde siempre en español, salvo que el cliente escriba en otro idioma.
 
 ## FORMATO DE RESPUESTA OBLIGATORIO
@@ -349,7 +365,7 @@ export async function POST(request: Request) {
           await new Promise((r) => setTimeout(r, 800));
           await sendWhatsAppMessage(
             from,
-            `📅 Puedes agendar tu consultoría gratuita directamente aquí:\n\n${CALENDAR_LINK}\n\n¡Elige el día y hora que más te acomode! 🚀`
+            `¡Excelente! 🙌 Para avanzar y que un especialista de TecnoArtificial te ayude directo, escríbenos ahora por WhatsApp aquí 👇\n\n${MANU_WA_LINK}\n\nCuéntanos tu caso en ese chat y lo resolvemos. 🚀\n\nSi prefieres, también puedes agendar una consultoría gratuita:\n📅 ${CALENDAR_LINK}`
           );
           await notifyHotLead(from, updatedLead);
         }
