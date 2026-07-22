@@ -1,15 +1,29 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    // Formulario público de contacto (web): el navegador solo puede CREAR.
+    // No puede leer, editar ni borrar leads existentes.
     match /leads/{lead} {
       allow create: if true;
       allow read, update, delete: if false;
     }
-    match /whatsapp_conversations/{phone} {
-      allow read, write: if true;
-    }
+
+    // El bot de WhatsApp y el CRM leen/escriben estas colecciones SOLO desde el
+    // servidor con Admin SDK (getAdminDb), que se salta estas reglas. Por eso el
+    // acceso desde cliente queda totalmente denegado: contienen PII (nombre,
+    // teléfono, empresa, presupuesto) y las conversaciones completas.
     match /whatsapp_leads/{phone} {
-      allow read, write: if true;
+      allow read, write: if false;
+    }
+    match /whatsapp_conversations/{phone} {
+      allow read, write: if false;
+    }
+
+    // Todo lo demás (blog_posts, etc.) se sirve exclusivamente vía Admin SDK.
+    // Regla por defecto: denegar cualquier acceso de cliente no contemplado arriba.
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }
