@@ -38,6 +38,13 @@ export async function generateMetadata({
       siteName: "TecnoArtificial",
       locale: "es_CL",
       publishedTime: post.publishedAt,
+      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: post.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: ["/og-image.png"],
     },
   };
 }

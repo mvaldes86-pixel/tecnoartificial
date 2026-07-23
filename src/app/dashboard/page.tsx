@@ -9,6 +9,10 @@ import {
   Lock,
   MessageSquare,
   ArrowRight,
+  DollarSign,
+  Eye,
+  MousePointerClick,
+  BarChart3,
 } from "lucide-react";
 import {
   getLeads,
@@ -16,6 +20,7 @@ import {
   formatPhone,
   type CrmLead,
 } from "@/lib/crm";
+import { getAdsMetrics } from "@/lib/ads";
 
 export const dynamic = "force-dynamic";
 
@@ -120,8 +125,9 @@ export default async function DashboardPage({
   }
 
   const keyQuery = key ? `?key=${encodeURIComponent(key)}` : "";
-  const leads = await getLeads();
+  const [leads, ads] = await Promise.all([getLeads(), getAdsMetrics()]);
   const stats = computeStats(leads);
+  const intFmt = (n: number) => n.toLocaleString("es-CL");
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -137,6 +143,62 @@ export default async function DashboardPage({
           </p>
         </header>
 
+        {/* Métricas de anuncios en vivo (Meta Ads) */}
+        <section className="mb-8">
+          <div className="flex items-center gap-2 text-emerald-300 text-sm font-semibold mb-3">
+            <BarChart3 className="w-4 h-4" /> Anuncios · Meta Ads (en vivo)
+          </div>
+          {ads.ok ? (
+            <>
+              <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+                <StatCard icon={<DollarSign className="w-5 h-5 text-emerald-300" />} label="Gastado" value={`$${ads.spend.toFixed(2)}`} accent="bg-emerald-500/20" />
+                <StatCard icon={<Eye className="w-5 h-5 text-sky-300" />} label="Personas alcanzadas" value={intFmt(ads.reach)} accent="bg-sky-500/20" />
+                <StatCard icon={<BarChart3 className="w-5 h-5 text-indigo-300" />} label="Impresiones" value={intFmt(ads.impressions)} accent="bg-primary/20" />
+                <StatCard icon={<MousePointerClick className="w-5 h-5 text-orange-300" />} label="Clics" value={intFmt(ads.clicks)} accent="bg-orange-500/20" />
+                <StatCard icon={<MessageSquare className="w-5 h-5 text-emerald-300" />} label="Conversaciones WhatsApp" value={intFmt(ads.messages)} accent="bg-emerald-500/20" />
+              </div>
+              {ads.campaigns.length > 0 && (
+                <div className="mt-4 bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="text-left text-slate-400 border-b border-white/10">
+                          <th className="px-5 py-3 font-medium">Campaña</th>
+                          <th className="px-5 py-3 font-medium">Estado</th>
+                          <th className="px-5 py-3 font-medium">Gastado</th>
+                          <th className="px-5 py-3 font-medium">Alcance</th>
+                          <th className="px-5 py-3 font-medium">Clics</th>
+                          <th className="px-5 py-3 font-medium">Conversaciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {ads.campaigns.map((c) => (
+                          <tr key={c.name} className="border-b border-white/5">
+                            <td className="px-5 py-3 text-slate-200">{c.name}</td>
+                            <td className="px-5 py-3 text-slate-300 whitespace-nowrap">{c.status}</td>
+                            <td className="px-5 py-3 text-slate-300 whitespace-nowrap">${c.spend.toFixed(2)}</td>
+                            <td className="px-5 py-3 text-slate-300 whitespace-nowrap">{intFmt(c.reach)}</td>
+                            <td className="px-5 py-3 text-slate-300 whitespace-nowrap">{intFmt(c.clicks)}</td>
+                            <td className="px-5 py-3 text-slate-300 whitespace-nowrap">{intFmt(c.messages)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="bg-amber-500/10 border border-amber-500/30 text-amber-300 rounded-2xl px-5 py-4 text-sm">
+              No se pudieron cargar las métricas de Meta Ads: {ads.error}
+              <span className="text-amber-400/70"> — probablemente el token de Ads expiró; hay que generar uno nuevo.</span>
+            </div>
+          )}
+        </section>
+
+        <div className="flex items-center gap-2 text-indigo-300 text-sm font-semibold mb-3">
+          <MessageSquare className="w-4 h-4" /> Bot de WhatsApp · leads
+        </div>
         <section className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
           <StatCard icon={<Users className="w-5 h-5 text-indigo-300" />} label="Leads totales" value={stats.total} accent="bg-primary/20" />
           <StatCard icon={<Flame className="w-5 h-5 text-orange-300" />} label="Derivados" value={stats.derivados} accent="bg-orange-500/20" />

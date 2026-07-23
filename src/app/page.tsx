@@ -7,6 +7,7 @@ import Clients from "@/components/Clients";
 import Portfolio from "@/components/Portfolio";
 import CaseStudy from "@/components/CaseStudy";
 import Vigenta from "@/components/Vigenta";
+import LaunchBanner from "@/components/LaunchBanner";
 import Booking from "@/components/Booking";
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
     <main className="relative flex flex-col w-full">
       <Navbar />
       <Hero />
+      <LaunchBanner />
       <Services />
       <Portfolio />
       <Process />

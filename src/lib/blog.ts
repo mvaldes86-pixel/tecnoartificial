@@ -46,12 +46,15 @@ export async function getAllPosts(): Promise<BlogPost[]> {
   const db = getAdminDb();
   if (!db) return [];
   try {
+    // Solo filtro por estado en Firestore (índice de campo único, sin índice
+    // compuesto) y ordeno por fecha en memoria — el blog tiene pocos posts.
     const snap = await db
       .collection(BLOG_COLLECTION)
       .where("status", "==", "published")
-      .orderBy("publishedAt", "desc")
       .get();
-    return snap.docs.map((d) => toPost(d.data() as BlogPostDoc));
+    return snap.docs
+      .map((d) => toPost(d.data() as BlogPostDoc))
+      .sort((a, b) => (Date.parse(b.publishedAt) || 0) - (Date.parse(a.publishedAt) || 0));
   } catch (error) {
     console.error("[blog] getAllPosts falló:", error);
     return [];

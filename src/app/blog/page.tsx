@@ -31,8 +31,14 @@ function formatDate(iso: string): string {
   });
 }
 
+// Post destacado: se muestra grande arriba del listado. Prioriza el lanzamiento
+// de Vigenta; si no existe, destaca el más reciente.
+const FEATURED_SLUG = "lanzamiento-vigenta-cl-papeles-auto-nfc";
+
 export default async function BlogPage() {
   const posts = await getAllPosts();
+  const featured = posts.find((p) => p.slug === FEATURED_SLUG) ?? posts[0];
+  const rest = posts.filter((p) => p.slug !== featured?.slug);
 
   return (
     <main className="min-h-screen bg-[#0A0A1F] text-white">
@@ -74,32 +80,62 @@ export default async function BlogPage() {
             <p className="text-lg">Pronto publicaremos nuestros primeros artículos. 🚀</p>
           </div>
         ) : (
-          <div className="grid gap-6 sm:grid-cols-2">
-            {posts.map((post) => (
+          <>
+            {featured && (
               <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="group flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-7 hover:border-primary/40 hover:bg-white/[0.04] transition-all"
+                href={`/blog/${featured.slug}`}
+                className="group flex flex-col rounded-3xl border border-primary/30 bg-primary/[0.06] p-8 md:p-10 mb-8 hover:border-primary/60 hover:bg-primary/[0.09] transition-all"
               >
-                <div className="flex items-center gap-3 text-xs mb-4">
-                  <span className="px-3 py-1 rounded-full bg-primary/10 text-primary font-semibold">
-                    {post.category}
+                <div className="flex flex-wrap items-center gap-3 text-xs mb-4">
+                  <span className="px-3 py-1 rounded-full bg-primary text-white font-bold uppercase tracking-wide">
+                    ★ Destacado
                   </span>
-                  <span className="text-white/30">{formatDate(post.publishedAt)}</span>
+                  <span className="px-3 py-1 rounded-full bg-primary/10 text-primary font-semibold">
+                    {featured.category}
+                  </span>
+                  <span className="text-white/30">{formatDate(featured.publishedAt)}</span>
                 </div>
-                <h2 className="font-display text-xl font-bold mb-3 group-hover:text-primary transition-colors">
-                  {post.title}
+                <h2 className="font-display text-2xl md:text-4xl font-black mb-4 group-hover:text-primary transition-colors">
+                  {featured.title}
                 </h2>
-                <p className="text-white/60 text-sm leading-relaxed flex-1">
-                  {post.excerpt}
+                <p className="text-white/70 leading-relaxed max-w-3xl">
+                  {featured.excerpt}
                 </p>
-                <span className="inline-flex items-center gap-2 text-primary text-sm font-bold mt-5">
+                <span className="inline-flex items-center gap-2 text-primary text-sm font-bold mt-6">
                   Leer artículo
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </span>
               </Link>
-            ))}
-          </div>
+            )}
+            {rest.length > 0 && (
+              <div className="grid gap-6 sm:grid-cols-2">
+                {rest.map((post) => (
+                  <Link
+                    key={post.slug}
+                    href={`/blog/${post.slug}`}
+                    className="group flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-7 hover:border-primary/40 hover:bg-white/[0.04] transition-all"
+                  >
+                    <div className="flex items-center gap-3 text-xs mb-4">
+                      <span className="px-3 py-1 rounded-full bg-primary/10 text-primary font-semibold">
+                        {post.category}
+                      </span>
+                      <span className="text-white/30">{formatDate(post.publishedAt)}</span>
+                    </div>
+                    <h2 className="font-display text-xl font-bold mb-3 group-hover:text-primary transition-colors">
+                      {post.title}
+                    </h2>
+                    <p className="text-white/60 text-sm leading-relaxed flex-1">
+                      {post.excerpt}
+                    </p>
+                    <span className="inline-flex items-center gap-2 text-primary text-sm font-bold mt-5">
+                      Leer artículo
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </>
         )}
       </section>
 
