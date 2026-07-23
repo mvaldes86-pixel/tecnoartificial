@@ -1,5 +1,6 @@
 import React from 'react';
-import { Megaphone, Workflow } from 'lucide-react';
+import Link from 'next/link';
+import { Megaphone, Workflow, ShieldCheck, ArrowRight } from 'lucide-react';
 
 const services = [
   {
@@ -38,6 +39,28 @@ export default function Services() {
           </div>
         ))}
       </div>
+
+      {/* Nueva línea: Ciberseguridad Escudo */}
+      <Link
+        href="/servicios/ciberseguridad"
+        className="group mt-8 max-w-4xl mx-auto flex flex-col md:flex-row md:items-center gap-6 rounded-3xl border border-emerald-500/25 bg-gradient-to-br from-emerald-950/40 to-white/[0.03] p-8 hover:border-emerald-400/50 transition-all"
+      >
+        <div className="p-4 rounded-xl bg-emerald-500/10 text-emerald-400 group-hover:scale-110 transition-transform shrink-0 w-fit">
+          <ShieldCheck className="w-8 h-8" />
+        </div>
+        <div className="flex-1">
+          <div className="flex items-center gap-3 mb-1">
+            <h3 className="font-display text-2xl font-bold">Ciberseguridad · Escudo</h3>
+            <span className="text-[10px] font-black tracking-wider uppercase bg-emerald-500 text-[#04140f] px-2 py-0.5 rounded-full">Nuevo</span>
+          </div>
+          <div className="text-white/50 leading-relaxed">
+            Auditamos, blindamos y certificamos tu presencia digital. Diagnóstico gratis para saber qué tan expuesto estás.
+          </div>
+        </div>
+        <span className="inline-flex items-center gap-2 text-emerald-300 font-bold whitespace-nowrap group-hover:gap-3 transition-all">
+          Ver más <ArrowRight className="w-5 h-5" />
+        </span>
+      </Link>
     </section>
   );
 }
