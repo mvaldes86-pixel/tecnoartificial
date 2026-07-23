@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#4F46E5">
+<title>Cotización — Clínicas Odontológicas Everest · TecnoArtificial</title>
+<style>html,body{margin:0}@page{size:A4;margin:14mm}</style>
+</head>
+<body>
+<style>
+  :root {
+    --ground: #FCFCFE;
+    --panel: #FFFFFF;
+    --panel-2: #F5F6FB;
+    --ink: #131625;
+    --ink-soft: #4A4F63;
+    --ink-faint: #767C90;
+    --line: #E7E9F2;
+    --line-strong: #D6D9E8;
+    --indigo: #4F46E5;
+    --indigo-soft: #EEF0FF;
+    --indigo-ink: #3A34B0;
+    --mint: #0D9488;
+    --mint-soft: #E4F5F2;
+    --mint-ink: #0A6E66;
+    --amber: #B7791F;
+    --amber-soft: #FBF3E2;
+    --shadow: 0 1px 2px rgba(19,22,37,.04), 0 8px 30px rgba(19,22,37,.06);
+    --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+    --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --maxw: 60rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #0B0E1A;
+      --panel: #131728;
+      --panel-2: #171C31;
+      --ink: #EDEFF7;
+      --ink-soft: #B7BCD0;
+      --ink-faint: #838AA6;
+      --line: #262C44;
+      --line-strong: #333A57;
+      --indigo: #8B85FF;
+      --indigo-soft: #1C1F3E;
+      --indigo-ink: #C3BFFF;
+      --mint: #3BD1C0;
+      --mint-soft: #10322F;
+      --mint-ink: #7FE6DA;
+      --amber: #E7B85C;
+      --amber-soft: #2C2413;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 34px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #FCFCFE; --panel: #FFFFFF; --panel-2: #F5F6FB;
+    --ink: #131625; --ink-soft: #4A4F63; --ink-faint: #767C90;
+    --line: #E7E9F2; --line-strong: #D6D9E8;
+    --indigo: #4F46E5; --indigo-soft: #EEF0FF; --indigo-ink: #3A34B0;
+    --mint: #0D9488; --mint-soft: #E4F5F2; --mint-ink: #0A6E66;
+    --amber: #B7791F; --amber-soft: #FBF3E2;
+    --shadow: 0 1px 2px rgba(19,22,37,.04), 0 8px 30px rgba(19,22,37,.06);
+  }
+  :root[data-theme="dark"] {
+    --ground: #0B0E1A; --panel: #131728; --panel-2: #171C31;
+    --ink: #EDEFF7; --ink-soft: #B7BCD0; --ink-faint: #838AA6;
+    --line: #262C44; --line-strong: #333A57;
+    --indigo: #8B85FF; --indigo-soft: #1C1F3E; --indigo-ink: #C3BFFF;
+    --mint: #3BD1C0; --mint-soft: #10322F; --mint-ink: #7FE6DA;
+    --amber: #E7B85C; --amber-soft: #2C2413;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 34px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 1.5rem; }
+
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.15; text-wrap: balance; letter-spacing: -0.01em; }
+  p { margin: 0 0 1rem; }
+  a { color: var(--indigo); text-decoration: none; }
+
+  .eyebrow {
+    font-size: .74rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--indigo); margin: 0 0 .6rem;
+  }
+  .eyebrow.mint { color: var(--mint-ink); }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 4.5rem 0 2.5rem; border-bottom: 1px solid var(--line); }
+  .brandrow { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+  .brand { display: flex; align-items: center; gap: .7rem; font-weight: 700; letter-spacing: -.01em; font-size: 1.05rem; }
+  .brand .dot { width: 1.9rem; height: 1.9rem; border-radius: 8px; background: linear-gradient(135deg, var(--indigo), var(--mint)); display: grid; place-items: center; color: #fff; font-family: var(--font-display); font-size: 1.1rem; }
+  .brandmeta { font-size: .82rem; color: var(--ink-faint); text-align: right; line-height: 1.5; }
+
+  .hero h1 { font-size: clamp(2.1rem, 5.5vw, 3.4rem); margin: 0 0 1rem; }
+  .hero .lead { font-size: 1.18rem; color: var(--ink-soft); max-width: 40ch; }
+  .forwhom {
+    display: inline-flex; flex-direction: column; gap: .15rem; margin-top: 2rem;
+    padding: .9rem 1.2rem; border-left: 3px solid var(--mint); background: var(--mint-soft); border-radius: 0 10px 10px 0;
+  }
+  .forwhom .lbl { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mint-ink); font-weight: 700; }
+  .forwhom .who { font-family: var(--font-display); font-size: 1.25rem; color: var(--ink); }
+  .forwhom .sub { font-size: .86rem; color: var(--ink-faint); }
+
+  /* ---------- Section scaffold ---------- */
+  section { padding: 3.2rem 0; border-bottom: 1px solid var(--line); }
+  .section-head { margin-bottom: 1.8rem; }
+  .section-head h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); margin: 0; }
+  .section-head p { color: var(--ink-soft); margin-top: .6rem; max-width: 58ch; }
+
+  /* ---------- Understanding cards ---------- */
+  .grid { display: grid; gap: 1rem; }
+  .cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .cols-3 { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 680px) { .cols-2, .cols-3 { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 1.3rem 1.4rem;
+    box-shadow: var(--shadow);
+  }
+  .card h3 { font-size: 1.08rem; margin: 0 0 .35rem; }
+  .card p { font-size: .95rem; color: var(--ink-soft); margin: 0; }
+  .card .tag { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); }
+
+  .painlist { list-style: none; padding: 0; margin: 0; display: grid; gap: .7rem; }
+  .painlist li { display: flex; gap: .7rem; align-items: flex-start; font-size: .97rem; color: var(--ink-soft); }
+  .painlist .mk { flex: none; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--amber-soft); color: var(--amber); display: grid; place-items: center; font-size: .9rem; font-weight: 700; margin-top: .1rem; }
+
+  /* ---------- Pillars ---------- */
+  .pillar { position: relative; overflow: hidden; }
+  .pillar .n { font-family: var(--font-display); font-size: .95rem; color: var(--indigo); font-weight: 700; }
+  .pillar h3 { margin-top: .2rem; }
+  .pillar ul { margin: .7rem 0 0; padding-left: 1.1rem; color: var(--ink-soft); font-size: .93rem; }
+  .pillar ul li { margin-bottom: .3rem; }
+  .pillar::after { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: linear-gradient(90deg, var(--indigo), var(--mint)); opacity: .9; }
+
+  /* ---------- Flow (sequence) ---------- */
+  .flow { list-style: none; padding: 0; margin: 0; position: relative; }
+  .flow::before { content: ""; position: absolute; left: 1.15rem; top: .8rem; bottom: .8rem; width: 2px; background: linear-gradient(var(--indigo), var(--mint)); opacity: .35; }
+  .flow li { position: relative; padding: 0 0 1.5rem 3.4rem; }
+  .flow li:last-child { padding-bottom: 0; }
+  .flow .step {
+    position: absolute; left: 0; top: 0; width: 2.35rem; height: 2.35rem; border-radius: 50%;
+    background: var(--panel); border: 2px solid var(--indigo); color: var(--indigo);
+    display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 1.05rem;
+    box-shadow: var(--shadow); font-variant-numeric: tabular-nums;
+  }
+  .flow li:nth-child(n+4) .step { border-color: var(--mint); color: var(--mint-ink); }
+  .flow h3 { font-size: 1.06rem; margin: .15rem 0 .25rem; }
+  .flow p { font-size: .95rem; color: var(--ink-soft); margin: 0; }
+
+  /* ---------- Proof ---------- */
+  .proof { background: var(--panel-2); border: 1px solid var(--line); border-radius: 16px; padding: 2rem 1.8rem; }
+  .proof .quote { font-family: var(--font-display); font-size: 1.25rem; line-height: 1.45; color: var(--ink); margin: 0 0 1.4rem; text-wrap: balance; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  @media (max-width: 560px) { .stats { grid-template-columns: 1fr; gap: .9rem; } }
+  .stat .num { font-family: var(--font-display); font-size: 2rem; font-weight: 600; color: var(--indigo); font-variant-numeric: tabular-nums; line-height: 1; }
+  .stat .lbl { font-size: .85rem; color: var(--ink-soft); margin-top: .35rem; }
+
+  /* ---------- Pricing ---------- */
+  .price-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 1.1rem; align-items: stretch; }
+  @media (max-width: 760px) { .price-grid { grid-template-columns: 1fr; } }
+  .price {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 1.6rem 1.6rem; box-shadow: var(--shadow);
+    display: flex; flex-direction: column;
+  }
+  .price.feature { border: 1.5px solid var(--indigo); background: linear-gradient(180deg, var(--indigo-soft), var(--panel) 55%); position: relative; }
+  .price .kicker { font-size: .74rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); }
+  .price.feature .kicker { color: var(--indigo); }
+  .price h3 { font-size: 1.25rem; margin: .3rem 0 .1rem; }
+  .amount { font-family: var(--font-display); font-weight: 600; font-size: 2.4rem; letter-spacing: -.02em; margin: .5rem 0 .1rem; font-variant-numeric: tabular-nums; }
+  .amount small { font-family: var(--font-sans); font-size: .95rem; font-weight: 500; color: var(--ink-faint); }
+  .price ul { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: .55rem; }
+  .price ul li { display: flex; gap: .6rem; align-items: flex-start; font-size: .93rem; color: var(--ink-soft); }
+  .price ul li .ck { flex: none; color: var(--mint); font-weight: 800; margin-top: .05rem; }
+  .price .foot { margin-top: auto; padding-top: 1rem; font-size: .84rem; color: var(--ink-faint); }
+
+  .launch {
+    margin-top: 1.1rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; justify-content: space-between;
+    background: var(--amber-soft); border: 1px dashed var(--amber); border-radius: 14px; padding: 1rem 1.3rem;
+  }
+  .launch .txt { font-size: .95rem; color: var(--ink); }
+  .launch .txt b { color: var(--amber); }
+  .launch .old { text-decoration: line-through; color: var(--ink-faint); }
+
+  .note { font-size: .88rem; color: var(--ink-faint); margin-top: 1.1rem; }
+
+  /* ---------- Tables ---------- */
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: .93rem; min-width: 34rem; }
+  th, td { text-align: left; padding: .85rem 1.1rem; border-bottom: 1px solid var(--line); }
+  thead th { font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); font-weight: 700; background: var(--panel-2); }
+  tbody tr:last-child td { border-bottom: none; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .totalrow td { font-weight: 700; color: var(--ink); background: var(--panel-2); }
+  .win { color: var(--mint-ink); font-weight: 700; }
+
+  .roi-band { display: grid; grid-template-columns: 1.3fr 1fr; gap: 1.4rem; align-items: center; }
+  @media (max-width: 720px) { .roi-band { grid-template-columns: 1fr; } }
+  .roi-callout { background: var(--indigo); color: #fff; border-radius: 16px; padding: 1.6rem 1.7rem; }
+  .roi-callout .big { font-family: var(--font-display); font-size: 1.5rem; line-height: 1.3; margin: 0 0 .4rem; }
+  .roi-callout p { color: rgba(255,255,255,.82); margin: 0; font-size: .95rem; }
+
+  /* ---------- Steps to start ---------- */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; counter-reset: s; }
+  @media (max-width: 720px) { .steps { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 420px) { .steps { grid-template-columns: 1fr; } }
+  .steps .s { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 1.2rem; }
+  .steps .s .k { font-family: var(--font-display); color: var(--mint-ink); font-weight: 700; font-size: 1.1rem; }
+  .steps .s h3 { font-size: 1rem; margin: .3rem 0 .2rem; }
+  .steps .s p { font-size: .87rem; color: var(--ink-soft); margin: 0; }
+
+  /* ---------- CTA / footer ---------- */
+  .cta { text-align: center; padding: 3.5rem 0; }
+  .cta h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); margin: 0 0 .8rem; }
+  .cta p { color: var(--ink-soft); max-width: 46ch; margin: 0 auto 1.6rem; }
+  .btn {
+    display: inline-flex; align-items: center; gap: .5rem; background: var(--indigo); color: #fff; font-weight: 600;
+    padding: .85rem 1.6rem; border-radius: 999px; font-size: 1rem;
+  }
+  .btn:hover { filter: brightness(1.07); }
+  footer { padding: 2.4rem 0 3.5rem; color: var(--ink-faint); font-size: .86rem; }
+  .footgrid { display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; align-items: flex-end; }
+  footer strong { color: var(--ink); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal { opacity: 0; transform: translateY(10px); animation: rise .6s ease forwards; }
+    @keyframes rise { to { opacity: 1; transform: none; } }
+  }
+
+  @media print {
+    body { font-size: 12px; }
+    .reveal { opacity: 1 !important; transform: none !important; animation: none !important; }
+    section, .hero { break-inside: avoid; }
+    .price, .card, .proof, .flow li { break-inside: avoid; }
+    .btn { display: none; }
+  }
+</style>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="brandrow reveal">
+      <div class="brand"><span class="dot">✦</span> TecnoArtificial</div>
+      <div class="brandmeta">
+        Propuesta comercial · N.º TA-2026-0723<br>
+        Santiago · 23 de julio de 2026 · Válida hasta el 07 de agosto
+      </div>
+    </div>
+    <p class="eyebrow">Sistema de captación y agendamiento con IA</p>
+    <h1>Más pacientes agendados, sin que se te escape ninguno.</h1>
+    <p class="lead">Un sistema que atrae pacientes con publicidad, los atiende al instante por WhatsApp y agenda la cita solo — funcionando las 24 horas.</p>
+    <div class="forwhom">
+      <span class="lbl">Preparado para</span>
+      <span class="who">Clínicas Odontológicas Everest</span>
+      <span class="sub">Ex Dr. Smile · Sucursales La Reina y Las Condes</span>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Entendemos su momento</p>
+      <h2>Una marca en crecimiento que no puede perder pacientes en el camino</h2>
+      <p>Everest llega con el respaldo de una red con más de 20 años y foco en tecnología. En pleno cambio de marca desde Dr. Smile, cada consulta que entra vale oro — y hoy varias se pierden por tiempos de respuesta y agenda manual.</p>
+    </div>
+    <div class="grid cols-3">
+      <div class="card">
+        <span class="tag">Red · 2 sucursales</span>
+        <h3>La Reina y Las Condes</h3>
+        <p>Av. Ossa #235 (Plaza Egaña) y Encomenderos #138 (Tobalaba). Alta demanda local en comunas de buen poder adquisitivo.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Tratamientos de alto valor</span>
+        <h3>Implantes, ortodoncia, estética</h3>
+        <p>Implantes, ortodoncia, blanqueamiento, endodoncia, prótesis y periodoncia. Tickets altos que justifican invertir en captación.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Canales actuales</span>
+        <h3>Agenda online + Instagram</h3>
+        <p>@clinicaeverest y agenda web ya existen. Falta el motor que llene esa agenda de forma constante y automática.</p>
+      </div>
+    </div>
+
+    <div class="grid cols-2" style="margin-top:1.6rem">
+      <div class="card">
+        <span class="tag" style="color:var(--amber)">Dónde se pierde dinero hoy</span>
+        <ul class="painlist" style="margin-top:.8rem">
+          <li><span class="mk">!</span> El paciente escribe fuera de horario o el fin de semana y nadie responde: se va a otra clínica.</li>
+          <li><span class="mk">!</span> Leads de Instagram que preguntan "¿cuánto cuesta?" y quedan sin respuesta rápida se enfrían en minutos.</li>
+          <li><span class="mk">!</span> Agendar a mano satura a recepción y genera errores.</li>
+          <li><span class="mk">!</span> Citas que se olvidan (no-shows): cada silla vacía es pérdida directa.</li>
+        </ul>
+      </div>
+      <div class="card" style="background:var(--panel-2)">
+        <span class="tag mint" style="color:var(--mint-ink)">La oportunidad</span>
+        <p style="margin-top:.8rem; color:var(--ink-soft); font-size:.97rem">
+          Con solo <b style="color:var(--ink)">2 o 3 pacientes nuevos de alto ticket al mes</b> (un implante, una ortodoncia), el sistema completo se paga varias veces. El resto — decenas de limpiezas, blanqueamientos y controles — es utilidad. No es un gasto: es una máquina de agendar.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow mint">La solución</p>
+      <h2>Tres piezas que trabajan como una sola</h2>
+      <p>Publicidad que atrae, un agente de IA que atiende y agenda, y un CRM que hace seguimiento y evita que se pierda un solo paciente.</p>
+    </div>
+    <div class="grid cols-3">
+      <div class="card pillar">
+        <span class="n">Pilar 01</span>
+        <h3>Campañas Meta Ads</h3>
+        <ul>
+          <li>Facebook e Instagram segmentados por comuna y tratamiento.</li>
+          <li>Creativos por servicio: implantes, ortodoncia, blanqueamiento, urgencias.</li>
+          <li>Optimización semanal y pruebas A/B.</li>
+        </ul>
+      </div>
+      <div class="card pillar">
+        <span class="n">Pilar 02</span>
+        <h3>Agente IA en WhatsApp</h3>
+        <ul>
+          <li>Responde al instante, 24/7, con lenguaje natural.</li>
+          <li>Resuelve dudas de precios, previsión y ubicación.</li>
+          <li>Agenda la cita en la sucursal elegida, solo.</li>
+        </ul>
+      </div>
+      <div class="card pillar">
+        <span class="n">Pilar 03</span>
+        <h3>CRM + recordatorios</h3>
+        <ul>
+          <li>Cada paciente y cita quedan registrados y con seguimiento.</li>
+          <li>Recordatorio automático 24 h antes: menos inasistencias.</li>
+          <li>Panel con métricas de leads, citas y costo por paciente.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">El flujo, paso a paso</p>
+      <h2>Del anuncio a la silla del dentista</h2>
+      <p>Así viaja un paciente por el sistema. Los pasos en indigo son captación y atención; en verde, agendamiento y retención.</p>
+    </div>
+    <ol class="flow">
+      <li>
+        <span class="step">1</span>
+        <h3>Ve el anuncio correcto</h3>
+        <p>Una persona de La Reina o Las Condes ve en Instagram/Facebook un anuncio del tratamiento que le interesa.</p>
+      </li>
+      <li>
+        <span class="step">2</span>
+        <h3>Un clic abre WhatsApp</h3>
+        <p>Toca el anuncio y se abre directamente el WhatsApp de la clínica, con la conversación ya iniciada.</p>
+      </li>
+      <li>
+        <span class="step">3</span>
+        <h3>El agente IA lo atiende al instante</h3>
+        <p>Sin esperas ni horarios: entiende qué necesita, responde precios referenciales, previsión y ubicación, y lo califica.</p>
+      </li>
+      <li>
+        <span class="step">4</span>
+        <h3>Agenda la cita solo</h3>
+        <p>Ofrece horarios disponibles y confirma la reserva en la sucursal elegida — todo dentro del chat.</p>
+      </li>
+      <li>
+        <span class="step">5</span>
+        <h3>Queda en el CRM</h3>
+        <p>El paciente, su tratamiento de interés y su cita quedan registrados y ordenados para el equipo.</p>
+      </li>
+      <li>
+        <span class="step">6</span>
+        <h3>Recordatorio y seguimiento</h3>
+        <p>Un recordatorio automático 24 h antes reduce las inasistencias, y se hace seguimiento post-consulta.</p>
+      </li>
+      <li>
+        <span class="step">7</span>
+        <h3>Todo medido en un panel</h3>
+        <p>Leads, citas agendadas, costo por paciente y tratamientos más pedidos, visibles en tiempo real.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow mint">Ya lo hicimos, y funciona</p>
+      <h2>Caso real: un agente de IA que atendió a 1.587 personas</h2>
+    </div>
+    <div class="proof">
+      <p class="quote">"Para IBI construimos un agente de WhatsApp con IA que, en 2 meses, atendió a casi 1.600 personas sin intervención humana y entregó cientos de leads calificados al equipo de ventas."</p>
+      <div class="stats">
+        <div class="stat"><div class="num">1.587</div><div class="lbl">personas atendidas en 2 meses, sin intervención humana</div></div>
+        <div class="stat"><div class="num">237</div><div class="lbl">leads calificados (14,9%) derivados a un asesor</div></div>
+        <div class="stat"><div class="num">55%</div><div class="lbl">de los contactos llegó fuera de horario — y fue atendido al instante</div></div>
+      </div>
+    </div>
+    <p class="note">La misma tecnología, adaptada al mundo dental: en vez de derivar a un vendedor, el agente <b>agenda la cita</b>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Inversión</p>
+      <h2>Un solo plan, todo integrado</h2>
+      <p>Implementación única para dejar el sistema funcionando, y un plan mensual que lo mantiene, lo optimiza y gestiona la publicidad. Valores en pesos chilenos, más IVA.</p>
+    </div>
+
+    <div class="price-grid">
+      <div class="price feature">
+        <span class="kicker">Plan mensual</span>
+        <h3>Todo Incluido</h3>
+        <div class="amount">$490.000 <small>/ mes + IVA</small></div>
+        <ul>
+          <li><span class="ck">✓</span> Administración de campañas Meta Ads (ambas sucursales)</li>
+          <li><span class="ck">✓</span> Optimización semanal, creatividades y pruebas A/B</li>
+          <li><span class="ck">✓</span> Operación, mantención y mejora continua del Agente IA</li>
+          <li><span class="ck">✓</span> CRM, recordatorios anti no-show y seguimiento</li>
+          <li><span class="ck">✓</span> Hosting e infraestructura del bot incluidos</li>
+          <li><span class="ck">✓</span> Reporte mensual de resultados + soporte prioritario</li>
+        </ul>
+        <div class="foot">Sin permanencia forzada. Aviso con 30 días.</div>
+      </div>
+
+      <div class="price">
+        <span class="kicker">Puesta en marcha · pago único</span>
+        <h3>Implementación</h3>
+        <div class="amount">$690.000 <small>/ única vez + IVA</small></div>
+        <ul>
+          <li><span class="ck">✓</span> Agente IA de WhatsApp a medida (agenda, dudas y triage)</li>
+          <li><span class="ck">✓</span> CRM configurado con estados y seguimiento</li>
+          <li><span class="ck">✓</span> Integración con la agenda/calendario de la clínica</li>
+          <li><span class="ck">✓</span> Configuración de campañas: píxel, públicos y estructura</li>
+          <li><span class="ck">✓</span> 4 a 6 creativos iniciales (imágenes y video)</li>
+        </ul>
+        <div class="foot">Listo y funcionando en 5 a 10 días hábiles.</div>
+      </div>
+    </div>
+
+    <div class="launch">
+      <div class="txt">
+        <b>Oferta de lanzamiento</b> — al contratar durante julio, la implementación baja de
+        <span class="old">$690.000</span> a <b>$550.000 + IVA</b> en un pago, o <b>2 cuotas de $275.000</b>.
+      </div>
+      <div class="txt" style="font-size:.85rem;color:var(--ink-faint)">Empezamos esta semana.</div>
+    </div>
+
+    <div class="grid cols-2" style="margin-top:1.6rem">
+      <div class="card">
+        <span class="tag">Un tercer costo, transparente</span>
+        <h3 style="margin-top:.3rem">Pauta publicitaria</h3>
+        <p>Es el dinero que se invierte directamente en Meta para mostrar los anuncios. <b style="color:var(--ink)">No es un cobro nuestro</b> — se paga directo a la plataforma y tú decides el monto. Recomendamos partir con <b style="color:var(--ink)">$350.000 a $500.000 / mes</b> para ver resultados estables.</p>
+      </div>
+      <div class="card" style="background:var(--panel-2)">
+        <span class="tag mint" style="color:var(--mint-ink)">Resumen mensual sugerido</span>
+        <div class="tablewrap" style="margin-top:.8rem;border:none">
+          <table style="min-width:0">
+            <tbody>
+              <tr><td>Plan Todo Incluido</td><td class="num">$490.000</td></tr>
+              <tr><td>Pauta (a Meta, sugerida)</td><td class="num">$400.000</td></tr>
+              <tr class="totalrow"><td>Recurrente mensual</td><td class="num">$890.000</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note" style="margin-top:.6rem">En el mes 1 se suma la implementación ($550.000 con la oferta). Desde el mes 2, solo el plan + la pauta que elijas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow mint">Por qué es rentable</p>
+      <h2>Lo que vale cada paciente que agendes</h2>
+      <p>Valores referenciales de tratamiento en el mercado chileno. El sistema completo cuesta menos que un solo tratamiento de alto ticket al mes.</p>
+    </div>
+    <div class="roi-band">
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr><th>Tratamiento</th><th class="num">Valor referencial</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Ortodoncia (tratamiento completo)</td><td class="num">$900.000 – $1.600.000</td></tr>
+            <tr><td>Implante dental (unitario)</td><td class="num">$350.000 – $600.000</td></tr>
+            <tr><td>Prótesis</td><td class="num">$250.000 – $700.000</td></tr>
+            <tr><td>Blanqueamiento</td><td class="num">$120.000 – $220.000</td></tr>
+            <tr><td>Limpieza / control</td><td class="num">$25.000 – $45.000</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="roi-callout">
+        <p class="big">1 ortodoncia agendada ≈ 3 meses del sistema completo.</p>
+        <p>Y el agente no agenda una: agenda decenas de consultas al mes. El punto de equilibrio se cruza en la primera semana.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Comparación de mercado</p>
+      <h2>Lo mismo, contratado por separado, cuesta más</h2>
+      <p>Contratar una agencia de publicidad, un software de bot dental y un CRM por separado suma más — y sin que hablen entre sí. Aquí todo viene integrado.</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Componente</th>
+            <th class="num">Por separado (mercado)</th>
+            <th class="num">Con TecnoArtificial</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Gestión de campañas (agencia)</td><td class="num">$200.000 – $600.000 / mes</td><td class="num">Incluido</td></tr>
+          <tr><td>Bot IA dental (ej. software especializado)</td><td class="num">~$300.000 / mes</td><td class="num">Incluido</td></tr>
+          <tr><td>CRM / software de agenda</td><td class="num">$30.000 – $200.000 / mes</td><td class="num">Incluido</td></tr>
+          <tr class="totalrow"><td>Total mensual (sin pauta)</td><td class="num">$530.000 – $1.100.000</td><td class="num win">$490.000 + IVA</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Rangos de referencia de agencias y plataformas chilenas 2026. Además de costar menos, la ventaja real es que las tres piezas están conectadas: un lead del anuncio se agenda y se mide sin pasos manuales.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow mint">Cómo partimos</p>
+      <h2>De la firma a los primeros pacientes en días</h2>
+    </div>
+    <div class="steps">
+      <div class="s"><div class="k">01</div><h3>Kickoff</h3><p>Reunión breve para accesos, tono de marca y tratamientos a promover.</p></div>
+      <div class="s"><div class="k">02</div><h3>Construcción</h3><p>Montamos el agente IA, el CRM y las campañas. 5 a 10 días hábiles.</p></div>
+      <div class="s"><div class="k">03</div><h3>Salida a producción</h3><p>Encendemos los anuncios y el bot empieza a agendar.</p></div>
+      <div class="s"><div class="k">04</div><h3>Optimización</h3><p>Ajuste semanal según resultados y reporte mensual.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="cta wrap">
+  <h2>Llenemos su agenda, empezando esta semana.</h2>
+  <p>Reservamos su implementación con la oferta de lanzamiento de julio. Coordinemos el kickoff.</p>
+  <a class="btn" href="https://wa.me/56933472864">Conversar por WhatsApp →</a>
+</div>
+
+<footer>
+  <div class="wrap footgrid">
+    <div>
+      <strong>TecnoArtificial SpA</strong><br>
+      Inteligencia artificial, automatización y desarrollo a medida.<br>
+      Antonio Bellet 193, Of. 1210, Providencia · Santiago, Chile
+    </div>
+    <div style="text-align:right">
+      tecnoartificial.com<br>
+      +56 9 3347 2864 · contacto@tecnoartificial.com<br>
+      <span style="color:var(--ink-faint)">Propuesta válida por 15 días desde su emisión.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Entrada suave escalonada (respeta reduce-motion vía CSS).
+  document.querySelectorAll('section, .cta, footer').forEach(function (el, i) {
+    el.classList.add('reveal');
+    el.style.animationDelay = (i * 0.04) + 's';
+  });
+</script>
+<script>
+  // Aviso de apertura: se dispara una sola vez por sesión de pestaña. Toma la
+  // etiqueta ?u= (a quién se le envió) para identificar quién abrió.
+  (function () {
+    try {
+      if (sessionStorage.getItem('ta_tracked')) return;
+      sessionStorage.setItem('ta_tracked', '1');
+    } catch (e) {}
+    var u = '';
+    try { u = new URLSearchParams(location.search).get('u') || ''; } catch (e) {}
+    var img = new Image();
+    img.src = '/api/track?doc=Cotizacion-Everest&u=' + encodeURIComponent(u) + '&t=' + Date.now();
+  })();
+</script>
+
+</body>
+</html>
