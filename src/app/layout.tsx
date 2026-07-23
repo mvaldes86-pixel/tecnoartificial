@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
+import CookieConsent from "@/components/CookieConsent";
 
 
 const outfit = Outfit({
@@ -47,6 +48,20 @@ export const metadata: Metadata = {
     locale: "es_CL",
     url: "https://tecnoartificial.com",
     siteName: "TecnoArtificial",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "TecnoArtificial — Inteligencia Artificial para tu negocio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TecnoArtificial | Evoluciona tu Negocio con IA",
+    description: "Optimizamos tus procesos y escalamos tus ventas con tecnología de IA de última generación.",
+    images: ["/og-image.png"],
   },
 };
 
@@ -67,13 +82,19 @@ const organizationJsonLd = {
     addressRegion: "Región Metropolitana",
     addressCountry: "CL",
   },
+  logo: "https://tecnoartificial.com/og-image.png",
+  image: "https://tecnoartificial.com/og-image.png",
   contactPoint: {
     "@type": "ContactPoint",
     telephone: "+56920293667",
     contactType: "customer service",
     availableLanguage: ["Spanish"],
   },
-  sameAs: ["https://wa.me/56920293667"],
+  sameAs: [
+    "https://wa.me/56920293667",
+    "https://www.instagram.com/tecnoartificial.spa",
+    "https://www.facebook.com/966324953226108",
+  ],
 };
 
 
@@ -89,32 +110,11 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '1428411498841708');
-            fbq('track', 'PageView');
-          `,
-          }}
-        />
-        <noscript>
-          <img 
-            height="1" 
-            width="1" 
-            style={{ display: 'none' }}
-            src="https://www.facebook.com/tr?id=1428411498841708&ev=PageView&noscript=1"
-            alt=""
-          />
-        </noscript>
+        {/* Meta Pixel: se carga condicionalmente desde CookieConsent, solo tras
+            que el visitante acepta las cookies (cumplimiento Ley 19.628 / RGPD). */}
         {children}
+
+        <CookieConsent />
 
         {/* Botón WhatsApp Flotante */}
         <a 

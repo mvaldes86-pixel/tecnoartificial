@@ -14,7 +14,8 @@ export default function ConsultoriaPage() {
     whatsapp: '',
     empresa: '',
     industria: 'Tecnología',
-    desafio: ''
+    desafio: '',
+    website: '' // honeypot anti-bot: oculto; si viene relleno, el servidor lo descarta
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState<boolean | string>(false);
@@ -119,6 +120,17 @@ export default function ConsultoriaPage() {
               <h2 className="font-display text-3xl font-bold mb-8 relative z-10">Agenda tu sesión</h2>
               
               <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
+                {/* Honeypot anti-bot: oculto para humanos, los bots lo rellenan */}
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  value={formData.website}
+                  onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                  style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0 }}
+                />
                 <div className="grid md:grid-cols-2 gap-5">
                   <div>
                     <label className="block text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-2 ml-1">Nombre Completo</label>
