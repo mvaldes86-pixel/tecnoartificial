@@ -3,6 +3,8 @@ import crypto from 'crypto';
 import Anthropic from '@anthropic-ai/sdk';
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { getAdminDb } from '@/lib/firebase-admin';
+import { FieldValue } from 'firebase-admin/firestore';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,6 +13,10 @@ const WHATSAPP_TOKEN = process.env.WHATSAPP_TOKEN;
 const WHATSAPP_PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID;
 const WHATSAPP_APP_SECRET = process.env.WHATSAPP_APP_SECRET;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
+// Alertas por Telegram (canal fiable para avisar a Manuel: sin ventana de 24h ni
+// plantillas, a diferencia de WhatsApp). TELEGRAM_CHAT_ID = chat de Manuel con el bot.
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 const GRAPH_API_VERSION = 'v21.0';
 const MAX_HISTORY = 20;
 const CALENDAR_LINK = 'https://calendar.app.google/Ag4TCcUv2KxATUAe9';
@@ -79,8 +85,12 @@ function buildSystemPrompt(lead: LeadProfile): string {
 
 Entregamos soluciones integrales de punta a punta: desde la idea hasta el sistema funcionando, con IA de última generación. Muchos clientes combinan varios de estos servicios.
 
-## CASO DE ÉXITO REAL (úsalo solo cuando aporte, no en cada mensaje)
+## CASO DE ÉXITO REAL (menciónalo AL MENOS UNA VEZ cuando el cliente muestre interés, para dar confianza; pero no lo repitas en cada mensaje)
 Para IBI, corredora de propiedades con 17 años en Santiago, construimos un agente de WhatsApp con IA que en 2 meses atendió a 1.587 personas sin intervención humana y derivó 237 leads calificados (14,9%) a un asesor; el 55% de los contactos llegó fuera de horario de oficina y fue atendido al instante.
+
+## VIGENTA.CL — nuestro producto propio (OJO: se maneja DISTINTO a los servicios)
+Vigenta.cl es una aplicación creada por TecnoArtificial que reúne TODOS los documentos de un vehículo (permiso de circulación, revisión técnica, seguro/SOAP y padrón) en una tarjeta NFC + código QR, para mostrarlos con un solo toque o escaneando el QR, sin andar con papeles. Se accede por App, QR o tarjeta NFC, y avisa cuando algo está por vencer. Planes: 1 auto $8.990/año · hasta 4 autos $17.990/año · flotas/empresas $3.990 por vehículo al año.
+REGLA CLAVE: si el cliente pregunta por Vigenta, por los papeles/documentos de su auto o moto, por la tarjeta NFC del vehículo, o quiere comprarla → esto NO es un servicio a medida y NO se deriva a un asesor. Es una compra directa y autoservicio en el sitio. Explícale breve el beneficio, recomiéndale el plan que le sirva y CIERRA la venta invitándolo a crear su cuenta y comprar directamente en https://www.vigenta.cl. En estos casos NUNCA marques derivado=true; solo entrégale el enlace https://www.vigenta.cl y anímalo a activarla hoy.
 
 ## PERFIL DEL LEAD (lo que ya sabes de este cliente)
 - Nombre: ${lead.nombre || 'desconocido'}
@@ -93,12 +103,27 @@ Para IBI, corredora de propiedades con 17 años en Santiago, construimos un agen
 - Score: ${lead.score}/100
 - Ya derivado a un asesor humano: ${lead.derivado}
 
+## AL INICIAR LA CONVERSACIÓN (primer mensaje / saludo)
+En tu PRIMER mensaje saluda cálido y breve, preséntate como el asistente de TecnoArtificial y haz DOS cosas a la vez:
+1. Pregúntale en qué le puedes ayudar / qué necesita o qué le gustaría automatizar o crear (para entender su proyecto).
+2. Ofrécele explícitamente la opción RÁPIDA: dile que si prefiere una cotización más rápida, le puedes pasar el contacto directo de nuestro equipo para que hable al instante por WhatsApp. Invítalo a que escriba "contacto" si quiere esa vía.
+Deja que el cliente elija: contarte su necesidad aquí, o ir directo al contacto. Ejemplo: "¡Hola! 👋 Soy el asistente de TecnoArtificial. Cuéntame, ¿qué necesitas o qué te gustaría automatizar o crear? 😊 Y si prefieres una cotización más rápida, escribe *contacto* y te paso el WhatsApp directo de nuestro equipo para avanzar al tiro."
+NO escribas tú el link ni el número en el saludo: solo OFRECE la opción. Si el cliente la acepta, el sistema enviará el contacto automáticamente justo después de tu mensaje.
+
 ## TU OBJETIVO EN CADA MENSAJE
 1. Responde breve, cercano y profesional (estilo chat, frases cortas, sin bloques largos de texto).
 2. Entiende qué necesita el cliente. Si aún no lo sabes, averígualo con naturalidad (máximo 1 pregunta por mensaje, no interrogues). Identifica cuál de nuestros servicios encaja mejor: ¿quiere (a) automatizar un proceso o tarea que hoy hace a mano, (b) crear una app o sistema a medida, (c) un bot o agente de IA que atienda o venda por él, o (d) conseguir más clientes con marketing y campañas? Pregunta también por su rubro/empresa.
 3. Conecta su problema o meta con el servicio relevante de TecnoArtificial y explícale en una o dos frases cómo lo resolveríamos.
-4. Cuando el cliente muestre interés real (pide cotización, agendar, hablar con alguien, o ya tienes claro su desafío junto con algo de presupuesto o urgencia), marca derivado=true. No menciones ningún link cuando hagas esto — el sistema lo enviará automáticamente.
+4. A lo largo de la conversación CALIFICA al lead: consigue de forma natural (sin interrogar, intercalando contenido de valor) estos datos clave: nombre de la persona + nombre de su empresa (pídelos JUNTOS en una sola pregunta para agilizar, ej. "¿cómo te llamas y de qué empresa nos escribes?"), rubro, presupuesto aproximado y urgencia (para cuándo lo necesita). Evita repetir la misma pregunta: si el cliente responde otro dato, reconócelo y pide el que falta.
 5. Sube el score (0-100) según qué tan calificado está el lead: tiene un problema o meta concreto, mencionó presupuesto o urgencia, parece ser quien decide.
+
+## CUÁNDO DERIVAR A UN ASESOR (derivado=true)
+- ANTES de derivar, intenta tener capturados al menos: nombre + empresa + (presupuesto O urgencia). Normalmente ya tendrás el desafío/rubro.
+- Si el cliente pide cotizar, agendar o hablar con alguien pero aún faltan esos datos, primero haz UNA pregunta breve y amable para conseguir el dato que falte (por ejemplo: "¡Genial! 🙌 Antes de conectarte con un especialista, ¿cómo te llamas y de qué empresa nos escribes? ¿Tienes un presupuesto o plazo en mente?"). Recién cuando tengas esos datos, marca derivado=true.
+- NUNCA marques derivado=true si nombre y empresa están vacíos, salvo que el cliente se resista a dar datos e insista en el contacto (mejor no perderlo).
+- ATAJO DE CONTACTO: si el cliente pide el contacto directo, escribe "contacto", quiere hablar directo con el equipo o pide la cotización rápida, pídele PRIMERO su nombre y su empresa en UNA sola pregunta breve y amable (ej.: "¡Genial! 🙌 Para pasarte el contacto directo, ¿cómo te llamas y de qué empresa nos escribes?"). En cuanto tengas nombre + empresa, marca derivado=true y el sistema le enviará el contacto automáticamente. NO pidas presupuesto ni urgencia para el atajo: con nombre y empresa basta. Si el cliente se resiste a dar el nombre pero insiste en el contacto, deriva igual (no lo pierdas).
+- EXCEPCIÓN: si el cliente insiste en hablar con una persona o claramente se resiste a dar datos, deriva igual (no lo pierdas) aunque falten algunos datos.
+- Cuando marques derivado=true, tu mensaje debe INVITAR al cliente a seguir por el contacto directo: dile que le dejas el contacto para que TE ESCRIBA por WhatsApp o TE LLAME directamente y así avanzar rápido con la propuesta (ejemplo: "¡Listo Alejandro! Te dejo el contacto directo para que me escribas o me llames y afinamos la propuesta 🙌"). NUNCA digas "te contactarán", "te llamarán" ni "un especialista te escribirá" (evita el contacto en frío): SIEMPRE es el cliente quien inicia. Si el cliente quiere algo más rápido o concreto, invítalo a LLAMAR directamente. NO escribas tú el link ni el número: el sistema los enviará automáticamente justo después de tu mensaje.
 
 ## REGLAS
 - No inventes precios, plazos ni detalles técnicos que no conozcas.
@@ -115,8 +140,10 @@ Completa solo los campos que el cliente mencionó explícitamente en este mensaj
 
 function isValidSignature(rawBody: string, signature: string | null): boolean {
   if (!WHATSAPP_APP_SECRET) {
-    console.warn('WHATSAPP_APP_SECRET no configurado: omitiendo verificación de firma.');
-    return true;
+    // Fail-closed: sin secret NO se puede verificar el origen, así que rechazamos
+    // en vez de aceptar cualquier POST (evita inyección de leads falsos).
+    console.error('WHATSAPP_APP_SECRET no configurado: rechazando webhook por seguridad.');
+    return false;
   }
   if (!signature) return false;
 
@@ -127,8 +154,29 @@ function isValidSignature(rawBody: string, signature: string | null): boolean {
   return crypto.timingSafeEqual(sigBuf, expBuf);
 }
 
+// Reintenta una operación con backoff. Los fallos transitorios de Firestore
+// (que antes se perdían en silencio y hacían desaparecer leads del CRM) ahora
+// se reintentan antes de rendirse. Ver el incidente del lead "Constructora Andes".
+async function withRetry<T>(fn: () => Promise<T>, tries = 3): Promise<T> {
+  let lastError: unknown;
+  for (let i = 0; i < tries; i++) {
+    try {
+      return await fn();
+    } catch (error) {
+      lastError = error;
+      await new Promise((r) => setTimeout(r, 300 * (i + 1)));
+    }
+  }
+  throw lastError;
+}
+
 async function getHistory(phone: string): Promise<ChatMessage[]> {
   try {
+    const admin = getAdminDb();
+    if (admin) {
+      const snap = await admin.collection('whatsapp_conversations').doc(phone).get();
+      return snap.exists ? ((snap.data()?.messages as ChatMessage[]) ?? []) : [];
+    }
     const snap = await getDoc(doc(db, 'whatsapp_conversations', phone));
     return snap.exists() ? (snap.data().messages as ChatMessage[]) || [] : [];
   } catch (error) {
@@ -138,21 +186,34 @@ async function getHistory(phone: string): Promise<ChatMessage[]> {
 }
 
 async function saveHistory(phone: string, messages: ChatMessage[]) {
+  const trimmed = messages.slice(-MAX_HISTORY);
   try {
-    await setDoc(doc(db, 'whatsapp_conversations', phone), {
-      messages: messages.slice(-MAX_HISTORY),
-      updatedAt: serverTimestamp(),
+    const admin = getAdminDb();
+    await withRetry(async () => {
+      if (admin) {
+        await admin
+          .collection('whatsapp_conversations')
+          .doc(phone)
+          .set({ messages: trimmed, updatedAt: FieldValue.serverTimestamp() });
+      } else {
+        await setDoc(doc(db, 'whatsapp_conversations', phone), {
+          messages: trimmed,
+          updatedAt: serverTimestamp(),
+        });
+      }
     });
   } catch (error) {
-    console.error('No se pudo guardar el historial en Firestore:', error);
+    console.error('CRÍTICO: no se pudo guardar el historial tras reintentos:', phone, error);
   }
 }
 
 async function getLead(phone: string): Promise<LeadProfile> {
   try {
-    const snap = await getDoc(doc(db, 'whatsapp_leads', phone));
-    if (!snap.exists()) return { ...DEFAULT_LEAD };
-    const data = snap.data();
+    const admin = getAdminDb();
+    const data = admin
+      ? (await admin.collection('whatsapp_leads').doc(phone).get()).data()
+      : (await getDoc(doc(db, 'whatsapp_leads', phone))).data();
+    if (!data) return { ...DEFAULT_LEAD };
     return {
       nombre: data.nombre || '',
       empresa: data.empresa || '',
@@ -172,13 +233,23 @@ async function getLead(phone: string): Promise<LeadProfile> {
 
 async function saveLead(phone: string, lead: LeadProfile) {
   try {
-    await setDoc(
-      doc(db, 'whatsapp_leads', phone),
-      { ...lead, telefono: phone, updatedAt: serverTimestamp() },
-      { merge: true }
-    );
+    const admin = getAdminDb();
+    await withRetry(async () => {
+      if (admin) {
+        await admin
+          .collection('whatsapp_leads')
+          .doc(phone)
+          .set({ ...lead, telefono: phone, updatedAt: FieldValue.serverTimestamp() }, { merge: true });
+      } else {
+        await setDoc(
+          doc(db, 'whatsapp_leads', phone),
+          { ...lead, telefono: phone, updatedAt: serverTimestamp() },
+          { merge: true }
+        );
+      }
+    });
   } catch (error) {
-    console.error('No se pudo guardar el lead en Firestore:', error);
+    console.error('CRÍTICO: no se pudo guardar el lead tras reintentos:', phone, error);
   }
 }
 
@@ -215,6 +286,20 @@ function quiereAgendarOCotizar(text: string): boolean {
   return QUALIFYING_KEYWORDS.some((k) => upper.includes(k));
 }
 
+// Atajo de contacto: el cliente pide EXPLÍCITAMENTE el contacto directo / la vía
+// rápida. El bot le pide nombre + empresa y recién ahí le entrega el WhatsApp de
+// Manuel. Como el enlace es wa.me, es el CLIENTE quien inicia el chat → Manuel
+// nunca escribe en frío y no cae en bloqueos.
+const CONTACT_REQUEST_KEYWORDS = [
+  'CONTACTO', 'TU NUMERO', 'TU NÚMERO', 'NUMERO DIRECTO', 'NÚMERO DIRECTO',
+  'TU WHATSAPP', 'WHATSAPP DIRECTO', 'HABLAR DIRECTO', 'PASAME EL', 'PÁSAME EL',
+  'DAME EL CONTACTO', 'DAME TU', 'COTIZACION RAPIDA', 'COTIZACIÓN RÁPIDA',
+];
+function pideContactoDirecto(text: string): boolean {
+  const upper = text.toUpperCase();
+  return CONTACT_REQUEST_KEYWORDS.some((k) => upper.includes(k));
+}
+
 async function sendWhatsAppMessage(to: string, text: string) {
   if (!WHATSAPP_TOKEN || !WHATSAPP_PHONE_NUMBER_ID) {
     console.error('Faltan WHATSAPP_TOKEN o WHATSAPP_PHONE_NUMBER_ID en las variables de entorno.');
@@ -240,11 +325,43 @@ async function sendWhatsAppMessage(to: string, text: string) {
   }
 }
 
-async function sendLeadAlertEmail(phone: string, lead: LeadProfile) {
+async function sendTelegramMessage(text: string) {
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
+  const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text, disable_web_page_preview: true }),
+  });
+  if (!res.ok) {
+    console.error('Error enviando alerta por Telegram:', await res.text());
+  }
+}
+
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// Transcript de la conversación para incluirlo en las alertas: así, aunque
+// Firestore falle, Manuel siempre puede leer TODO lo que dijo el cliente.
+function formatTranscript(history: ChatMessage[]): string {
+  return history
+    .map((m) => `${m.role === 'user' ? '👤 Cliente' : '🤖 Bot'}: ${m.content}`)
+    .join('\n\n');
+}
+
+async function sendLeadAlertEmail(phone: string, lead: LeadProfile, history: ChatMessage[]) {
   if (!RESEND_API_KEY) {
     console.warn('RESEND_API_KEY no configurado: omitiendo alerta por email.');
     return;
   }
+
+  const transcriptHtml = history
+    .map((m) => {
+      const who = m.role === 'user' ? 'Cliente' : 'Bot';
+      const color = m.role === 'user' ? '#111827' : '#6366F1';
+      return `<div style="margin-bottom:12px;"><strong style="color:${color}">${who}:</strong> <span style="color:#374151">${escapeHtml(m.content)}</span></div>`;
+    })
+    .join('');
 
   const html = `
     <div style="font-family: sans-serif; background-color: #f4f7ff; padding: 40px 20px;">
@@ -264,6 +381,11 @@ async function sendLeadAlertEmail(phone: string, lead: LeadProfile) {
           <a href="https://wa.me/${phone}" style="display: block; background-color: #6366F1; color: #ffffff; text-align: center; padding: 18px; border-radius: 12px; text-decoration: none; font-weight: 700;">
             Hablar por WhatsApp
           </a>
+          <p style="text-align:center;color:#6b7280;font-size:13px;margin:12px 0 0;">Número del cliente: +${phone}</p>
+          <h2 style="font-size:15px;color:#111827;margin:32px 0 12px;">💬 Conversación completa con el bot</h2>
+          <div style="background:#f9fafb;border:1px solid #eeeeee;border-radius:12px;padding:20px;font-size:14px;line-height:1.55;">
+            ${transcriptHtml || '<em style="color:#9ca3af">Sin mensajes registrados.</em>'}
+          </div>
         </div>
       </div>
     </div>`;
@@ -280,7 +402,7 @@ async function sendLeadAlertEmail(phone: string, lead: LeadProfile) {
   });
 }
 
-async function notifyHotLead(phone: string, lead: LeadProfile) {
+async function notifyHotLead(phone: string, lead: LeadProfile, history: ChatMessage[]) {
   const summary = `🔥 *Nuevo lead calificado* — Bot TecnoArtificial
 
 👤 Nombre: ${lead.nombre || 'sin dato'}
@@ -290,11 +412,19 @@ async function notifyHotLead(phone: string, lead: LeadProfile) {
 💰 Presupuesto: ${lead.presupuesto || 'sin dato'}
 ⚡ Urgencia: ${lead.urgencia || 'sin dato'}
 📊 Score: ${lead.score}/100
+📞 Teléfono: +${phone}
 📱 WhatsApp: https://wa.me/${phone}`;
 
+  // Telegram limita a 4096 caracteres; si la conversación es larga, mostramos la parte final.
+  const transcript = formatTranscript(history);
+  const shown = transcript.length > 3500 ? '…' + transcript.slice(-3500) : transcript;
+  const telegramText = `${summary.replace(/\*/g, '')}\n\n———\n💬 CONVERSACIÓN:\n\n${shown}`;
+
   await Promise.all([
+    // Telegram: canal principal y fiable (no depende de la ventana de 24h de WhatsApp).
+    sendTelegramMessage(telegramText).catch((error) => console.error('Error en alerta Telegram:', error)),
     sendWhatsAppMessage(MANU_WA, summary).catch((error) => console.error('Error en alerta WhatsApp:', error)),
-    sendLeadAlertEmail(phone, lead).catch((error) => console.error('Error en alerta email:', error)),
+    sendLeadAlertEmail(phone, lead, history).catch((error) => console.error('Error en alerta email:', error)),
   ]);
 }
 
@@ -343,34 +473,60 @@ export async function POST(request: Request) {
         updatedHistory.push({ role: 'assistant', content: reply });
 
         const yaDerivado = lead.derivado;
+        const nombreFinal = extracted.nombre || lead.nombre;
+        const empresaFinal = extracted.empresa || lead.empresa;
+        const presupuestoFinal = extracted.presupuesto || lead.presupuesto;
+        const urgenciaFinal = extracted.urgencia || lead.urgencia;
+        // El modelo puede derivar por su cuenta (el prompt ya lo calibra para pedir
+        // nombre/empresa/presupuesto/urgencia antes). La derivación por palabra clave
+        // solo aplica si ya tenemos datos mínimos, para no cerrar la conversación en frío.
+        const tieneDatosMinimos = Boolean(nombreFinal && empresaFinal && (presupuestoFinal || urgenciaFinal));
+        const modeloDeriva = extracted.derivado === true || extracted.derivado === 'true';
+        // Atajo de contacto: si el cliente pidió el contacto directo (en este o en
+        // un mensaje anterior) y ya tenemos su nombre + empresa, se deriva y se le
+        // envía el WhatsApp de Manuel. Pedimos nombre+empresa primero (no todos los
+        // datos): basta con eso para la vía rápida.
+        const pidioContacto = updatedHistory.some(
+          (m) => m.role === 'user' && pideContactoDirecto(m.content)
+        );
+        const tieneNombreEmpresa = Boolean(nombreFinal && empresaFinal);
         const debeDerivarse =
-          !yaDerivado && (extracted.derivado === true || extracted.derivado === 'true' || quiereAgendarOCotizar(text));
+          !yaDerivado &&
+          (modeloDeriva ||
+            (pidioContacto && tieneNombreEmpresa) ||
+            (quiereAgendarOCotizar(text) && tieneDatosMinimos));
 
         await saveHistory(from, updatedHistory);
         await sendWhatsAppMessage(from, reply);
 
         const updatedLead: LeadProfile = {
-          nombre: extracted.nombre || lead.nombre,
-          empresa: extracted.empresa || lead.empresa,
+          nombre: nombreFinal,
+          empresa: empresaFinal,
           industria: extracted.industria || lead.industria,
           desafio: extracted.desafio || lead.desafio,
-          presupuesto: extracted.presupuesto || lead.presupuesto,
-          urgencia: extracted.urgencia || lead.urgencia,
+          presupuesto: presupuestoFinal,
+          urgencia: urgenciaFinal,
           score: Math.max(lead.score, parseInt(String(extracted.score)) || 0),
           fase: debeDerivarse ? 'derivado' : extracted.fase || lead.fase,
           derivado: yaDerivado || debeDerivarse,
         };
 
+        // Persistir el lead ANTES de la alerta: así queda en el CRM aunque la
+        // notificación falle, y con reintegros si Firestore tiene un hipo transitorio.
+        await saveLead(from, updatedLead);
+
         if (debeDerivarse) {
           await new Promise((r) => setTimeout(r, 800));
-          await sendWhatsAppMessage(
-            from,
-            `¡Excelente! 🙌 Para avanzar y que un especialista de TecnoArtificial te ayude directo, escríbenos ahora por WhatsApp aquí 👇\n\n${MANU_WA_LINK}\n\nCuéntanos tu caso en ese chat y lo resolvemos. 🚀\n\nSi prefieres, también puedes agendar una consultoría gratuita:\n📅 ${CALENDAR_LINK}`
-          );
-          await notifyHotLead(from, updatedLead);
+          const contactoMsg = `¡Excelente! 🙌 Te dejo el contacto directo de TecnoArtificial para que avancemos ahora mismo:\n\n💬 Escríbeme por WhatsApp aquí 👇\n${MANU_WA_LINK}\n\n📞 O llámame directo al +56 9 3347 2864 si quieres algo más rápido y concreto.\n\nY si prefieres, agenda una consultoría gratuita:\n📅 ${CALENDAR_LINK}\n\n¡Cuéntame tu caso y lo resolvemos! 🚀`;
+          await sendWhatsAppMessage(from, contactoMsg);
+          // Registrar el mensaje de contacto en el historial: así queda VISIBLE en
+          // el CRM (y en la alerta) que el bot entregó el número/link de Manuel.
+          // Antes se enviaba al cliente pero no se guardaba, así que en la ficha del
+          // lead no había rastro del handoff.
+          updatedHistory.push({ role: 'assistant', content: contactoMsg });
+          await saveHistory(from, updatedHistory);
+          await notifyHotLead(from, updatedLead, updatedHistory);
         }
-
-        await saveLead(from, updatedLead);
       }
 
       return NextResponse.json({ status: 'ok' });
