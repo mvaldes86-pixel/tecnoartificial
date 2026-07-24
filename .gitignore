@@ -48,3 +48,9 @@ Screenshot_*.png
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# tooling de skills (npx skills add) y settings locales — NO versionar
+/.agents
+/.claude/skills
+.claude/settings.local.json
+skills-lock.json
