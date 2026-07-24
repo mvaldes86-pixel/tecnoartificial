@@ -1,22 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
-import { createPost, slugExists } from "@/lib/blog";
+import { createPost, slugExists, getAllPosts } from "@/lib/blog";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 120;
 
 // ─────────────────────────────────────────────────────────────
-// FUENTES DE NOTICIAS (editables): feeds RSS de medios creíbles.
-// Agrega o quita URLs aquí. El agente lee estos feeds como material
-// de origen; Claude escribe un resumen ORIGINAL en español (no copia).
+// Agente SEO del blog. Publica 1 artículo evergreen por ejecución.
+// El cron corre martes y jueves (ver vercel.json) → 2 artículos/semana.
+// Enfoque: posicionar en Google con contenido útil para pymes chilenas
+// que buscan IA, automatización, marketing y ciberseguridad.
 // ─────────────────────────────────────────────────────────────
-const RSS_FEEDS: string[] = [
-  "https://www.technologyreview.com/topic/artificial-intelligence/feed/",
-  "https://venturebeat.com/category/ai/feed/",
-  "https://techcrunch.com/tag/artificial-intelligence/feed/",
+
+// Pilares/keywords sobre los que rota el agente. Ampliar libremente.
+const PILARES: string[] = [
+  "Agentes de IA y chatbots de WhatsApp para atención y agendamiento de clientes",
+  "Automatización de procesos y tareas repetitivas con IA en pymes",
+  "Marketing digital con IA: campañas en Meta (Facebook e Instagram) y generación de leads",
+  "SEO e inteligencia artificial: cómo posicionar un negocio en Google",
+  "Ciberseguridad para pymes: auditorías, pentesting y protección de datos (Ley 21.719 y 21.663)",
+  "IA aplicada por rubro: clínicas y salud, e-commerce, inmobiliarias, servicios profesionales",
+  "Desarrollo de software y apps a medida potenciadas con IA",
+  "Casos de uso y ROI de la inteligencia artificial para dueños de negocio",
 ];
 
-const POSTS_PER_RUN = 3;
 const MODEL = "claude-sonnet-4-6";
 
 function slugify(text: string): string {
@@ -29,91 +36,68 @@ function slugify(text: string): string {
     .slice(0, 70);
 }
 
-async function fetchFeed(url: string): Promise<string> {
-  try {
-    const res = await fetch(url, {
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (compatible; TecnoArtificialBot/1.0; +https://tecnoartificial.com)",
-      },
-      cache: "no-store",
-    });
-    if (!res.ok) return "";
-    const text = await res.text();
-    return text.slice(0, 9000); // recorta cada feed para no inflar el prompt
-  } catch (error) {
-    console.error(`[ai-news] feed falló ${url}:`, error);
-    return "";
-  }
-}
-
 type GeneratedPost = {
   title: string;
   slug: string;
   excerpt: string;
   content: string;
   category: string;
-  sourceName: string;
-  sourceUrl: string;
+  keyword?: string;
 };
 
-function extractJsonArray(text: string): GeneratedPost[] {
-  const start = text.indexOf("[");
-  const end = text.lastIndexOf("]");
+function extractJsonObject(text: string): GeneratedPost {
+  // Acepta un objeto suelto o el primer objeto de un array.
+  const start = text.indexOf("{");
+  const end = text.lastIndexOf("}");
   if (start === -1 || end === -1) throw new Error("Respuesta sin JSON válido");
   return JSON.parse(text.slice(start, end + 1));
 }
 
 export async function GET(req: NextRequest) {
-  // Seguridad: solo se ejecuta con el secreto correcto.
-  // Vercel Cron envía automáticamente "Authorization: Bearer <CRON_SECRET>".
+  // Seguridad: Vercel Cron envía "Authorization: Bearer <CRON_SECRET>".
   const secret = process.env.CRON_SECRET;
   const auth = req.headers.get("authorization");
   if (!secret || auth !== `Bearer ${secret}`) {
     return NextResponse.json({ error: "No autorizado" }, { status: 401 });
   }
-
   if (!process.env.ANTHROPIC_API_KEY) {
-    return NextResponse.json(
-      { error: "Falta ANTHROPIC_API_KEY" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Falta ANTHROPIC_API_KEY" }, { status: 500 });
   }
 
-  // 1. Traer material de origen desde los feeds.
-  const feeds = await Promise.all(RSS_FEEDS.map(fetchFeed));
-  const material = feeds.filter(Boolean).join("\n\n---\n\n");
-  if (!material) {
-    return NextResponse.json(
-      { error: "No se pudo leer ningún feed" },
-      { status: 502 },
-    );
-  }
+  // Títulos ya publicados: para no repetir temas y elegir un ángulo fresco.
+  const existing = await getAllPosts();
+  const recentTitles = existing.slice(0, 30).map((p) => `- ${p.title}`).join("\n") || "(ninguno todavía)";
+  const pilar = PILARES[Math.floor(Math.random() * PILARES.length)];
 
-  // 2. Claude selecciona y redacta resúmenes originales en español.
   const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-  const prompt = `Eres el editor del blog de TecnoArtificial, una empresa chilena de inteligencia artificial que ayuda a negocios con marketing, automatización y agentes de IA.
+  const prompt = `Eres el editor SEO del blog de TecnoArtificial (tecnoartificial.com), una empresa chilena que ayuda a negocios y pymes con inteligencia artificial, automatización, agentes de WhatsApp, marketing digital y ciberseguridad.
 
-A continuación tienes contenido crudo de feeds RSS de noticias de IA:
+OBJETIVO: escribir UN artículo evergreen optimizado para SEO que posicione en Google Chile y atraiga a dueños de negocio. No es una noticia: es contenido útil y duradero que responde a lo que la gente busca.
 
-${material}
+Ángulo/pilar sugerido para hoy (puedes afinar el enfoque, pero mantente en este tema): "${pilar}".
 
-Tarea: elige las ${POSTS_PER_RUN} noticias MÁS relevantes e interesantes para dueños de negocios y pymes en Chile/Latinoamérica. Para cada una, escribe un artículo ORIGINAL en español (NO copies el texto original; resume y aporta el ángulo de negocio de TecnoArtificial).
+Artículos YA publicados (NO repitas estos temas ni títulos; elige un enfoque o keyword distinto):
+${recentTitles}
 
-Devuelve ÚNICAMENTE un array JSON válido (sin texto extra, sin markdown de código) con exactamente ${POSTS_PER_RUN} objetos con esta forma:
-[
-  {
-    "title": "Título atractivo y claro en español (max 70 caracteres)",
-    "slug": "titulo-en-kebab-case-sin-acentos",
-    "excerpt": "Resumen de 1-2 frases (max 160 caracteres).",
-    "content": "Artículo en Markdown de 250-350 palabras. Usa 1-2 subtítulos con ##. Explica la noticia y POR QUÉ le importa a una empresa, con un cierre que conecte con servicios de IA. No inventes datos.",
-    "category": "Una de: Marketing IA, Automatización, Agentes IA, Tendencias IA",
-    "sourceName": "Nombre del medio de origen",
-    "sourceUrl": "URL del artículo original"
-  }
-]`;
+REQUISITOS SEO:
+- Título con la keyword principal al inicio, atractivo y claro (máx 65 caracteres).
+- Empieza el artículo respondiendo la intención de búsqueda en las primeras 2 frases.
+- 650-900 palabras en Markdown, con 3-4 subtítulos "##" que incluyan variantes de la keyword.
+- Lenguaje simple orientado a dueños de pyme en Chile; ejemplos concretos y accionables.
+- Cierra con un llamado a la acción hacia los servicios de TecnoArtificial (consultoría/diagnóstico gratis).
+- No inventes estadísticas ni cifras falsas. Nada de relleno.
 
-  let generated: GeneratedPost[];
+Devuelve ÚNICAMENTE un objeto JSON válido (sin texto extra, sin bloques de código markdown) con esta forma exacta:
+{
+  "title": "Título con keyword (máx 65 caracteres)",
+  "slug": "titulo-en-kebab-case-sin-acentos",
+  "excerpt": "Meta descripción atractiva con la keyword (máx 155 caracteres).",
+  "content": "Artículo completo en Markdown (650-900 palabras, subtítulos ##).",
+  "category": "Una de: Marketing IA, Automatización, Agentes IA, Ciberseguridad, SEO, Tendencias IA",
+  "keyword": "keyword principal objetivo"
+}`;
+
+  let post: GeneratedPost;
   try {
     const message = await anthropic.messages.create({
       model: MODEL,
@@ -122,37 +106,28 @@ Devuelve ÚNICAMENTE un array JSON válido (sin texto extra, sin markdown de có
     });
     const textBlock = message.content.find((b) => b.type === "text");
     const raw = textBlock && "text" in textBlock ? textBlock.text : "";
-    generated = extractJsonArray(raw);
+    post = extractJsonObject(raw);
   } catch (error) {
-    console.error("[ai-news] Claude falló:", error);
-    return NextResponse.json(
-      { error: "Error generando contenido", detail: String(error) },
-      { status: 500 },
-    );
+    console.error("[ai-seo] Claude falló:", error);
+    return NextResponse.json({ error: "Error generando contenido", detail: String(error) }, { status: 500 });
   }
 
-  // 3. Guardar en Firestore (omitiendo slugs que ya existen).
-  const created: string[] = [];
-  const skipped: string[] = [];
-  for (const post of generated) {
-    const slug = slugify(post.slug || post.title);
-    if (!slug || !post.title || !post.content) continue;
-    if (await slugExists(slug)) {
-      skipped.push(slug);
-      continue;
-    }
-    await createPost({
-      slug,
-      title: post.title,
-      excerpt: post.excerpt || "",
-      content: post.content,
-      category: post.category || "Tendencias IA",
-      sourceName: post.sourceName,
-      sourceUrl: post.sourceUrl,
-      author: "TecnoArtificial",
-    });
-    created.push(slug);
+  const slug = slugify(post.slug || post.title);
+  if (!slug || !post.title || !post.content) {
+    return NextResponse.json({ error: "Contenido inválido" }, { status: 500 });
+  }
+  if (await slugExists(slug)) {
+    return NextResponse.json({ ok: true, created: [], skipped: [slug], note: "slug ya existía" });
   }
 
-  return NextResponse.json({ ok: true, created, skipped });
+  await createPost({
+    slug,
+    title: post.title,
+    excerpt: post.excerpt || "",
+    content: post.content,
+    category: post.category || "Tendencias IA",
+    author: "TecnoArtificial",
+  });
+
+  return NextResponse.json({ ok: true, created: [slug], pilar });
 }
