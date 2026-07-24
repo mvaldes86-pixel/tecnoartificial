@@ -30,7 +30,7 @@ export default function Services() {
 
       <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
         {services.map((service, index) => (
-          <div key={index} className="glass-card group flex flex-col items-start gap-4">
+          <div key={index} className="glass-card group flex flex-col items-start gap-4 transition duration-300 hover:-translate-y-1 hover:border-white/20">
             <div className={`p-4 rounded-xl bg-white/5 ${service.color} group-hover:scale-110 transition-transform`}>
               <service.icon className="w-8 h-8" />
             </div>

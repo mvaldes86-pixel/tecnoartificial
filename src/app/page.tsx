@@ -9,6 +9,7 @@ import CaseStudy from "@/components/CaseStudy";
 import Vigenta from "@/components/Vigenta";
 import LaunchBanner from "@/components/LaunchBanner";
 import Booking from "@/components/Booking";
+import Reveal from "@/components/Reveal";
 
 export default function Home() {
   return (
@@ -16,13 +17,13 @@ export default function Home() {
       <Navbar />
       <Hero />
       <LaunchBanner />
-      <Services />
-      <Portfolio />
-      <Process />
-      <Clients />
-      <CaseStudy />
-      <Vigenta />
-      <Booking />
+      <Reveal><Services /></Reveal>
+      <Reveal><Portfolio /></Reveal>
+      <Reveal><Process /></Reveal>
+      <Reveal><Clients /></Reveal>
+      <Reveal><CaseStudy /></Reveal>
+      <Reveal><Vigenta /></Reveal>
+      <Reveal><Booking /></Reveal>
       
       <footer className="py-14 md:py-24 border-t border-white/5 px-6 text-center flex flex-col items-center gap-6">
         <div className="flex gap-6 items-center">
