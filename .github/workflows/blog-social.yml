@@ -1,0 +1,63 @@
+name: Blog auto + registro para redes
+
+# Plan B: dispara la publicacion del blog y registra el ultimo post en
+# data/ultimo-post.json, que lee la routine de redes (el sandbox cloud no
+# puede leer tecnoartificial.com, pero SI puede clonar este repo).
+#
+# Corre martes y jueves 12:00 UTC (08:00 Chile). GitHub Actions puede
+# retrasarse algunos minutos; la routine de redes corre 2h despues (14:00 UTC).
+# El endpoint tiene candado "1 post por dia", asi que convive con el cron de
+# Vercel (respaldo) sin publicar de mas.
+
+on:
+  schedule:
+    - cron: "0 12 * * 2,4"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: blog-social
+  cancel-in-progress: false
+
+jobs:
+  publicar-y-registrar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Publicar articulo y capturar el ultimo post
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CRON_SECRET:-}" ]; then
+            echo "Falta el secret CRON_SECRET en el repo (Settings > Secrets > Actions)."
+            exit 1
+          fi
+          echo "Llamando al endpoint del blog (puede tardar ~40s si genera)..."
+          RESP=$(curl -sS -m 150 -H "Authorization: Bearer $CRON_SECRET" \
+            https://tecnoartificial.com/api/cron/ai-news)
+          echo "Respuesta: $RESP"
+          echo "$RESP" | jq -e '.slug and .title and .url' >/dev/null \
+            || { echo "La respuesta no trae slug/title/url"; exit 1; }
+          mkdir -p data
+          echo "$RESP" | jq '{slug, title, url, actualizado: (now | todate)}' \
+            > data/ultimo-post.json
+          echo "Escrito data/ultimo-post.json:"
+          cat data/ultimo-post.json
+
+      - name: Commit si cambio
+        run: |
+          set -euo pipefail
+          git config user.name "blog-bot"
+          git config user.email "actions@users.noreply.github.com"
+          if git diff --quiet -- data/ultimo-post.json; then
+            echo "Sin cambios en data/ultimo-post.json (mismo post)."
+          else
+            git add data/ultimo-post.json
+            git commit -m "chore(social): actualiza ultimo-post.json [skip ci]"
+            git push
+          fi
