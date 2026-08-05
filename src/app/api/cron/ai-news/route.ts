@@ -45,13 +45,26 @@ type GeneratedPost = {
   keyword?: string;
 };
 
-function extractJsonObject(text: string): GeneratedPost {
-  // Acepta un objeto suelto o el primer objeto de un array.
-  const start = text.indexOf("{");
-  const end = text.lastIndexOf("}");
-  if (start === -1 || end === -1) throw new Error("Respuesta sin JSON válido");
-  return JSON.parse(text.slice(start, end + 1));
-}
+// Esquema de la herramienta: la API entrega `tool_use.input` YA parseado como
+// objeto, así que el Markdown largo del `content` (con comillas y saltos de
+// línea) nunca rompe el parseo — a diferencia de pedir un JSON en texto libre,
+// que fallaba de forma intermitente con "SyntaxError ... in JSON".
+const ARTICLE_TOOL = {
+  name: "publicar_articulo",
+  description: "Registra el artículo de blog SEO generado.",
+  input_schema: {
+    type: "object" as const,
+    properties: {
+      title: { type: "string", description: "Título con la keyword al inicio (máx 65 caracteres)." },
+      slug: { type: "string", description: "Slug en kebab-case sin acentos." },
+      excerpt: { type: "string", description: "Meta descripción con la keyword (máx 155 caracteres)." },
+      content: { type: "string", description: "Artículo completo en Markdown (650-900 palabras, subtítulos ##)." },
+      category: { type: "string", description: "Una de: Marketing IA, Automatización, Agentes IA, Ciberseguridad, SEO, Tendencias IA." },
+      keyword: { type: "string", description: "Keyword principal objetivo." },
+    },
+    required: ["title", "slug", "excerpt", "content", "category"],
+  },
+};
 
 export async function GET(req: NextRequest) {
   // Seguridad: Vercel Cron envía "Authorization: Bearer <CRON_SECRET>".
@@ -87,26 +100,23 @@ REQUISITOS SEO:
 - Cierra con un llamado a la acción hacia los servicios de TecnoArtificial (consultoría/diagnóstico gratis).
 - No inventes estadísticas ni cifras falsas. Nada de relleno.
 
-Devuelve ÚNICAMENTE un objeto JSON válido (sin texto extra, sin bloques de código markdown) con esta forma exacta:
-{
-  "title": "Título con keyword (máx 65 caracteres)",
-  "slug": "titulo-en-kebab-case-sin-acentos",
-  "excerpt": "Meta descripción atractiva con la keyword (máx 155 caracteres).",
-  "content": "Artículo completo en Markdown (650-900 palabras, subtítulos ##).",
-  "category": "Una de: Marketing IA, Automatización, Agentes IA, Ciberseguridad, SEO, Tendencias IA",
-  "keyword": "keyword principal objetivo"
-}`;
+Entrega el artículo llamando a la herramienta "publicar_articulo" con todos sus campos.`;
 
   let post: GeneratedPost;
   try {
     const message = await anthropic.messages.create({
       model: MODEL,
       max_tokens: 4000,
+      tools: [ARTICLE_TOOL],
+      tool_choice: { type: "tool", name: ARTICLE_TOOL.name },
       messages: [{ role: "user", content: prompt }],
     });
-    const textBlock = message.content.find((b) => b.type === "text");
-    const raw = textBlock && "text" in textBlock ? textBlock.text : "";
-    post = extractJsonObject(raw);
+    const toolBlock = message.content.find((b) => b.type === "tool_use");
+    if (!toolBlock || toolBlock.type !== "tool_use") {
+      throw new Error("La respuesta no incluyó tool_use");
+    }
+    // La API entrega `input` ya parseado como objeto — sin JSON.parse frágil.
+    post = toolBlock.input as GeneratedPost;
   } catch (error) {
     console.error("[ai-seo] Claude falló:", error);
     return NextResponse.json({ error: "Error generando contenido", detail: String(error) }, { status: 500 });
