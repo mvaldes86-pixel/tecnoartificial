@@ -79,6 +79,26 @@ export async function GET(req: NextRequest) {
 
   // Títulos ya publicados: para no repetir temas y elegir un ángulo fresco.
   const existing = await getAllPosts();
+
+  // Candado idempotente: publica como máximo 1 artículo por día (UTC), sin
+  // importar cuántos disparadores lo llamen (cron de Vercel + GitHub Action).
+  // Si ya hay un post de hoy, no genera otro y devuelve ese último (para que
+  // el GitHub Action registre el post correcto en el repo).
+  const newest = existing[0];
+  const today = new Date().toISOString().slice(0, 10);
+  if (newest && newest.publishedAt && newest.publishedAt.slice(0, 10) === today) {
+    const url = `https://tecnoartificial.com/blog/${newest.slug}`;
+    return NextResponse.json({
+      ok: true,
+      created: [],
+      skipped: [newest.slug],
+      slug: newest.slug,
+      title: newest.title,
+      url,
+      note: "ya se publicó hoy",
+    });
+  }
+
   const recentTitles = existing.slice(0, 30).map((p) => `- ${p.title}`).join("\n") || "(ninguno todavía)";
   const pilar = PILARES[Math.floor(Math.random() * PILARES.length)];
 
@@ -126,8 +146,9 @@ Entrega el artículo llamando a la herramienta "publicar_articulo" con todos sus
   if (!slug || !post.title || !post.content) {
     return NextResponse.json({ error: "Contenido inválido" }, { status: 500 });
   }
+  const url = `https://tecnoartificial.com/blog/${slug}`;
   if (await slugExists(slug)) {
-    return NextResponse.json({ ok: true, created: [], skipped: [slug], note: "slug ya existía" });
+    return NextResponse.json({ ok: true, created: [], skipped: [slug], slug, title: post.title, url, note: "slug ya existía" });
   }
 
   await createPost({
@@ -139,5 +160,7 @@ Entrega el artículo llamando a la herramienta "publicar_articulo" con todos sus
     author: "TecnoArtificial",
   });
 
-  return NextResponse.json({ ok: true, created: [slug], pilar });
+  // Devolvemos slug/title/url para que el GitHub Action registre el último
+  // post en el repo (lo lee la routine de redes, que no puede leer el sitio).
+  return NextResponse.json({ ok: true, created: [slug], slug, title: post.title, url, pilar });
 }
