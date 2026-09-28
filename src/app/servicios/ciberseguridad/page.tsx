@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
+
+// Escudo (ciberseguridad) todavía NO está activo como servicio. Mientras tanto
+// la página queda oculta (404 + noindex) pero el código se conserva intacto.
+// Para reactivar: poner SERVICIO_ACTIVO = true y volver a listar los enlaces
+// en Navbar, Services y sitemap (ver commit que ocultó ciberseguridad).
+const SERVICIO_ACTIVO = false;
 import {
   ShieldCheck,
   Search,
@@ -22,6 +29,7 @@ export const metadata: Metadata = {
   description:
     "Auditamos, blindamos y certificamos tu presencia digital. Pentesting, monitoreo continuo y el sello 'Sitio auditado por Escudo'. Ciberseguridad para empresas que se digitalizan en Chile.",
   alternates: { canonical: "/servicios/ciberseguridad" },
+  robots: { index: false, follow: false },
   openGraph: {
     title: "Escudo · Ciberseguridad para tu negocio | TecnoArtificial",
     description:
@@ -142,6 +150,8 @@ const WA = "https://wa.me/56920293667?text=" +
   encodeURIComponent("Hola 👋 Quiero información sobre Escudo (ciberseguridad) de TecnoArtificial.");
 
 export default function CiberseguridadPage() {
+  if (!SERVICIO_ACTIVO) notFound();
+
   return (
     <main className="min-h-screen bg-[#0A0A1F] text-white">
       <Navbar />

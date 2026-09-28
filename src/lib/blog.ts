@@ -21,6 +21,15 @@ type BlogPostDoc = Omit<BlogPost, "publishedAt"> & {
   status?: string;
 };
 
+// El servicio de ciberseguridad (Escudo) aún no está activo, así que ocultamos
+// cualquier artículo del tema ya publicado en Firestore: no aparece en el
+// listado, ni en el sitemap, ni por URL directa (404). Para reactivar, borrar
+// esta función y sus usos. (Ver commit que ocultó ciberseguridad.)
+function isHiddenPost(p: BlogPost): boolean {
+  const hay = `${p.category} ${p.slug} ${p.title}`.toLowerCase();
+  return hay.includes("ciberseg") || hay.includes("pentest");
+}
+
 function toPost(data: BlogPostDoc): BlogPost {
   const published =
     data.publishedAt instanceof Timestamp
@@ -54,6 +63,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
       .get();
     return snap.docs
       .map((d) => toPost(d.data() as BlogPostDoc))
+      .filter((p) => !isHiddenPost(p))
       .sort((a, b) => (Date.parse(b.publishedAt) || 0) - (Date.parse(a.publishedAt) || 0));
   } catch (error) {
     console.error("[blog] getAllPosts falló:", error);
@@ -71,7 +81,9 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       .limit(1)
       .get();
     if (snap.empty) return null;
-    return toPost(snap.docs[0].data() as BlogPostDoc);
+    const post = toPost(snap.docs[0].data() as BlogPostDoc);
+    if (isHiddenPost(post)) return null; // ciberseguridad oculta hasta activar el servicio
+    return post;
   } catch (error) {
     console.error(`[blog] getPostBySlug(${slug}) falló:`, error);
     return null;

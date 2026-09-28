@@ -18,7 +18,6 @@ const PILARES: string[] = [
   "Automatización de procesos y tareas repetitivas con IA en pymes",
   "Marketing digital con IA: campañas en Meta (Facebook e Instagram) y generación de leads",
   "SEO e inteligencia artificial: cómo posicionar un negocio en Google",
-  "Ciberseguridad para pymes: auditorías, pentesting y protección de datos (Ley 21.719 y 21.663)",
   "IA aplicada por rubro: clínicas y salud, e-commerce, inmobiliarias, servicios profesionales",
   "Desarrollo de software y apps a medida potenciadas con IA",
   "Casos de uso y ROI de la inteligencia artificial para dueños de negocio",
@@ -59,7 +58,7 @@ const ARTICLE_TOOL = {
       slug: { type: "string", description: "Slug en kebab-case sin acentos." },
       excerpt: { type: "string", description: "Meta descripción con la keyword (máx 155 caracteres)." },
       content: { type: "string", description: "Artículo completo en Markdown (650-900 palabras, subtítulos ##)." },
-      category: { type: "string", description: "Una de: Marketing IA, Automatización, Agentes IA, Ciberseguridad, SEO, Tendencias IA." },
+      category: { type: "string", description: "Una de: Marketing IA, Automatización, Agentes IA, SEO, Tendencias IA." },
       keyword: { type: "string", description: "Keyword principal objetivo." },
     },
     required: ["title", "slug", "excerpt", "content", "category"],
@@ -116,7 +115,8 @@ REQUISITOS SEO:
 - Título con la keyword principal al inicio, atractivo y claro (máx 65 caracteres).
 - Empieza el artículo respondiendo la intención de búsqueda en las primeras 2 frases.
 - 650-900 palabras en Markdown, con 3-4 subtítulos "##" que incluyan variantes de la keyword.
-- Lenguaje simple orientado a dueños de pyme en Chile; ejemplos concretos y accionables.
+- Lenguaje simple orientado a dueños de pyme; ejemplos concretos y accionables.
+- Escribe en ESPAÑOL LATINOAMERICANO NEUTRO (genérico), SIN modismos ni voseo chileno (nada de "sabís", "cachái", "po", "al tiro", "bacán"); usa trato de "tú" estándar.
 - Cierra con un llamado a la acción hacia los servicios de TecnoArtificial (consultoría/diagnóstico gratis).
 - No inventes estadísticas ni cifras falsas. Nada de relleno.
 

@@ -50,6 +50,11 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   staticPageGenerationTimeout: 180,
+  // La tarjeta social dinámica (blog/[slug]/opengraph-image) lee las fuentes de
+  // marca con fs; hay que incluirlas en el bundle de la función en Vercel.
+  outputFileTracingIncludes: {
+    "/blog/[slug]/opengraph-image": ["./assets/fonts/*.ttf"],
+  },
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
