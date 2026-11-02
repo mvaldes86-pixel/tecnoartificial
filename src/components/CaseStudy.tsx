@@ -4,22 +4,22 @@ import { Users, MessageCircle, Moon, Home, ArrowRight } from 'lucide-react';
 const stats = [
   {
     icon: Users,
-    value: '4.948',
+    value: '6.156',
     label: 'Personas atendidas por el agente en WhatsApp, sin intervención humana',
   },
   {
     icon: MessageCircle,
-    value: '821',
-    label: 'Leads calificados y derivados a un asesor humano para cerrar la visita (16,6%)',
+    value: '1.197',
+    label: 'Leads calificados y derivados a un asesor humano para cerrar la visita (19,4%)',
   },
   {
     icon: Moon,
-    value: '58,7%',
+    value: '58,1%',
     label: 'Llegaron fuera de horario de oficina (noches y fines de semana) y fueron atendidos al instante',
   },
   {
     icon: Home,
-    value: '61',
+    value: '63',
     label: 'Propiedades distintas promocionadas por el mismo agente',
   },
 ];
@@ -54,7 +54,7 @@ export default function CaseStudy() {
           <div className="flex items-center gap-6">
             <img src="/logos/ibi.jpeg" alt="IBI" className="h-20 w-auto object-contain rounded-lg flex-shrink-0" />
             <p className="text-white/70 max-w-md text-sm md:text-base">
-              Datos reales acumulados entre el 24 de abril y el 28 de septiembre de 2026, sobre WhatsApp Business + IA, sin intervención humana hasta que el lead está listo para visitar.
+              Datos reales acumulados entre el 24 de abril y el 2 de noviembre de 2026, sobre WhatsApp Business + IA, sin intervención humana hasta que el lead está listo para visitar.
             </p>
           </div>
           <a
